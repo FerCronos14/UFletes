@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">UFletes</string>
+    <string name="quieres_ofrecer_tus_servicios_de_fletes_registrate_como_fletero">¿Quieres ofrecer tus servicios de fletes?, ¡Registrate como fletero!</string>
+    <string name="registrate">Registrate</string>
+    <string name="estas_buscando_un_flete_que_pueda_mover_tus_muebles_registrate_como_usuario">¿Estas buscando un flete que pueda mover tus muebles?, ¡Registrate como usuario!</string>
+    <string name="registro_de_cliente">Registro de cliente</string>
+    <string name="apellido_paterno">Apellido paterno</string>
+    <string name="iniciar_sesion">Iniciar Sesion</string>
+    <string name="registro">Registro</string>
+    <string name="apellido_materno">Apellido materno</string>
+    <string name="telefono">Telefono</string>
+    <string name="nombre_s">Nombre(s)</string>
+    <string name="correo_electronio">Correo electrónio</string>
+    <string name="registrar">Registrar</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="confirmar_contrase_a">Confirmar contraseña</string>
+    <string name="title_activity_pantalla_busqueda_fletero">pantalla_busquedaFletero</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>

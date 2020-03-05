@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "709916148789",
+    "firebase_url": "https://fletes-7921b.firebaseio.com",
+    "project_id": "fletes-7921b",
+    "storage_bucket": "fletes-7921b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709916148789:android:30200cb503f48eddc69d7c",
+        "android_client_info": {
+          "package_name": "com.example.ufletes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709916148789-nb8otvoihscki282p3d07pt4n5160um5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ufletes",
+            "certificate_hash": "759445107578e8dc3a5f69815b4c00784ee0f2ad"
+          }
+        },
+        {
+          "client_id": "709916148789-m2jm31cioj7kooks7enkcqb6s6hsqncj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd2vxFFFbaFYBulP1qB_FtJvRA5xn91Bo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709916148789-m2jm31cioj7kooks7enkcqb6s6hsqncj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
