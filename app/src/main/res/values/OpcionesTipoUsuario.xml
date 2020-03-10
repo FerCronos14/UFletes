@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="comboTipoUsuario">
+        <item>Selecione tipo de usuario</item>
+        <item>Cliente</item>
+        <item>Fletero</item>
+    </string-array>
+
+
+
+    
+</resources>

@@ -12,6 +12,23 @@ public class Registro_Main extends AppCompatActivity implements View.OnClickList
     private Button myRegistroFleteroMain;
     private Button myRegistroClienteMain;
 
+    public void manejoEventosRegistroMain (int opc) {
+        switch (opc) {
+            case R.id.btnRegistroFletero_Main:
+                //Intent intentRegistro_Fletero = new Intent(this, Registro_Fletero.class);
+                //Intent intent = new Intent(Registro_Main.this, Registro_Fletero.class);
+                startActivity(new Intent(Registro_Main.this, Registro_Fletero.class));
+                break;
+            case R.id.btnRegistoCliente_Main:
+                //Intent intentRegistro_User = new Intent(this, Registro_User.class);
+                //intent = new Intent(Registro_Main.this, Registro_User.class);
+                startActivity(new Intent(Registro_Main.this, Registro_User.class));
+                break;
+            default:
+                break;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,19 +44,6 @@ public class Registro_Main extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btnRegistroFletero_Main:
-                //Intent intentRegistro_Fletero = new Intent(this, Registro_Fletero.class);
-                //Intent intent = new Intent(Registro_Main.this, Registro_Fletero.class);
-                startActivity(new Intent(Registro_Main.this, Registro_Fletero.class));
-                break;
-            case R.id.btnRegistoCliente_Main:
-                //Intent intentRegistro_User = new Intent(this, Registro_User.class);
-                //intent = new Intent(Registro_Main.this, Registro_User.class);
-                startActivity(new Intent(Registro_Main.this, Registro_User.class));
-                break;
-            default:
-                break;
-        }
+        manejoEventosRegistroMain(view.getId());
     }
 }

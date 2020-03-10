@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnRegistro:
                 //Intent intentLoginRegistro = new Intent(this, Registro_Main.class);
-                Intent intent  = new Intent(MainActivity.this, Registro_Main.class);
+                Intent intent  = new Intent(MainActivity.this, Registro_User.class);
 
                 startActivity(intent);
                 break;
@@ -55,12 +56,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Intent intent = new Intent(MainActivity.this, pantalla_busquedaFletero.class);
+                    Intent intent = new Intent(MainActivity.this, pantalla_AgregarArticulos.class);
+                    //Toast.makeText(MainActivity.this, "Bienvenido", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                     finish();
-                    Toast.makeText(MainActivity.this, "Bienvenido", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(MainActivity.this, "No se pudo iniciar sesion, favro de comprobar datos.", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(MainActivity.this, "No se pudo iniciar sesion, favor de comprobar datos.", Toast.LENGTH_SHORT).show();
                 }
 
             }

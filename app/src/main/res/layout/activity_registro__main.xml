@@ -7,70 +7,61 @@
     android:background="@drawable/fondo"
     tools:context=".Registro_Main">
 
-    <Button
-        android:id="@+id/btnRegistroFletero_Main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="368dp"
-        android:background="@drawable/fondo_botones"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:text="@string/registrate"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRegistroFletero" />
-
     <TextView
         android:id="@+id/txtRegistroFletero"
         android:layout_width="279dp"
         android:layout_height="50dp"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="226dp"
-        android:layout_marginEnd="66dp"
-        android:layout_marginBottom="33dp"
+        android:layout_marginBottom="350dp"
         android:text="@string/quieres_ofrecer_tus_servicios_de_fletes_registrate_como_fletero"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnRegistroFletero_Main"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtRegistroCliente"
-        android:layout_width="268dp"
-        android:layout_height="66dp"
-        android:layout_marginStart="66dp"
-        android:layout_marginEnd="66dp"
-        android:text="@string/estas_buscando_un_flete_que_pueda_mover_tus_muebles_registrate_como_usuario"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.675" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnRegistoCliente_Main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="143dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="141dp"
         android:layout_marginBottom="136dp"
         android:background="@drawable/fondo_botones"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:text="@string/registrate"
+        android:text="Registrar Usuario"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRegistroCliente" />
+        app:layout_constraintTop_toBottomOf="@+id/txtRegistroCliente"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnRegistroFletero_Main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/fondo_botones"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Registrar Fletero"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRegistroFletero"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/txtRegistroCliente"
+        android:layout_width="268dp"
+        android:layout_height="66dp"
+        android:text="@string/estas_buscando_un_flete_que_pueda_mover_tus_muebles_registrate_como_usuario"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.569" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
