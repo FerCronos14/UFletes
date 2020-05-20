@@ -58,7 +58,8 @@ public class Filtro_Fleteros_Fragment extends  DialogFragment {
         mbtnFilroFletero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.stopListening();
+                //BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.stopListening();
+                BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.notifyDataSetChanged();
                 menuFiltroFleteros();
                 //detenerFragment();
                 //DialogFragment newFragment = Filtro_Fleteros_Fragment.newInstance();// call the static method
@@ -133,6 +134,7 @@ public class Filtro_Fleteros_Fragment extends  DialogFragment {
                     mBusqueda = "Acendente";
                     //queJaleElCondenado();
                     BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.startListening();
+                    BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.notifyDataSetChanged();
 
                 }
                 if (opciones[i].equals("Descendente")) {
