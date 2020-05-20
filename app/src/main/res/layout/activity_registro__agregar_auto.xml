@@ -28,6 +28,7 @@
         android:layout_marginTop="65dp"
         android:layout_marginEnd="99dp"
         android:layout_marginBottom="499dp"
+        android:background="@drawable/fondo_textos"
         android:ems="10"
         android:hint="Marca del vehículo"
         android:inputType="textPersonName"
@@ -44,6 +45,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="99dp"
         android:layout_marginBottom="444dp"
+        android:background="@drawable/fondo_textos"
         android:ems="10"
         android:hint="Tipo de vehículo"
         android:inputType="textPersonName"
@@ -60,6 +62,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="99dp"
         android:layout_marginBottom="389dp"
+        android:background="@drawable/fondo_textos"
         android:ems="10"
         android:hint="Capacidad del vehículo"
         android:inputType="textPersonName"
@@ -69,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextTipoVehiculo" />
 
     <Button
-        android:id="@+id/btnAgregarVehiculo"
+        android:id="@+id/btnAgregarFotoVehiculo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
@@ -79,6 +82,7 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="¿Agregar foto del vehículo?"
+        android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextCapacidadVehiculo" />
@@ -88,15 +92,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="167dp"
-        android:layout_marginTop="69dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="99dp"
         android:layout_marginBottom="199dp"
         android:background="@drawable/fondo_botones"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="Añadir vehículo"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAgregarVehiculo" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAgregarFotoVehiculo" />
+
+    <fragment
+        android:id="@+id/fragmentVehiculo"
+        android:name="com.example.ufletes.AgregarVehiculosFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAñadirVehiculo"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

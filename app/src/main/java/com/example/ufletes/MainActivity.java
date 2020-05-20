@@ -2,19 +2,35 @@ package com.example.ufletes;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -22,15 +38,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText mtxtLogin_Password;
     private Button btnLogin_IniciarSesion;
     private Button btnLogin_Registrate;
-    private String Usuario_login = "";
+    String Usuario_login = "";
     private String Password_login = "";
+    static String correoUsuario = "";
+    //=============================================== Datos Clientes ============================
+    static String idDoc_Cliente = "";
+    static String nombreCliente = "";
+    static String apellidoCliente = "";
+    static String telefonoCliente = "";
+    //=============================================== Datos Fleteros ============================
+    static String idDoc_Fletero = "";
+    static String correoFletero = "";
+
     private FirebaseAuth mAuth;
+    //private DatabaseReference mDatabase;
+    private FirebaseFirestore mFireStore;
+
+    private ProgressDialog mPDialog;
 
     public void manejoEventosMain (int opc) {
         switch (opc) {
             case R.id.btnInicioSesion:
                 if (!Usuario_login.isEmpty() && !Password_login.isEmpty()) {
-                    LogearUsuario();
+                    ObtenerDatosCliente();
                 }
                 else{
                     Toast.makeText(MainActivity.this, "Favor de llenar los campos", Toast.LENGTH_SHORT).show();
@@ -41,27 +71,76 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnRegistro:
                 //Intent intentLoginRegistro = new Intent(this, Registro_Main.class);
                 Intent intent  = new Intent(MainActivity.this, Registro_User.class);
-
                 startActivity(intent);
                 break;
             default:
                 break;
-
         }
-
+    }
+    private void ObtenerDatosFletero (){
+        mFireStore.collection("Fletero")
+                .whereEqualTo("correo", Usuario_login)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                idDoc_Fletero = document.getId();
+                                correoFletero = document.getData().get("correo").toString();
+                            }
+                        }
+                    }
+                });
+    }
+    private void ObtenerDatosCliente (){
+        mFireStore.collection("Cliente")
+                .whereEqualTo("correo", Usuario_login)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                correoUsuario = document.getData().get("correo").toString();
+                                idDoc_Cliente = document.getId();
+                                nombreCliente = document.getData().get("nombre").toString();
+                                apellidoCliente = document.getData().get("apellidop").toString();
+                                telefonoCliente = document.getData().get("telefono").toString();
+                            }
+                            ObtenerDatosFletero();
+                            LogearUsuario();
+                        }
+                    }
+                });
     }
 
-    private void LogearUsuario() {
+    private void LogearUsuario()
+    {
+        mPDialog.setTitle("Iniciando sesion");
+        mPDialog.setMessage("Espere un momento...");
+        mPDialog.setCancelable(false);
+        mPDialog.show();
+        //ObtenerDatosFletero();
+        //ObtenerDatosCliente();
         mAuth.signInWithEmailAndPassword(Usuario_login, Password_login).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Intent intent = new Intent(MainActivity.this, pantalla_AgregarArticulos.class);
-                    //Toast.makeText(MainActivity.this, "Bienvenido", Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
-                    finish();
+                    mPDialog.dismiss();
+                    if (correoUsuario.equals(Usuario_login)) {
+                        //Toast.makeText(MainActivity.this, "Bienvenido " + nombreUsuario + " " + apellidoUsuario, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MainActivity.this, "Bienvenido " + correoUsuario, Toast.LENGTH_LONG).show();
+                        //startActivity(new Intent(MainActivity.this,Pantalla_pedidos.class));
+                        startActivity(new Intent(MainActivity.this,pantalla_busquedaFletero.class));
+                    } else if (!correoUsuario.equals(Usuario_login)){
+                        Toast.makeText(MainActivity.this, idDoc_Fletero, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MainActivity.this, "Bienvenido " + Usuario_login, Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(MainActivity.this, Pantalla_Inicio_Fletero.class));
+                    }
+                    //finish();
                 }else {
-
+                    mPDialog.dismiss();
                     Toast.makeText(MainActivity.this, "No se pudo iniciar sesion, favor de comprobar datos.", Toast.LENGTH_SHORT).show();
                 }
 
@@ -69,11 +148,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSupportActionBar().hide();
         mAuth = FirebaseAuth.getInstance();
 
         mtxtLogin_Correo = findViewById(R.id.editTextCorreo_Login);
@@ -84,24 +164,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnLogin_IniciarSesion.setOnClickListener(this);
         btnLogin_Registrate.setOnClickListener(this);
+
+        mFireStore = FirebaseFirestore.getInstance();
+
+        mPDialog = new ProgressDialog(this);
+
+        compruebaPermisoSD();
+
+    }
+
+    private void compruebaPermisoSD() {
+        // Check if we have write permission
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            //Log.e(TAG, "Permission not granted WRITE_EXTERNAL_STORAGE.");
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        225);
+            }
+        }
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            //Log.e(TAG, "Permission not granted CAMERA.");
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.CAMERA)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.CAMERA},
+                        226);
+            }
+        }
     }
 
     @Override
     public void onClick(View view) {
         Usuario_login = mtxtLogin_Correo.getText().toString();
         Password_login =  mtxtLogin_Password.getText().toString();
+        //ObtenerDatosFletero();
+        //ObtenerDatosCliente();
+        //Toast.makeText(MainActivity.this, "Bienvenido " + Usuario_login + "\n" + correoUsuario, Toast.LENGTH_LONG).show();
         manejoEventosMain(view.getId());
     }
-
-   /* @Override
-    protected void onStart() {
-        super.onStart();
-        if (mAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(MainActivity.this, pantalla_busquedaFletero.class);
-            startActivity(intent);
-            finish();
-        }
-    } */
 }
 
 

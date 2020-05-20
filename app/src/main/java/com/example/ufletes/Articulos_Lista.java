@@ -1,25 +1,26 @@
 package com.example.ufletes;
 
 public class Articulos_Lista {
-    private String nombre_Articulo;
+    private String nombre_a;
     private String path_Articulo;
-    //private float valoracion;
-    private Integer cantidad_Articulo;
-    private String descripcion_Articulo;
+    private String cant_a;
+    private String descri_a;
 
-    public Articulos_Lista(String nombre_Articulo, String path_Articulo, Integer cantidad_Articulo, String descripcion_Articulo) {
-        this.nombre_Articulo = nombre_Articulo;
+    public Articulos_Lista() { }
+
+    public Articulos_Lista(String nombre_a, String path_Articulo, String cant_a, String descri_a) {
+        this.nombre_a = nombre_a;
         this.path_Articulo = path_Articulo;
-        this.cantidad_Articulo = cantidad_Articulo;
-        this.descripcion_Articulo = descripcion_Articulo;
+        this.cant_a = cant_a;
+        this.descri_a = descri_a;
     }
 
-    public String getNombre_Articulo() {
-        return nombre_Articulo;
+    public String getNombre_a() {
+        return nombre_a;
     }
 
-    public void setNombre_Articulo(String nombre_Articulo) {
-        this.nombre_Articulo = nombre_Articulo;
+    public void setNombre_a(String nombre_a) {
+        this.nombre_a = nombre_a;
     }
 
     public String getPath_Articulo() {
@@ -30,19 +31,19 @@ public class Articulos_Lista {
         this.path_Articulo = path_Articulo;
     }
 
-    public Integer getCantidad_Articulo() {
-        return cantidad_Articulo;
+    public String getCant_a() {
+        return cant_a;
     }
 
-    public void setCantidad_Articulo(Integer cantidad_Articulo) {
-        this.cantidad_Articulo = cantidad_Articulo;
+    public void setCant_a(String cant_a) {
+        this.cant_a = cant_a;
     }
 
-    public String getDescripcion_Articulo() {
-        return descripcion_Articulo;
+    public String getDescri_a() {
+        return descri_a;
     }
 
-    public void setDescripcion_Articulo(String descripcion_Articulo) {
-        this.descripcion_Articulo = descripcion_Articulo;
+    public void setDescri_a(String descri_a) {
+        this.descri_a = descri_a;
     }
 }

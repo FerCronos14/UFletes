@@ -2,6 +2,7 @@ package com.example.ufletes;
 
 import android.os.Bundle;
 
+import com.example.ufletes.dummy.DummyContent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,12 +11,15 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class pantalla_busquedaFletero extends AppCompatActivity {
+public class pantalla_busquedaFletero extends AppCompatActivity implements BusquedaListaFleterosFragment.OnListFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_busqueda_fletero);
+
+        getSupportActionBar().hide();
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -27,4 +31,9 @@ public class pantalla_busquedaFletero extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+
+    @Override
+    public void onListFragmentInteraction(Fleteros_Lista item) {
+
+    }
 }

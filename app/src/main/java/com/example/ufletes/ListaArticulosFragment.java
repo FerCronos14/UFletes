@@ -13,6 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +27,12 @@ public class ListaArticulosFragment extends Fragment {
 
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    RecyclerView recyclerView;
+    RecyclerView RVARTICULOS;
     MyListaArticulosRecyclerViewAdapter Adapter_Articulos;
     List<Articulos_Lista> articulos_listaList;
     private OnListFragmentInteractionListener mListener;
+    private FirebaseFirestore mFirestore;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public ListaArticulosFragment() {
     }
@@ -31,7 +40,6 @@ public class ListaArticulosFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -42,24 +50,43 @@ public class ListaArticulosFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            articulos_listaList = new ArrayList<>();
-            articulos_listaList.add(new Articulos_Lista("Cama","https://dico.com.mx/media/2017/Dico_Centro/collage/DF/colchon_matrimonial-denver-2.jpg",2,"cama con base"));
-            articulos_listaList.add(new Articulos_Lista("Estufa","https://lh3.googleusercontent.com/proxy/pbqL0QFvjI-GY6rRKFopp31CVsmz-3iCPjCe633nq5cWR0lRU8FmteRBJ8F9WtBFRKSPk6ur5FtwYh8F_2MUJGfARv2PsfJp9ajID1KC09sAF592R_taxi67gGbijiqnpZuy_VM0bzJ3d-RFeQqvhDfmJ2JOcj7mQl96aNcgSo95VkALBwx0HVkg0AaLO_Q",1,""));
-            articulos_listaList.add(new Articulos_Lista("Lavadora","https://www.tiendamabe.com.co/medias/mabe-lavadora-19kg-blanca-LMA79114WBAB0-derecha.jpg-1200Wx1200H?context=bWFzdGVyfGltYWdlc3wxMTQ1NzV8aW1hZ2UvanBlZ3xpbWFnZXMvaGFhL2hhZi84ODc0OTkwODk1MTM0LmpwZ3wyMjM3YTA5NDVhZjQ5Njc5M2IzZDc3MTE3M2U4Y2VhN2ViZDY0YjhmZjU5MDU4ZmExNDEwNDU0OTJlZmE5MzNl",1,"lavadora y secadora"));
-            articulos_listaList.add(new Articulos_Lista("TV","https://www.mobydecmuebles.com/wp-content/uploads/2018/10/centrotv_dublin_web1-600x600.jpg",2,"Delicado"));
+            mFirestore = FirebaseFirestore.getInstance();
 
-            Adapter_Articulos = new MyListaArticulosRecyclerViewAdapter(articulos_listaList, mListener);
-            recyclerView.setAdapter(Adapter_Articulos);
+            Query query = mFirestore.collection("Cliente")
+                    .document(MainActivity.idDoc_Cliente)
+                    .collection("Articulos");
+            RVARTICULOS = (RecyclerView) view;
+            FirestoreRecyclerOptions<Articulos_Lista> FirestoreRecyclerOptions =
+                    new FirestoreRecyclerOptions.Builder<Articulos_Lista>()
+                            .setQuery(query, Articulos_Lista.class).build();
+
+            Adapter_Articulos = new MyListaArticulosRecyclerViewAdapter(getActivity(), FirestoreRecyclerOptions);
+            Adapter_Articulos.notifyDataSetChanged();
+            if (mColumnCount <= 1) {
+                RVARTICULOS.setLayoutManager(new LinearLayoutManager(context));
+            } else {
+                RVARTICULOS.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            }
+
+            RVARTICULOS.setAdapter(Adapter_Articulos);
         }
+
         return view;
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Adapter_Articulos.startListening();
+    }
+
+    //Cuando la app esta pausa o minimizada para dejar de escuhar los cambios
+    @Override
+    public void onStop() {
+        super.onStop();
+        Adapter_Articulos.stopListening();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -82,4 +109,5 @@ public class ListaArticulosFragment extends Fragment {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Articulos_Lista item);
     }
+
 }

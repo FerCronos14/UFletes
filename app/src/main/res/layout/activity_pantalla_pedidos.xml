@@ -11,16 +11,16 @@
         android:id="@+id/textViewNombre_Listado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="78dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="78dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="599dp"
         android:text="Pedidos"
+        android:imeOptions="actionNext"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/editTextDireccion_Pedidos"
@@ -29,19 +29,22 @@
         android:layout_marginStart="35dp"
         android:layout_marginEnd="163dp"
         android:layout_marginBottom="460dp"
+        android:background="@drawable/fondo_textos"
         android:ems="10"
+        android:imeOptions="actionDone"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDireccion_Pedido" />
+        app:layout_constraintTop_toBottomOf="@+id/txtDireccion_Pedido"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/txtDireccion_Pedido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
-        android:layout_marginTop="67dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="316dp"
         android:text="Dirección"
         android:textSize="18sp"
@@ -49,11 +52,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.003" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewNombre_Listado"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnAgregar_Articulos_User"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
@@ -63,11 +66,14 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="Agregar articulos"
+        android:textColor="#ffffff"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDestino_pedido"
+        app:layout_constraintVertical_bias="0.74" />
 
     <Button
         android:id="@+id/btnPedirFlete_Pedidos"
@@ -81,11 +87,12 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="Solicitar flete"
+        android:textColor="#ffffff"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAgregar_Articulos_User" />
 
     <Button
         android:id="@+id/btnAbrirMapa"
@@ -97,6 +104,7 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="Abrir mapa"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="@+id/editTextDestino_pedido"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editTextDestino_pedido"
@@ -124,11 +132,13 @@
         android:layout_marginStart="35dp"
         android:layout_marginEnd="163dp"
         android:layout_marginBottom="372dp"
+        android:background="@drawable/fondo_textos"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDestino_pedido" />
+        app:layout_constraintTop_toBottomOf="@+id/txtDestino_pedido"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

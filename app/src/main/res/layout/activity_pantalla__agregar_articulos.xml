@@ -11,7 +11,7 @@
         android:id="@+id/txtAgregarArticulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="611dp"
         android:text="Agregar articulos"
         android:textSize="24sp"
@@ -25,11 +25,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="99dp"
         android:layout_marginBottom="494dp"
+        android:background="@drawable/fondo_textos"
         android:ems="10"
         android:hint="Nombre"
+        android:imeOptions="actionNext"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,9 +46,11 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="99dp"
         android:layout_marginBottom="439dp"
+        android:background="@drawable/fondo_textos"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Descripción"
+        android:imeOptions="actionDone"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,11 +63,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="396dp"
-        android:text="#"
+        android:text="1"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/txtCantidadTexto"
+        app:layout_constraintStart_toStartOf="@+id/txtCantidadTexto"
         app:layout_constraintTop_toBottomOf="@+id/editTextDescripcionArticulo"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="155dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnSumar"
@@ -72,7 +77,10 @@
         android:layout_marginStart="20dp"
         android:background="@drawable/fondo_botones"
         android:text="+"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="@+id/txtCantidadArticulo"
+        app:layout_constraintEnd_toStartOf="@+id/btnAgregarArticulo"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/txtCantidadArticulo"
         app:layout_constraintTop_toTopOf="@+id/txtCantidadArticulo" />
 
@@ -84,6 +92,7 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/fondo_botones"
         android:text="-"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="@+id/txtCantidadArticulo"
         app:layout_constraintEnd_toStartOf="@+id/txtCantidadArticulo"
         app:layout_constraintStart_toStartOf="parent"
@@ -111,19 +120,36 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="Agregar"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="@+id/btnSumar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnSumar" />
 
+
     <fragment
-        android:id="@+id/fragment"
-        android:name="com.example.ufletes.ListaArticulosFragment"
-        android:layout_width="202dp"
-        android:layout_height="249dp"
+        android:id="@+id/fragmentRV"
+        android:name ="com.example.ufletes.ListaArticulosFragment"
+        android:layout_width="0dp"
+        android:layout_height="289dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.987" />
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/btnAgregarFoto_Articulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/fondo_botones"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="¿Agregar foto?"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentRV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCantidadTexto" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

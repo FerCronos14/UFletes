@@ -3,14 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingEnd="10dp"
+    android:paddingBottom="8dp">
 
     <ImageView
         android:id="@+id/imageViewListado_Foto_Articulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="115dp"
+        android:layout_height="117dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_launcher_background"
@@ -23,19 +25,23 @@
         android:layout_marginStart="20dp"
         android:text="TextView"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewListado_Foto_Articulo"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewListado_Descripcion"
         app:layout_constraintStart_toEndOf="@+id/imageViewListado_Foto_Articulo"
-        app:layout_constraintTop_toTopOf="@+id/imageViewListado_Foto_Articulo" />
+        app:layout_constraintTop_toTopOf="@+id/textViewListado_Descripcion" />
 
     <TextView
         android:id="@+id/textViewListado_Descripcion"
         android:layout_width="93dp"
         android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:text="TextView"
+        android:layout_marginStart="230dp"
+        android:layout_marginEnd="20dp"
+        android:text="Descripcion"
+        android:textAlignment="center"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewListado_Foto_Articulo"
-        app:layout_constraintStart_toEndOf="@+id/textViewNombre_Listado"
+        app:layout_constraintEnd_toStartOf="@+id/textViewListado_Cantidad"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageViewListado_Foto_Articulo" />
 
     <TextView
@@ -44,10 +50,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:text="TextView"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewListado_Foto_Articulo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageViewListado_Foto_Articulo" />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

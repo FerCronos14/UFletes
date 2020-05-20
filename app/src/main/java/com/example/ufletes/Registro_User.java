@@ -14,12 +14,16 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,10 +46,11 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
     public String Email_User_Register = "";
     private String Password_User_Register = "";
     private String ConfirmPassword_User_Register = "";
-    public String TipoUsuario = "";
+    static String TipoUsuario = "";
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    //private DatabaseReference mDatabase;
+    private FirebaseFirestore mFireStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,20 +69,15 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
         comboUsuarios = findViewById(R.id.spinnerTipoUsuario);
 
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        //mDatabase = FirebaseDatabase.getInstance().getReference();
+        mFireStore = FirebaseFirestore.getInstance();
 
 
         mbtnRegistro_User.setOnClickListener(this);
 
-        /* mbtnRegistro_User.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        }); */
 
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,
-                R.array.comboTipoUsuario, R.layout.spinner_mod);
+                R.array.comboTipoUsuario, android.R.layout.simple_spinner_item);
 
 
         comboUsuarios.setAdapter(adapter);
@@ -105,7 +105,13 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Favor de seleccionar un tipo de usuario", Toast.LENGTH_SHORT).show();
         }
         else {
-
+            Map<String, Object> map = new HashMap<>();
+            map.put("nombre", Nombre_User_Register);
+            map.put("apellidom", ApeMaterno_User_Register);
+            map.put("apellidop", ApePaterno_User_Register);
+            map.put("telefono", Tel_User_Register);
+            map.put("correo", Email_User_Register);
+            map.put("password", Password_User_Register);
 
             mAuth.createUserWithEmailAndPassword(Email_User_Register, Password_User_Register).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
@@ -118,16 +124,29 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
                         map.put("telefono", Tel_User_Register);
                         map.put("correo", Email_User_Register);
                         map.put("password", Password_User_Register);
+                        if (TipoUsuario.contains("Fletero")) {
+                            map.put("pathFoto_v", "");
+                        }
 
                         String id = mAuth.getCurrentUser().getUid();
-                        mDatabase.child(TipoUsuario).child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        mFireStore.collection(TipoUsuario)
+                                .add(map)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
-                            public void onComplete(@NonNull Task<Void> task2) {
-                                if (task2.isSuccessful()) {
-                                    Toast.makeText(Registro_User.this, "Registro completo", Toast.LENGTH_SHORT).show();
-                                    //startActivity( new Intent(Registro_User.this, MainActivity.class));
-                                    //finish();
+                            public void onSuccess(DocumentReference documentReference) {
+                                //String postId = " ";
+                                Toast.makeText(Registro_User.this, "Registro completo", Toast.LENGTH_SHORT).show();
+                               if (TipoUsuario.contains("Cliente") ) {
+                                    startActivity(new Intent(Registro_User.this, pantalla_busquedaFletero.class));
+                                } else if (TipoUsuario.contains("Fletero")) {
+                                    startActivity(new Intent(Registro_User.this, Pantalla_Inicio_Fletero.class));
                                 }
+                               finish();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(Registro_User.this, "No se pudo completar el registro", Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else {
