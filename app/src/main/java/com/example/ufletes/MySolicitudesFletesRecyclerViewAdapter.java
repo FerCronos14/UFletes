@@ -40,7 +40,7 @@ public class MySolicitudesFletesRecyclerViewAdapter extends FirestoreRecyclerAda
     @Override
     public void onBindViewHolder(@NonNull MySolicitudesFletesRecyclerViewAdapter.ViewHolder holder, int position, @NonNull Solicitudes_Lista model)
     {
-        holder.mtextViewNombreSolicitud.setText((model.getNombre_s()));
+        holder.mtextViewNombreSolicitud.setText((model.getNombre_s() + " " + model.getApellidop_s()));
         holder.mtextViewTelefonoSolicitud.setText((model.getTelefono_s()));
         holder.mtextViewDirOrigenSolicitud.setText((model.getDirOrigen_s()));
         holder.mtextViewDirDestinoSolicitud.setText(model.getDirDestino_s());

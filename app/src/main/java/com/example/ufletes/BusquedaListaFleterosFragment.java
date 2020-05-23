@@ -1,11 +1,14 @@
 package com.example.ufletes;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,8 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentManager;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,10 +43,13 @@ public class BusquedaListaFleterosFragment extends Fragment {
     static MyBusquedaListaFleterosRecyclerViewAdapter Adapter_Fleteros_Busqueda;
     List<Fleteros_Lista> fleteros_listaList;
     private FirebaseFirestore mFirestore;
+    private FirestoreRecyclerOptions<Fleteros_Lista> FirestoreRecyclerOptions;
     FirebaseUser userFleter_Busqueda = FirebaseAuth.getInstance().getCurrentUser();
 
-    private OnListFragmentInteractionListener mListener;
+    private static OnListFragmentInteractionListener mListener;
     private Query query;
+
+
 
     private String mConsulta;
     //private EditText metBusqFleteros;
@@ -62,10 +72,18 @@ public class BusquedaListaFleterosFragment extends Fragment {
         // Set the adapter
         //metBusqFleteros = getActivity().findViewById(R.id.etBusqFletero);
 
-        llamadoRecycler();
+        if (Filtro_Fleteros_Fragment.mBusqueda.contains("Acendente")) {
+            filtroAscendente();
+        }
+        if (Filtro_Fleteros_Fragment.mBusqueda.contains("Descendente")) {
+            filtroDescendente();
+        }
+        if (Filtro_Fleteros_Fragment.mBusqueda.isEmpty() || Filtro_Fleteros_Fragment.mBusqueda.contains("normal")) {
+            filtroInicial();
+        }
         return view;
-
     }
+
 
     private void llamadoRecycler() {
         if (view instanceof RecyclerView) {
@@ -90,7 +108,7 @@ public class BusquedaListaFleterosFragment extends Fragment {
 //https://stackoverflow.com/questions/58458640/is-it-possible-to-filter-a-firestore-recyclerview-no-third-party-app
             RVFleteros_Busqueda = (RecyclerView) view;
 
-            FirestoreRecyclerOptions<Fleteros_Lista> FirestoreRecyclerOptions =
+            FirestoreRecyclerOptions =
                     new FirestoreRecyclerOptions.Builder<Fleteros_Lista>()
                             .setQuery(query, Fleteros_Lista.class).build();
 
@@ -107,26 +125,54 @@ public class BusquedaListaFleterosFragment extends Fragment {
         }
     }
 
+    public void filtroInicial() {
+        mFirestore = FirebaseFirestore.getInstance();
+        query = mFirestore.collection("Fletero").orderBy("correo");
+        recyclerattach();
+        Adapter_Fleteros_Busqueda.notifyDataSetChanged();
+    }
+
+
+    public void filtroAscendente () {
+        mFirestore = FirebaseFirestore.getInstance();
+        query = mFirestore.collection("Fletero").orderBy("nombre", Query.Direction.ASCENDING);
+        recyclerattach();
+        Adapter_Fleteros_Busqueda.notifyDataSetChanged();
+    }
+
+    public void filtroDescendente() {
+        mFirestore = FirebaseFirestore.getInstance();
+        query = mFirestore.collection("Fletero").orderBy("nombre", Query.Direction.DESCENDING);
+        recyclerattach();
+        Adapter_Fleteros_Busqueda.notifyDataSetChanged();
+    }
+
+    public void recyclerattach() {
+        context = view.getContext();
+
+        RVFleteros_Busqueda = (RecyclerView) view;
+        FirestoreRecyclerOptions =
+                new FirestoreRecyclerOptions.Builder<Fleteros_Lista>()
+                        .setQuery(query, Fleteros_Lista.class).build();
+
+        Adapter_Fleteros_Busqueda = new MyBusquedaListaFleterosRecyclerViewAdapter(getActivity(), FirestoreRecyclerOptions);
+        Adapter_Fleteros_Busqueda.notifyDataSetChanged();
+
+        if (mColumnCount <= 1) {
+            RVFleteros_Busqueda.setLayoutManager(new LinearLayoutManager(context));
+        } else {
+            RVFleteros_Busqueda.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+        }
+
+        RVFleteros_Busqueda.setAdapter(Adapter_Fleteros_Busqueda);
+    }
+
     @Override
     public void onStart() {
         super.onStart();
         Adapter_Fleteros_Busqueda.startListening();
     }
 
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Adapter_Fleteros_Busqueda.startListening();
-    }
-
-    //Cuando la app esta pausa o minimizada para dejar de escuhar los cambios
-    @Override
-    public void onStop() {
-        super.onStop();
-        Adapter_Fleteros_Busqueda.stopListening();
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -137,6 +183,7 @@ public class BusquedaListaFleterosFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
         }
+
         Toast.makeText(getContext(), "ATTACH", Toast.LENGTH_LONG).show();
     }
 
@@ -144,7 +191,6 @@ public class BusquedaListaFleterosFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-        //Adapter_Fleteros_Busqueda.stopListening();
         Toast.makeText(getContext(), "LIASLASDSAL", Toast.LENGTH_LONG).show();
     }
 
@@ -161,5 +207,11 @@ public class BusquedaListaFleterosFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Fleteros_Lista item);
+    }
+
+    //Una buena opcion para pasar los datos al adapter es justamente ponerlos como parametro de este metodo y luego pasarlos al adapter
+    public void updateListaFleteros(){
+        //Aca deberias actualizar los datos del adapter... en el codigo no veo dodne le cargas los datos, pero aqui deberias actualizarlos y luego hacer el notifyDataSetChanged() que le indicara que tiene que refrescar el recycler y actualizar lo que esta mostrando.
+        RVFleteros_Busqueda.setAdapter(new MyBusquedaListaFleterosRecyclerViewAdapter(getActivity(), FirestoreRecyclerOptions));
     }
 }

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -30,13 +31,17 @@ import android.widget.Toast;
  */
 public class Filtro_Fleteros_Fragment extends  DialogFragment {
 
-    private Button mbtnFilroFletero;
-    static String mBusqueda = "";
 
-    private BusquedaListaFleterosFragment fragment;
+    static String mBusqueda = "";
+    private Button mbtnFilroFletero;
+
+    //private BusquedaListaFleterosFragment fragment;
+    private Fragment frgtest = null;
     private FragmentManager fragmentManager;
 
     Context mContext;
+
+    BusquedaListaFleterosFragment mBusquedaListaFleterosFragment = new BusquedaListaFleterosFragment();
 
 
     public Filtro_Fleteros_Fragment() {
@@ -51,27 +56,23 @@ public class Filtro_Fleteros_Fragment extends  DialogFragment {
         View myView = inflater.inflate(R.layout.fragment_filtro__fleteros_, container, false);
         // Inflate the layout for this fragment
 
-
         mbtnFilroFletero = myView.findViewById(R.id.btnFiltro_Fletero);
-
 
         mbtnFilroFletero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.stopListening();
-                BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.notifyDataSetChanged();
                 menuFiltroFleteros();
-                //detenerFragment();
-                //DialogFragment newFragment = Filtro_Fleteros_Fragment.newInstance();// call the static method
-                //newFragment.show(getActivity().getSupportFragmentManager(), "Filtro_Fleteros_Fragment");
-
+                detenerFragment();
             }
         });
 
+
         // Crear fragmento de tu clase
-        fragment = new BusquedaListaFleterosFragment();
+        //fragment = new BusquedaListaFleterosFragment();
+
+        frgtest = getChildFragmentManager().findFragmentById(R.id.fragmentBusqFletero);
         // Obtener el administrador de fragmentos a través de la actividad
-        fragmentManager = getActivity().getSupportFragmentManager();
+
 
         //juegoFragment();
         return myView;
@@ -79,47 +80,22 @@ public class Filtro_Fleteros_Fragment extends  DialogFragment {
 
     private void detenerFragment() {
         // Definir una transacción
+        //FragmentTransaction fragTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        //fragTransaction.detach(frgtest);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.detach(fragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.detach(frgtest);
+        fragmentTransaction.commitNowAllowingStateLoss();
+
     }
 
     private void queJaleElCondenado() {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.attach(fragment);
-        fragmentTransaction.commit();
-    }
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        //BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.stopListening();
-        final CharSequence[] opciones = {"A-Z", "Z-A", "Cancelar"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Seleccione filtro de busqueda")
-                .setItems(opciones, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int i) {
-                        // The 'which' argument contains the index position
-                        // of the selected item
-                        if (opciones[i].equals("A-Z")) {
-                            //Toast.makeText(getContext(), "de A a Z", Toast.LENGTH_SHORT).show();
-                            //mBusqueda = "deaz";
-
-                        }
-                        if (opciones[i].equals("Z-A")) {
-                            //Toast.makeText(getContext(), "al revez, campeon", Toast.LENGTH_SHORT).show();
-                            //mBusqueda = "deza";
-
-                        }
-                        if (opciones[i].equals("Cancelar")){
-                            //mBusqueda = "normal";
-                            //dialog.dismiss();
-                        }
-                    }
-                });
-        return builder.create();
+        fragmentTransaction.attach(frgtest);
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     private void menuFiltroFleteros() {
+        BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.stopListening();
 
         final CharSequence[] opciones = {"Acendente", "Descendente", "Cancelar"};
 
@@ -132,26 +108,26 @@ public class Filtro_Fleteros_Fragment extends  DialogFragment {
                 if (opciones[i].equals("Acendente")) {
                     Toast.makeText(getContext(), "Acendente", Toast.LENGTH_SHORT).show();
                     mBusqueda = "Acendente";
+                    mBusquedaListaFleterosFragment.updateListaFleteros();
                     //queJaleElCondenado();
-                    BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.startListening();
-                    BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.notifyDataSetChanged();
-
                 }
                 if (opciones[i].equals("Descendente")) {
                     Toast.makeText(getContext(), "Descendente", Toast.LENGTH_SHORT).show();
                     mBusqueda = "Descendente";
-                    BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.startListening();
+                    //BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.startListening();
 
                 }
                 if (opciones[i].equals("Cancelar")){
                     mBusqueda = "normal";
                     dialogInterface.dismiss();
-                    BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.startListening();
+                    //BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.startListening();
                 }
 
+                BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.startListening();
 
             }
         });
+
         alertOpciones.show();
 
     }
@@ -163,6 +139,8 @@ public class Filtro_Fleteros_Fragment extends  DialogFragment {
         Filtro_Fleteros_Fragment f = new Filtro_Fleteros_Fragment();
         return f;
     }
+
+
 
 
 }
