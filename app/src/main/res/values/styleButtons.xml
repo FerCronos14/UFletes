@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="FondoBoton" >
+        <item name="android:textColor">#ffffff</item>
+        <item name="backgroundTint">@color/colorBoton</item>
+        <item name="cornerRadius">20dp</item>
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:layout_marginEnd">12dp</item>
+        <item name="android:layout_marginLeft">9dp</item>
+        <item name="android:layout_marginRight">9dp</item>
+
+    </style></resources>

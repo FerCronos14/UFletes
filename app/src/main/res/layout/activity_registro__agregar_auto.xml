@@ -72,22 +72,20 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextTipoVehiculo" />
 
     <Button
+        style="@style/FondoBoton"
         android:id="@+id/btnAgregarFotoVehiculo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="160dp"
-        android:background="@drawable/fondo_botones"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:text="¿Agregar foto del vehículo?"
-        android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextCapacidadVehiculo" />
 
     <Button
+        style="@style/FondoBoton"
         android:id="@+id/btnAñadirVehiculo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -95,11 +93,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="99dp"
         android:layout_marginBottom="199dp"
-        android:background="@drawable/fondo_botones"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:text="Añadir vehículo"
-        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

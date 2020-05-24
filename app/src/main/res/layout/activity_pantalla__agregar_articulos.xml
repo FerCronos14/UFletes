@@ -112,15 +112,13 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
+        style="@style/FondoBoton"
         android:id="@+id/btnAgregarArticulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="85dp"
         android:background="@drawable/fondo_botones"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:text="Agregar"
-        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="@+id/btnSumar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnSumar" />
@@ -139,14 +137,11 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
+        style="@style/FondoBoton"
         android:id="@+id/btnAgregarFoto_Articulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/fondo_botones"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:text="¿Agregar foto?"
-        android:textColor="#ffffff"
         app:layout_constraintBottom_toTopOf="@+id/fragmentRV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -25,7 +25,7 @@ public class Pantalla_Inicio_Fletero extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla__inicio__fletero);
 
-        //getSupportActionBar().hide();
+        getSupportActionBar().hide();
 
         mBottomNav = findViewById(R.id.btnNav_inicio_fletero);
         showSelectedFragment(new Inicio_fletero_fragment());
@@ -49,7 +49,9 @@ public class Pantalla_Inicio_Fletero extends AppCompatActivity {
     }
 
     private void showSelectedFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.frgInicioFletero, fragment)
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frgInicioFletero, fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
     }

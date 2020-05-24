@@ -11,10 +11,10 @@
         android:id="@+id/textViewNombre_Listado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="599dp"
-        android:text="Pedidos"
         android:imeOptions="actionNext"
+        android:text="Pedidos"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,17 +56,14 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
+        style="@style/FondoBoton"
         android:id="@+id/btnAgregar_Articulos_User"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
         android:layout_marginEnd="210dp"
         android:layout_marginBottom="300dp"
-        android:background="@drawable/fondo_botones"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:text="Agregar articulos"
-        android:textColor="#ffffff"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,6 +73,7 @@
         app:layout_constraintVertical_bias="0.74" />
 
     <Button
+        style="@style/FondoBoton"
         android:id="@+id/btnPedirFlete_Pedidos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -83,11 +81,7 @@
         android:layout_marginTop="81dp"
         android:layout_marginEnd="123dp"
         android:layout_marginBottom="246dp"
-        android:background="@drawable/fondo_botones"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:text="Solicitar flete"
-        android:textColor="#ffffff"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,16 +89,13 @@
         app:layout_constraintTop_toBottomOf="@+id/btnAgregar_Articulos_User" />
 
     <Button
+        style="@style/FondoBoton"
         android:id="@+id/btnAbrirMapa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="35dp"
-        android:background="@drawable/fondo_botones"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:text="Abrir mapa"
-        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="@+id/editTextDestino_pedido"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editTextDestino_pedido"

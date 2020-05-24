@@ -23,6 +23,7 @@
         android:id="@+id/btnRegistoCliente_Main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/FondoBoton"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="136dp"
         android:background="@drawable/fondo_botones"

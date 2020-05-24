@@ -95,7 +95,6 @@ public class Filtro_Fleteros_Fragment extends  DialogFragment {
     }
 
     private void menuFiltroFleteros() {
-        BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.stopListening();
 
         final CharSequence[] opciones = {"Acendente", "Descendente", "Cancelar"};
 
@@ -108,7 +107,6 @@ public class Filtro_Fleteros_Fragment extends  DialogFragment {
                 if (opciones[i].equals("Acendente")) {
                     Toast.makeText(getContext(), "Acendente", Toast.LENGTH_SHORT).show();
                     mBusqueda = "Acendente";
-                    mBusquedaListaFleterosFragment.updateListaFleteros();
                     //queJaleElCondenado();
                 }
                 if (opciones[i].equals("Descendente")) {
@@ -123,7 +121,6 @@ public class Filtro_Fleteros_Fragment extends  DialogFragment {
                     //BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.startListening();
                 }
 
-                BusquedaListaFleterosFragment.Adapter_Fleteros_Busqueda.startListening();
 
             }
         });

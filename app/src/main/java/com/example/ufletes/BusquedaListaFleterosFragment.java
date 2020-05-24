@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -20,9 +21,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.ufletes.holders.busqFleterosHolder;
+
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.FragmentManager;
 
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,31 +34,30 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.bumptech.glide.Glide;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
+import static com.google.firebase.firestore.FirebaseFirestore.getInstance;
 
 public class BusquedaListaFleterosFragment extends Fragment {
 
     // TODO: Customize parameters
-    private int mColumnCount = 1;
-    RecyclerView RVFleteros_Busqueda;
-    static MyBusquedaListaFleterosRecyclerViewAdapter Adapter_Fleteros_Busqueda;
-    List<Fleteros_Lista> fleteros_listaList;
-    private FirebaseFirestore mFirestore;
+    private RecyclerView recyclerView, RVFleteros_Busqueda;
+    private FirestoreRecyclerAdapter<Fleteros_Lista, busqFleterosHolder> Adapter_Fleteros_Busqueda;
     private FirestoreRecyclerOptions<Fleteros_Lista> FirestoreRecyclerOptions;
-    FirebaseUser userFleter_Busqueda = FirebaseAuth.getInstance().getCurrentUser();
-
-    private static OnListFragmentInteractionListener mListener;
-    private Query query;
-
+    private Button filterButton;
+    private EditText searchBox;
+    Query query;
+    View view;
+    List<Fleteros_Lista> fleteros_listaList;
 
 
     private String mConsulta;
     //private EditText metBusqFleteros;
     Context context;
-    View view;
 
     public BusquedaListaFleterosFragment() {
     }
@@ -69,25 +72,74 @@ public class BusquedaListaFleterosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_busqueda_lista_fleteros_list, container, false);
-        // Set the adapter
-        //metBusqFleteros = getActivity().findViewById(R.id.etBusqFletero);
 
-        if (Filtro_Fleteros_Fragment.mBusqueda.contains("Acendente")) {
-            filtroAscendente();
-        }
-        if (Filtro_Fleteros_Fragment.mBusqueda.contains("Descendente")) {
-            filtroDescendente();
-        }
-        if (Filtro_Fleteros_Fragment.mBusqueda.isEmpty() || Filtro_Fleteros_Fragment.mBusqueda.contains("normal")) {
-            filtroInicial();
-        }
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        RVFleteros_Busqueda = view.findViewById(R.id.fleterosRVAct);
+        RVFleteros_Busqueda.setHasFixedSize(true);
+        LinearLayoutManager mlinearLayoutManager = new LinearLayoutManager(getActivity());
+        RVFleteros_Busqueda.setLayoutManager(mlinearLayoutManager);
 
-    private void llamadoRecycler() {
-        if (view instanceof RecyclerView) {
-            context = view.getContext();
+        final String[] order = getResources().getStringArray(R.array.order);
+        filterButton = view.findViewById(R.id.filterButtonBusqFletero);
+        searchBox = view.findViewById(R.id.searchBoxBusqFletero);
+
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity());
+                materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
+                materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        changeOrder(order[which]);
+                    }
+                }).show();
+            }
+        });
+        getData();
+
+    }
+
+    private void getData() {
+        query = getInstance()
+                .collection("Fletero")
+                .orderBy("correo");
+
+        FirestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Fleteros_Lista>()
+                .setQuery(query, Fleteros_Lista.class)
+                .build();
+        attachRecyclerView();
+        Adapter_Fleteros_Busqueda.notifyDataSetChanged();
+    }
+
+    private void attachRecyclerView() {
+        Adapter_Fleteros_Busqueda = new FirestoreRecyclerAdapter<Fleteros_Lista, busqFleterosHolder>(FirestoreRecyclerOptions) {
+            @Override
+            protected void onBindViewHolder(@NonNull busqFleterosHolder holder, int position, @NonNull Fleteros_Lista model) {
+                Glide.with(getContext())
+                        .load(model.getPathFoto_v())
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_vehiculo_na)
+                        .into(holder.imagenBusqFletero);
+
+                holder.nombreBusqFletero.setText(String.format("%s %s", model.getNombre(), model.getApellidop()));
+                holder.numeroBusqFletero.setText(model.getTelefono());
+            }
+
+            @NonNull
+            @Override
+            public busqFleterosHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_busqueda_lista_fleteros, parent, false);
+                return new busqFleterosHolder(view);
+            }
+        };
+
+         /*   context = view.getContext();
 
             mFirestore = FirebaseFirestore.getInstance();
             CollectionReference colFletero =  mFirestore.collection("Fletero");
@@ -122,9 +174,59 @@ public class BusquedaListaFleterosFragment extends Fragment {
             RVFleteros_Busqueda.setAdapter(Adapter_Fleteros_Busqueda);
 //------------------------------------------------------------------------------------------------------------------------------------------
 
-        }
+
+          */
+         RVFleteros_Busqueda.setAdapter(Adapter_Fleteros_Busqueda);
+
     }
 
+    private void changeOrder(String s) {
+        Adapter_Fleteros_Busqueda.stopListening();
+        if (s.equals("Ascendente")){
+            query = getInstance()
+                    .collection("Fletero")
+                    .orderBy("nombre", Query.Direction.ASCENDING);
+        }
+        else if (s.equals("Descendente")){
+            query = getInstance()
+                    .collection("Fletero")
+                    .orderBy("nombre", Query.Direction.DESCENDING);
+        }
+
+        else if(s.equals("Neutral")){
+            query = getInstance().collection("Fletero").orderBy("correo");
+        }
+
+        final String[] order = getResources().getStringArray(R.array.order);
+
+        filterButton = view.findViewById(R.id.filterButtonBusqFletero);
+        searchBox = view.findViewById(R.id.searchBox);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity());
+                materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
+                materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        changeOrder(order[which]);
+                    }
+                }).show();
+
+
+            }
+        });
+
+        FirestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Fleteros_Lista>()
+                .setQuery(query, Fleteros_Lista.class)
+                .build();
+        attachRecyclerView();
+        Adapter_Fleteros_Busqueda.startListening();
+        Adapter_Fleteros_Busqueda.notifyDataSetChanged();
+    }
+
+    /*
     public void filtroInicial() {
         mFirestore = FirebaseFirestore.getInstance();
         query = mFirestore.collection("Fletero").orderBy("correo");
@@ -167,13 +269,21 @@ public class BusquedaListaFleterosFragment extends Fragment {
         RVFleteros_Busqueda.setAdapter(Adapter_Fleteros_Busqueda);
     }
 
+     */
+
     @Override
     public void onStart() {
         super.onStart();
         Adapter_Fleteros_Busqueda.startListening();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        Adapter_Fleteros_Busqueda.stopListening();
+    }
 
+    /*
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -187,6 +297,7 @@ public class BusquedaListaFleterosFragment extends Fragment {
         Toast.makeText(getContext(), "ATTACH", Toast.LENGTH_LONG).show();
     }
 
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -194,16 +305,9 @@ public class BusquedaListaFleterosFragment extends Fragment {
         Toast.makeText(getContext(), "LIASLASDSAL", Toast.LENGTH_LONG).show();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
+
+
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Fleteros_Lista item);
@@ -214,4 +318,5 @@ public class BusquedaListaFleterosFragment extends Fragment {
         //Aca deberias actualizar los datos del adapter... en el codigo no veo dodne le cargas los datos, pero aqui deberias actualizarlos y luego hacer el notifyDataSetChanged() que le indicara que tiene que refrescar el recycler y actualizar lo que esta mostrando.
         RVFleteros_Busqueda.setAdapter(new MyBusquedaListaFleterosRecyclerViewAdapter(getActivity(), FirestoreRecyclerOptions));
     }
+     */
 }

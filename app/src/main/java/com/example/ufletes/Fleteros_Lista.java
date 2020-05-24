@@ -11,6 +11,14 @@ public class Fleteros_Lista {
 
     }
 
+    public Fleteros_Lista(String nombre, String apellidom, String apellidop, String telefono, String pathFoto_v) {
+        this.nombre = nombre;
+        this.apellidom = apellidom;
+        this.apellidop = apellidop;
+        this.telefono = telefono;
+        this.pathFoto_v = pathFoto_v;
+    }
+
     public String getNombre() {
         return nombre;
     }

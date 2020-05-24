@@ -15,7 +15,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import com.bumptech.glide.Glide;
-import com.example.ufletes.BusquedaListaFleterosFragment.OnListFragmentInteractionListener;
+//import com.example.ufletes.BusquedaListaFleterosFragment.OnListFragmentInteractionListener;
 import com.example.ufletes.ui.Vehiculos_Lista;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -27,7 +27,7 @@ public class MyBusquedaListaFleterosRecyclerViewAdapter extends FirestoreRecycle
 
     List<Fleteros_Lista> mValues;
     List<Fleteros_Lista> mValuesFiltrado;
-    OnListFragmentInteractionListener mListener;
+//    OnListFragmentInteractionListener mListener;
 
     private Context ctx;
     /**

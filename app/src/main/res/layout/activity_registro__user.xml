@@ -22,17 +22,14 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
+        style="@style/FondoBoton"
         android:id="@+id/btnRegistrar_User"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="206dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="107dp"
-        android:background="@drawable/fondo_botones"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:text="@string/registrar"
-        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
