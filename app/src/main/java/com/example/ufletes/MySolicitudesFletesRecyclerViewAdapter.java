@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ufletes.SolicitudesFletesFragment.OnListFragmentInteractionListener;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import java.util.List;
@@ -44,6 +43,7 @@ public class MySolicitudesFletesRecyclerViewAdapter extends FirestoreRecyclerAda
         holder.mtextViewTelefonoSolicitud.setText((model.getTelefono_s()));
         holder.mtextViewDirOrigenSolicitud.setText((model.getDirOrigen_s()));
         holder.mtextViewDirDestinoSolicitud.setText(model.getDirDestino_s());
+        holder.mtextViewFechaSolicitud.setText(model.getFecha_s());
 
     }
 
@@ -64,7 +64,7 @@ public class MySolicitudesFletesRecyclerViewAdapter extends FirestoreRecyclerAda
         //public final TextView mtextViewStatusSolicitud;
         public final TextView mtextViewDirOrigenSolicitud;
         public final TextView mtextViewDirDestinoSolicitud;
-        //public final ImageView imageViewArticulo;
+        public final TextView mtextViewFechaSolicitud;
 
         public ViewHolder(View view) {
             super(view);
@@ -73,7 +73,9 @@ public class MySolicitudesFletesRecyclerViewAdapter extends FirestoreRecyclerAda
            mtextViewTelefonoSolicitud = view.findViewById(R.id.textViewTelCliente_Solicitud);
            mtextViewDirOrigenSolicitud = view.findViewById(R.id.textViewDirOrigen_Solicitud);
            mtextViewDirDestinoSolicitud = view.findViewById(R.id.textViewDirDestino_Solicitud);
-           //mtextViewStatusSolicitud = view.findViewById(R.id.estatus);
+           mtextViewFechaSolicitud = view.findViewById(R.id.textViewFechaPedido);
+
+            //mtextViewStatusSolicitud = view.findViewById(R.id.estatus);
 
         }
 

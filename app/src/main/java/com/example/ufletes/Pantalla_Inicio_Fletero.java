@@ -38,7 +38,7 @@ public class Pantalla_Inicio_Fletero extends AppCompatActivity {
                     showSelectedFragment(new Inicio_fletero_fragment());
                 }
                 if (menuItem.getItemId() == R.id.menu_pedidos_fletero){
-                    showSelectedFragment(new Pedidos_Fleteros_fragment());
+                    showSelectedFragment(new SolicitudesFletesFragment());
                 }
                 return true;
             }

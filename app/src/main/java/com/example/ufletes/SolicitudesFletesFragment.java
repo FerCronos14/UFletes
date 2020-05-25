@@ -1,8 +1,11 @@
 package com.example.ufletes;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,8 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
+import com.example.ufletes.holders.solicitudesHolder;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -21,14 +29,19 @@ import com.google.firebase.firestore.Query;
 
 import java.util.List;
 
+import static com.google.firebase.firestore.FirebaseFirestore.getInstance;
+
 public class SolicitudesFletesFragment extends Fragment {
 
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    RecyclerView RVSOLICITUDES;
-    MySolicitudesFletesRecyclerViewAdapter Adapter_Solicitudes;
-    List<Solicitudes_Lista> solicitudes_listaList;
-    private OnListFragmentInteractionListener mListener;
+    private RecyclerView RVSOLICITUDES;
+    private FirestoreRecyclerAdapter<Solicitudes_Lista, solicitudesHolder> Adapter_Solicitudes;
+    private FirestoreRecyclerOptions<Solicitudes_Lista> FirestoreRecyclerOptions;
+    private Button filterButton;
+    private EditText searchBox;
+    Query query;
+    View view;
     private FirebaseFirestore mFirestore;
 
 
@@ -44,32 +57,118 @@ public class SolicitudesFletesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_solicitudes_fletes_list, container, false);
+        view = inflater.inflate(R.layout.fragment_solicitudes_fletes_list, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
 
-            mFirestore = FirebaseFirestore.getInstance();
-
-            Query query = mFirestore.collection("Pedidos").orderBy("nombre_s", Query.Direction.ASCENDING);
-            RVSOLICITUDES = (RecyclerView) view;
-            FirestoreRecyclerOptions<Solicitudes_Lista> FirestoreRecyclerOptions =
-                    new FirestoreRecyclerOptions.Builder<Solicitudes_Lista>()
-                            .setQuery(query, Solicitudes_Lista.class).build();
-
-            Adapter_Solicitudes = new MySolicitudesFletesRecyclerViewAdapter(getActivity(), FirestoreRecyclerOptions);
-            Adapter_Solicitudes.notifyDataSetChanged();
-
-            //RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                RVSOLICITUDES.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                RVSOLICITUDES.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            RVSOLICITUDES.setAdapter(Adapter_Solicitudes);
-        }
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        RVSOLICITUDES = view.findViewById(R.id.SolicitudesRVAct);
+        RVSOLICITUDES.setHasFixedSize(true);
+        LinearLayoutManager mlinearLayoutManager = new LinearLayoutManager(getActivity());
+        RVSOLICITUDES.setLayoutManager(mlinearLayoutManager);
+
+        final String[] order = {"Recientes", "Antiguos", "Neutral"};
+
+        filterButton = view.findViewById(R.id.filterButtonSolicitudes);
+        searchBox = view.findViewById(R.id.searchBoxSolicitudes);
+
+
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity());
+                materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
+                materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        changeOrder(order[which]);
+                    }
+                }).show();
+            }
+        });
+        getData();
+    }
+
+    private void getData() {
+        query = getInstance()
+                .collection("Pedidos");
+
+        FirestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Solicitudes_Lista>()
+                .setQuery(query, Solicitudes_Lista.class)
+                .build();
+        attachRecyclerView();
+        Adapter_Solicitudes.notifyDataSetChanged();
+    }
+
+    private void attachRecyclerView() {
+        Adapter_Solicitudes = new FirestoreRecyclerAdapter<Solicitudes_Lista,solicitudesHolder>(FirestoreRecyclerOptions) {
+            @Override
+            protected void onBindViewHolder(@NonNull solicitudesHolder holder, int position, @NonNull Solicitudes_Lista model) {
+
+                holder.mtextViewNombreSolicitud.setText(String.format("%s %s", model.getNombre_s(), model.getApellidop_s()));
+                holder.mtextViewTelefonoSolicitud.setText((model.getTelefono_s()));
+                holder.mtextViewDirOrigenSolicitud.setText((model.getDirOrigen_s()));
+                holder.mtextViewDirDestinoSolicitud.setText(model.getDirDestino_s());
+                holder.mtextViewFechaSolicitud.setText(model.getFecha_s());
+            }
+            @NonNull
+            @Override
+            public solicitudesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_solicitudes_fletes, parent, false);
+                return new solicitudesHolder(view);
+            }
+        };
+        RVSOLICITUDES.setAdapter(Adapter_Solicitudes);
+    }
+
+    private void changeOrder(String s) {
+        Adapter_Solicitudes.stopListening();
+        if (s.equals("Recientes")){
+            query = getInstance()
+                    .collection("Pedidos")
+                    .orderBy("fecha_s", Query.Direction.DESCENDING);
+        }
+        else if (s.equals("Antiguos")){
+            query = getInstance()
+                    .collection("Pedidos")
+                    .orderBy("fecha_s", Query.Direction.ASCENDING);
+        }
+
+        else if(s.equals("Neutral")){
+            query = getInstance().collection("Pedidos");
+        }
+
+        final String[] order = {"Recientes", "Antiguos", "Neutral"};
+
+        filterButton = view.findViewById(R.id.filterButtonSolicitudes);
+        searchBox = view.findViewById(R.id.searchBoxSolicitudes);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity());
+                materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
+                materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        changeOrder(order[which]);
+                    }
+                }).show();
+
+
+            }
+        });
+
+        FirestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Solicitudes_Lista>()
+                .setQuery(query, Solicitudes_Lista.class)
+                .build();
+        attachRecyclerView();
+        Adapter_Solicitudes.startListening();
+        Adapter_Solicitudes.notifyDataSetChanged();
     }
 
     @Override
@@ -78,32 +177,15 @@ public class SolicitudesFletesFragment extends Fragment {
         Adapter_Solicitudes.startListening();
     }
 
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        /*
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-
-         */
+    public void onStart() {
+        super.onStart();
+        Adapter_Solicitudes.startListening();
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onStop() {
+        super.onStop();
+        Adapter_Solicitudes.stopListening();
     }
-
-
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(Solicitudes_Lista item);
-    }
-
-
 }

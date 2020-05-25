@@ -7,18 +7,20 @@ public class Solicitudes_Lista {
     private String dirOrigen_s;
     private String dirDestino_s;
     private String statusSolicitud_s;
+    private String fecha_s;
 
     public Solicitudes_Lista() {
 
     }
 
-    public Solicitudes_Lista(String nombre_s, String apellidop_s, String telefono_s, String dirOrigen_s, String dirDestino_s, String statusSolicitud_s) {
+    public Solicitudes_Lista(String nombre_s, String apellidop_s, String telefono_s, String dirOrigen_s, String dirDestino_s, String statusSolicitud_s, String fecha_s) {
         this.nombre_s = nombre_s;
         this.apellidop_s = apellidop_s;
         this.telefono_s = telefono_s;
         this.dirOrigen_s = dirOrigen_s;
         this.dirDestino_s = dirDestino_s;
         this.statusSolicitud_s = statusSolicitud_s;
+        this.fecha_s = fecha_s;
     }
 
     public String getNombre_s() {
@@ -67,5 +69,13 @@ public class Solicitudes_Lista {
 
     public void setStatusSolicitud_s(String statusSolicitud_s) {
         this.statusSolicitud_s = statusSolicitud_s;
+    }
+
+    public String getFecha_s() {
+        return fecha_s;
+    }
+
+    public void setFecha_s(String fecha_s) {
+        this.fecha_s = fecha_s;
     }
 }

@@ -45,7 +45,7 @@ import static com.google.firebase.firestore.FirebaseFirestore.getInstance;
 public class BusquedaListaFleterosFragment extends Fragment {
 
     // TODO: Customize parameters
-    private RecyclerView recyclerView, RVFleteros_Busqueda;
+    private RecyclerView RVFleteros_Busqueda;
     private FirestoreRecyclerAdapter<Fleteros_Lista, busqFleterosHolder> Adapter_Fleteros_Busqueda;
     private FirestoreRecyclerOptions<Fleteros_Lista> FirestoreRecyclerOptions;
     private Button filterButton;
@@ -54,9 +54,6 @@ public class BusquedaListaFleterosFragment extends Fragment {
     View view;
     List<Fleteros_Lista> fleteros_listaList;
 
-
-    private String mConsulta;
-    //private EditText metBusqFleteros;
     Context context;
 
     public BusquedaListaFleterosFragment() {

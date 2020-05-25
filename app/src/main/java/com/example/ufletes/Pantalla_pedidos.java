@@ -20,7 +20,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickListener {
@@ -30,7 +33,7 @@ public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickL
     private Button mbtnSolicitar_Flete;
     private Button mbtnAbrir_Mapa;
     private TextView txtOrigen, txtDestino;
-    static String strPedidosOrigen, strPedidoDestino;
+    static String strPedidosOrigen, strPedidoDestino, fechaPedido;
     //private String toallitahumeda = (String) getIntent().getStringExtra("miLista");
     private ProgressDialog mPDialog;
     private FirebaseFirestore mFireStore;
@@ -45,6 +48,7 @@ public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.btnPedirFlete_Pedidos:
+                fechaPedido = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                 solicitarFleter();
                 break;
             default:
@@ -125,6 +129,7 @@ public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickL
             mapSolicFlete.put("dirOrigen_s", strPedidosOrigen);
             mapSolicFlete.put("dirDestino_s", strPedidoDestino);
             mapSolicFlete.put("statusSolicitud_s", "Disponible");
+            mapSolicFlete.put("fecha_s", fechaPedido);
 
             mPDialog.setTitle("Subiendo...");
             mPDialog.setMessage("Solicitando flete...");
