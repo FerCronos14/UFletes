@@ -58,7 +58,6 @@
         android:id="@+id/editTextCapacidadVehiculo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="99dp"
         android:layout_marginBottom="389dp"
@@ -66,9 +65,10 @@
         android:ems="10"
         android:hint="Capacidad del vehículo"
         android:inputType="textPersonName"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinnerCubicaje_Vehiculo"
         app:layout_constraintTop_toBottomOf="@+id/editTextTipoVehiculo" />
 
     <Button
@@ -98,6 +98,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAgregarFotoVehiculo" />
+
+    <Spinner
+        android:id="@+id/spinnerCubicaje_Vehiculo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextCapacidadVehiculo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTipoVehiculo" />
 
 
 

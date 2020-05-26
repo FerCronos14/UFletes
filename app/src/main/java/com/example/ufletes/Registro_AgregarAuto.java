@@ -24,8 +24,11 @@ import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -71,6 +74,8 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
     //Agregar botones que falten
     private ProgressDialog mPDialog;
 
+    private Spinner mspinnerCubicaje;
+
     private Uri photoURI;
     Uri picUri;
 
@@ -108,6 +113,29 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
         mbtnFotoVehivulo.setOnClickListener(this);
 
         mPDialog = new ProgressDialog(this);
+        mspinnerCubicaje = findViewById(R.id.spinnerCubicaje_Vehiculo);
+        ArrayAdapter<CharSequence> adapterCubicaje = ArrayAdapter.createFromResource(this, R.array.spinnerCubicaje, android.R.layout.simple_spinner_item);
+        adapterCubicaje.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mspinnerCubicaje.setAdapter(adapterCubicaje);
+        mspinnerCubicaje.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String textSpinner = adapterView.getItemAtPosition(i).toString();
+                Toast.makeText(Registro_AgregarAuto.this, textSpinner, Toast.LENGTH_SHORT).show();
+                if (adapterView.getItemAtPosition(i).toString() == "Otro") {
+                    Toast.makeText(Registro_AgregarAuto.this, "jajajajajaj", Toast.LENGTH_SHORT).show();
+                    mtxtVolVehiculo.setVisibility(View.VISIBLE);
+                } else {
+                    mtxtVolVehiculo.setVisibility(View.GONE);
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         mFireStore = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference();
@@ -209,8 +237,6 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
         });
         alertOpciones.show();
     }
-
-
 
     //Metodo para crear un nombre unico de cada fotografia --------------------------------------------------------------------------
     String mCurrentPhotoPath;

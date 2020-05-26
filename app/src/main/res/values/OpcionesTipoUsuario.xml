@@ -7,7 +7,20 @@
         <item>Fletero</item>
     </string-array>
 
+    <string-array name="spinnerCubicaje">
+        <item>1 Toneladas</item>
+        <item>1.5 Toneladas</item>
+        <item>2 Toneladas</item>
+        <item>2.5 Toneladas</item>
+        <item>3 Toneladas</item>
+        <item>3.5 Toneladas</item>
+        <item>4 Toneladas</item>
+        <item>4.5 Toneladas</item>
+        <item>5 Toneladas</item>
+        <item>5.5 Toneladas</item>
+        <item>6 Toneladas</item>
+        <item>6.5 Toneladas</item>
+        <item>Otro</item>
 
-
-    
+    </string-array>
 </resources>
