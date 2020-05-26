@@ -8,6 +8,7 @@ import androidx.core.content.FileProvider;
 import androidx.core.os.EnvironmentCompat;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,6 +21,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -62,7 +64,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
     private String marcaVehiculo = "";
     private String tipoVehiculo = "";
     private String volVehiculo = "";
-    static String sPathFoto_Vehiculo = " ";
+    public static String sPathFoto_Vehiculo = " ";
 
     private Button mbtnAgregarVehiculo;
     private Button mbtnFotoVehivulo;
@@ -110,6 +112,12 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
         mFireStore = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference();
 
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
+        return super.onCreateView(name, context, attrs);
     }
 
     public void manejoEventosAgregaVehiculos (int opcA) {

@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static String apellidoCliente = "";
     static String telefonoCliente = "";
     //=============================================== Datos Fleteros ============================
-    static String idDoc_Fletero = "";
+    public static String idDoc_Fletero = "";
     static String correoFletero = "";
 
     private FirebaseAuth mAuth;

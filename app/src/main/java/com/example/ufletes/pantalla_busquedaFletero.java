@@ -41,7 +41,7 @@ public class pantalla_busquedaFletero extends AppCompatActivity {
                 if (item.getItemId() == R.id.navigation_BusqFletero){
                     showSelectedFragment(new BusquedaListaFleterosFragment());
                 }
-                return false;
+                return true;
             }
         });
 
