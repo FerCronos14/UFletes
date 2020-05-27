@@ -134,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //startActivity(new Intent(MainActivity.this,Pantalla_pedidos.class));
                         startActivity(new Intent(MainActivity.this,pantalla_busquedaFletero.class));
                     } else if (!correoUsuario.equals(Usuario_login)){
-                        Toast.makeText(MainActivity.this, idDoc_Fletero, Toast.LENGTH_LONG).show();
                         //Toast.makeText(MainActivity.this, "Bienvenido " + Usuario_login, Toast.LENGTH_LONG).show();
                         startActivity(new Intent(MainActivity.this, Pantalla_Inicio_Fletero.class));
                     }

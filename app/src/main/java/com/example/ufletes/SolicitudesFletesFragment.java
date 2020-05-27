@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,8 @@ public class SolicitudesFletesFragment extends Fragment {
     Query query;
     View view;
     private FirebaseFirestore mFirestore;
+    private int expandedPosition = -1;
+
 
 
     public SolicitudesFletesFragment() {
@@ -107,18 +110,35 @@ public class SolicitudesFletesFragment extends Fragment {
     private void attachRecyclerView() {
         Adapter_Solicitudes = new FirestoreRecyclerAdapter<Solicitudes_Lista,solicitudesHolder>(FirestoreRecyclerOptions) {
             @Override
-            protected void onBindViewHolder(@NonNull solicitudesHolder holder, int position, @NonNull Solicitudes_Lista model) {
+            protected void onBindViewHolder(@NonNull solicitudesHolder holder, final int position, @NonNull Solicitudes_Lista model) {
 
                 holder.mtextViewNombreSolicitud.setText(String.format("%s %s", model.getNombre_s(), model.getApellidop_s()));
                 holder.mtextViewTelefonoSolicitud.setText((model.getTelefono_s()));
                 holder.mtextViewDirOrigenSolicitud.setText((model.getDirOrigen_s()));
                 holder.mtextViewDirDestinoSolicitud.setText(model.getDirDestino_s());
                 holder.mtextViewFechaSolicitud.setText(model.getFecha_s());
+
+                final boolean isExpanded = position==expandedPosition;
+                holder.mllExpandArea.setVisibility(isExpanded?View.VISIBLE:View.GONE);
+                holder.itemView.setActivated(isExpanded);
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        expandedPosition = isExpanded ? -1:position;
+                        TransitionManager.beginDelayedTransition(RVSOLICITUDES);
+                        notifyDataSetChanged();
+                    }
+                });
+
             }
+
             @NonNull
             @Override
             public solicitudesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_solicitudes_fletes, parent, false);
+                View view = LayoutInflater
+                        .from(parent.getContext())
+                        .inflate(R.layout.fragment_solicitudes_fletes, parent, false);
+
                 return new solicitudesHolder(view);
             }
         };
@@ -188,4 +208,5 @@ public class SolicitudesFletesFragment extends Fragment {
         super.onStop();
         Adapter_Solicitudes.stopListening();
     }
+
 }

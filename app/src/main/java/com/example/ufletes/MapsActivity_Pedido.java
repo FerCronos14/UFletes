@@ -74,13 +74,6 @@ public class MapsActivity_Pedido extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps__pedido);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        /*
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-         */
 
         mbtnAceptarDirCliente = findViewById(R.id.btnDefrDir_Cliente);
         medDirrecion_Cliente = findViewById(R.id.editTextDireccion_Pedidos);
@@ -88,7 +81,7 @@ public class MapsActivity_Pedido extends FragmentActivity implements
 
 
         smf = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.mapPedido);
         fusedLocation = LocationServices.getFusedLocationProviderClient(this);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -298,48 +291,6 @@ public class MapsActivity_Pedido extends FragmentActivity implements
         }
         return false;
     }
-
-    /*
-        public void manejoEventosMaps (int opcMaps) {
-            switch (opcMaps) {
-                case R.id.btnDefrDir_Cliente:
-                    //medDirrecion_Cliente.setText(addressOrigen);
-                    //medDestino_Cliente.setText((CharSequence) strDireccionDestino);
-
-
-                    Intent intent = new Intent(this, Pantalla_pedidos.class);
-                    intent.putExtra("DireccionOrigenMaps", addressOrigen);
-                    //Toast.makeText(this, "Direccion de origen" + addressOrigen, Toast.LENGTH_LONG).show();
-
-                    //startActivity(intent);
-                    finish();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        @Override
-        public void onClick(View view) {
-            manejoEventosMaps(view.getId());
-
-        }
-
-
-     */
-    //Metodos normales
-    /*
-    @Override
-    public void onMapLongClick(LatLng position) {
-        markerDestino  = mMap.addMarker(new MarkerOptions()
-                .position(position)
-                .draggable(true)
-                .title("Destino")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-        );
-    }
-
-     */
 
 
     @Override

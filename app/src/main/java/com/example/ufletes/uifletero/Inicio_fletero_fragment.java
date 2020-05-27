@@ -1,18 +1,31 @@
 package com.example.ufletes.uifletero;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ufletes.MainActivity;
@@ -23,7 +36,22 @@ import com.example.ufletes.holders.vehiculosFleterosHolder;
 import com.example.ufletes.ui.Vehiculos_Lista;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.Query;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import static com.google.firebase.firestore.FirebaseFirestore.getInstance;
 
@@ -38,6 +66,15 @@ public class Inicio_fletero_fragment extends Fragment {
     Query query;
     View view;
     private Button mbtnAgregarVehiculo_Fletero_Home;
+
+    private GoogleMap mMap;
+    private Location currentLocation;
+    private static List<Address> strDireccionRastreo;
+    private String addressRastreo;
+    FusedLocationProviderClient fusedLocation;
+    LocationRequest mLocationRequest;
+    LocationCallback mLocationCallback;
+    private static final int REQUEST_CODE = 101;
 
     public Inicio_fletero_fragment() {
         // Required empty public constructor
@@ -56,7 +93,6 @@ public class Inicio_fletero_fragment extends Fragment {
                 startActivity(new Intent(getActivity(), Registro_AgregarAuto.class));
             }
         });
-
         return root;
     }
 
@@ -121,4 +157,5 @@ public class Inicio_fletero_fragment extends Fragment {
         super.onStop();
         Adapter_Vehiculos.stopListening();
     }
+
 }
