@@ -8,12 +8,13 @@ public class Solicitudes_Lista {
     private String dirDestino_s;
     private String statusSolicitud_s;
     private String fecha_s;
+    private String idCliente_s;
 
     public Solicitudes_Lista() {
 
     }
 
-    public Solicitudes_Lista(String nombre_s, String apellidop_s, String telefono_s, String dirOrigen_s, String dirDestino_s, String statusSolicitud_s, String fecha_s) {
+    public Solicitudes_Lista(String nombre_s, String apellidop_s, String telefono_s, String dirOrigen_s, String dirDestino_s, String statusSolicitud_s, String fecha_s, String idCliente_s) {
         this.nombre_s = nombre_s;
         this.apellidop_s = apellidop_s;
         this.telefono_s = telefono_s;
@@ -21,6 +22,7 @@ public class Solicitudes_Lista {
         this.dirDestino_s = dirDestino_s;
         this.statusSolicitud_s = statusSolicitud_s;
         this.fecha_s = fecha_s;
+        this.idCliente_s = idCliente_s;
     }
 
     public String getNombre_s() {
@@ -77,5 +79,13 @@ public class Solicitudes_Lista {
 
     public void setFecha_s(String fecha_s) {
         this.fecha_s = fecha_s;
+    }
+
+    public String getIdCliente_s() {
+        return idCliente_s;
+    }
+
+    public void setIdCliente_s(String idCliente_s) {
+        this.idCliente_s = idCliente_s;
     }
 }

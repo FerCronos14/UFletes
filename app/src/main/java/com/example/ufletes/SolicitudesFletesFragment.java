@@ -1,13 +1,14 @@
 package com.example.ufletes;
 
-import android.content.Context;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,18 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.ufletes.holders.solicitudesHolder;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
-import java.util.List;
 
 import static com.google.firebase.firestore.FirebaseFirestore.getInstance;
 
@@ -39,8 +36,13 @@ public class SolicitudesFletesFragment extends Fragment {
     private RecyclerView RVSOLICITUDES;
     private FirestoreRecyclerAdapter<Solicitudes_Lista, solicitudesHolder> Adapter_Solicitudes;
     private FirestoreRecyclerOptions<Solicitudes_Lista> FirestoreRecyclerOptions;
+
     private Button filterButton;
     private EditText searchBox;
+    private Button mbtnAceptarPedido;
+
+    static String idCliente_pedido;
+
     Query query;
     View view;
     private FirebaseFirestore mFirestore;
@@ -54,7 +56,6 @@ public class SolicitudesFletesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -62,13 +63,13 @@ public class SolicitudesFletesFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_solicitudes_fletes_list, container, false);
 
-
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         RVSOLICITUDES = view.findViewById(R.id.SolicitudesRVAct);
         RVSOLICITUDES.setHasFixedSize(true);
         LinearLayoutManager mlinearLayoutManager = new LinearLayoutManager(getActivity());
@@ -117,16 +118,36 @@ public class SolicitudesFletesFragment extends Fragment {
                 holder.mtextViewDirOrigenSolicitud.setText((model.getDirOrigen_s()));
                 holder.mtextViewDirDestinoSolicitud.setText(model.getDirDestino_s());
                 holder.mtextViewFechaSolicitud.setText(model.getFecha_s());
+                final String auxidCliente_pedido = model.getIdCliente_s();
+
+
 
                 final boolean isExpanded = position==expandedPosition;
                 holder.mllExpandArea.setVisibility(isExpanded?View.VISIBLE:View.GONE);
                 holder.itemView.setActivated(isExpanded);
+                if (isExpanded) {
+                    mbtnAceptarPedido.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            fragment_ConfirmarPedido_Fletero dialog = new fragment_ConfirmarPedido_Fletero();
+                            final Dialog listaArticulosCliente = new Dialog(getContext(), android.R.style.Theme_Black_NoTitleBar);
+                            listaArticulosCliente.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100,0,0,0)));
+                            listaArticulosCliente.setContentView(R.layout.fragmenr_confirmar_pedido_fletero);
+                            listaArticulosCliente.setCancelable(true);
+                            listaArticulosCliente.show();
+                            //dialog.show(getActivity().getSupportFragmentManager(), "Dialogo1");
+                        }
+                    });
+                }
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        idCliente_pedido = auxidCliente_pedido;
                         expandedPosition = isExpanded ? -1:position;
                         TransitionManager.beginDelayedTransition(RVSOLICITUDES);
                         notifyDataSetChanged();
+                        Toast.makeText(getContext(), "id cliente "+ idCliente_pedido, Toast.LENGTH_SHORT).show();
+                        mbtnAceptarPedido = v.findViewById(R.id.btnAceptarPedido_Solicitud);
                     }
                 });
 

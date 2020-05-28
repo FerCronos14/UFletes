@@ -6,6 +6,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.multidex.BuildConfig;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -15,12 +17,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.ufletes.holders.articulosClienteHolder;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,6 +40,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnPausedListener;
 import com.google.firebase.storage.OnProgressListener;
@@ -45,6 +55,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.google.firebase.firestore.FirebaseFirestore.getInstance;
+
 public class pantalla_AgregarArticulos extends AppCompatActivity implements ListaArticulosFragment.OnListFragmentInteractionListener, View.OnClickListener {
 
     private EditText mtxtNombreArticulo;
@@ -55,10 +67,11 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
     private Integer cantidadArticulo = 1;
     private String descripcionArticulo ="";
     static String sPathFoto_Articulo = " ";
+    static String idDocArticulo = "";
 
     private Button mbtnAgregarArticulo;
-    private Button mbtnSumar;
-    private Button mbtnRestar;
+    private ImageButton mbtnSumar;
+    private ImageButton mbtnRestar;
     private Button mbtnFotoArticulo;
 
     private ProgressDialog mPDialog;
@@ -68,6 +81,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
     private FirebaseFirestore mFireStore;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private StorageReference mStorage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +93,8 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
         mtxtDescripcionArticulo = findViewById(R.id.editTextDescripcionArticulo);
 
         mbtnAgregarArticulo = findViewById(R.id.btnAgregarArticulo);
-        mbtnSumar = findViewById(R.id.btnSumar);
-        mbtnRestar = findViewById(R.id.btnRestar);
+        mbtnSumar = findViewById(R.id.imageButtonMas);
+        mbtnRestar = findViewById(R.id.imageButtonMenos);
         mbtnFotoArticulo = findViewById(R.id.btnAgregarFoto_Articulo);
 
         mbtnAgregarArticulo.setOnClickListener(pantalla_AgregarArticulos.this);
@@ -113,12 +127,14 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
                     mPDialog.setMessage("Registrando datos");
                     mPDialog.setCancelable(false);
                     mPDialog.show();
-
+/*
                     Map<String, Object> mapPathFotoArticulo = new HashMap<>();
                     mapPathFotoArticulo.put("pathFoto_a", sPathFoto_Articulo);
 
-                    DocumentReference newPathFotoFletero = mFireStore.collection("Cliente")
-                            .document(MainActivity.idDoc_Cliente);
+                    DocumentReference newPathFotoFletero = mFireStore
+                            .collection("Cliente")
+                            .document(MainActivity.idDoc_Cliente)
+                            ;
                     newPathFotoFletero.update(mapPathFotoArticulo)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -134,6 +150,8 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
                                 }
                             });;
 
+ */
+
                     mFireStore.collection("Cliente")
                             .document(MainActivity.idDoc_Cliente)
                             .collection("Articulos")
@@ -141,7 +159,8 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             mPDialog.dismiss();
-                            Toast.makeText(pantalla_AgregarArticulos.this, "Articulo guardado", Toast.LENGTH_SHORT).show();
+                            //idDocArticulo = documentReference.getId();
+                            Toast.makeText(pantalla_AgregarArticulos.this, "Articulo guardado" + idDocArticulo, Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -152,12 +171,12 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
 
                     break;
                 }
-            case R.id.btnSumar:
+            case R.id.imageButtonMas:
                 cantidadArticulo += 1;
                 mtxtCantidadArticulo.setText(cantidadArticulo.toString());
 
                 break;
-            case  R.id.btnRestar:
+            case  R.id.imageButtonMenos:
                 cantidadArticulo -= 1;
                         if (cantidadArticulo <= 1) {
                             cantidadArticulo = 1;
@@ -340,9 +359,8 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
     }
 
 
-        @Override
+    @Override
     public void onListFragmentInteraction(Articulos_Lista item) {
-
     }
 
     @Override

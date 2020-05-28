@@ -46,6 +46,7 @@ public class MyListaArticulosRecyclerViewAdapter extends FirestoreRecyclerAdapte
                     .load(pantalla_AgregarArticulos.sPathFoto_Articulo) // seleccionar path correcto de articulo
                     .fitCenter()
                     .centerCrop()
+                    .placeholder(R.drawable.ic_noimg)
                     .into(holder.imageViewArticulo)
             ;
         }

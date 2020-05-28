@@ -52,7 +52,7 @@
         <activity android:name=".pantalla_AgregarArticulos" />
         <activity android:name=".Registro_AgregarAuto" />
         <activity android:name=".Pantalla_pedidos" />
-        <activity android:name=".Registro_Fletero" />
+        <activity android:name=".fragment_ConfirmarPedido_Fletero" />
         <activity android:name=".Registro_User" />
         <activity android:name=".Registro_Main" />
         <activity android:name=".MainActivity">

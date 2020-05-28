@@ -61,10 +61,10 @@
 
     <EditText
         android:id="@+id/editTextCorreo_Login"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
-        android:layout_marginEnd="163dp"
+        android:layout_marginEnd="35dp"
         android:layout_marginBottom="250dp"
         android:background="@drawable/fondo_textos"
         android:ems="10"
@@ -73,16 +73,15 @@
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextPass_Login"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
-        android:layout_marginEnd="163dp"
+        android:layout_marginEnd="35dp"
         android:background="@drawable/fondo_textos"
         android:ems="10"
         android:hint="Contraseña"
@@ -90,7 +89,6 @@
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextCorreo_Login"
         app:layout_constraintVertical_bias="0.057" />
