@@ -1,21 +1,18 @@
 package com.example.ufletes;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ufletes.holders.articulosClienteHolder;
@@ -25,34 +22,29 @@ import com.google.firebase.firestore.Query;
 
 import static com.google.firebase.firestore.FirebaseFirestore.getInstance;
 
-public class fragment_ConfirmarPedido_Fletero extends DialogFragment {
 
-    Activity actividad;
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class ConfirmarPedidoFragment extends Fragment {
+
     private RecyclerView RVArticulos;
-    private FirestoreRecyclerAdapter<Articulos_Lista, articulosClienteHolder> Adapter_Articulos;
+    static FirestoreRecyclerAdapter<Articulos_Lista, articulosClienteHolder> Adapter_Articulos;
     private com.firebase.ui.firestore.FirestoreRecyclerOptions<Articulos_Lista> FirestoreRecyclerOptions;
     Query query;
     View view;
 
-    public fragment_ConfirmarPedido_Fletero() {
-
+    public ConfirmarPedidoFragment() {
+        // Required empty public constructor
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragmenr_confirmar_pedido_fletero, container, false);
-
+        view = inflater.inflate(R.layout.fragment_confirmar_pedido, container, false);
         return view;
     }
-
 
 
     @Override
@@ -61,16 +53,13 @@ public class fragment_ConfirmarPedido_Fletero extends DialogFragment {
 
         RVArticulos = view.findViewById(R.id.confirmacionArticulosClienteRVAct);
         RVArticulos.setHasFixedSize(true);
-        LinearLayoutManager mlinearLM = new LinearLayoutManager(getActivity());
-        RVArticulos.setLayoutManager(mlinearLM);
+        //LinearLayoutManager mlinearLM = new LinearLayoutManager(getActivity());
+        RVArticulos.setLayoutManager(new LinearLayoutManager(getContext()));;
         getData();
 
     }
 
-
-
     private void getData() {
-
         query = getInstance()
                 .collection("Cliente")
                 .document("QjQzVMbqNXfDscOWT9Vd")
@@ -99,12 +88,13 @@ public class fragment_ConfirmarPedido_Fletero extends DialogFragment {
                 ;
             }
 
-
             @NonNull
             @Override
             public articulosClienteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_listaarticulos, parent, false);
-                return new articulosClienteHolder(view);            }
+
+                return new articulosClienteHolder(view);
+            }
         };
         RVArticulos.setAdapter(Adapter_Articulos);
     }
@@ -113,12 +103,15 @@ public class fragment_ConfirmarPedido_Fletero extends DialogFragment {
     public void onStart() {
         super.onStart();
         Adapter_Articulos.startListening();
+        Toast.makeText(getActivity(), "Start", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Adapter_Articulos.startListening();
+        Toast.makeText(getActivity(), "resume", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -126,4 +119,5 @@ public class fragment_ConfirmarPedido_Fletero extends DialogFragment {
         super.onStop();
         Adapter_Articulos.stopListening();
     }
+
 }

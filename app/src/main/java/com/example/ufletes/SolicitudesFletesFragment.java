@@ -2,6 +2,7 @@ package com.example.ufletes;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.ufletes.holders.solicitudesHolder;
@@ -40,6 +42,7 @@ public class SolicitudesFletesFragment extends Fragment {
     private Button filterButton;
     private EditText searchBox;
     private Button mbtnAceptarPedido;
+
 
     static String idCliente_pedido;
 
@@ -120,25 +123,10 @@ public class SolicitudesFletesFragment extends Fragment {
                 holder.mtextViewFechaSolicitud.setText(model.getFecha_s());
                 final String auxidCliente_pedido = model.getIdCliente_s();
 
-
-
                 final boolean isExpanded = position==expandedPosition;
                 holder.mllExpandArea.setVisibility(isExpanded?View.VISIBLE:View.GONE);
                 holder.itemView.setActivated(isExpanded);
-                if (isExpanded) {
-                    mbtnAceptarPedido.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            fragment_ConfirmarPedido_Fletero dialog = new fragment_ConfirmarPedido_Fletero();
-                            final Dialog listaArticulosCliente = new Dialog(getContext(), android.R.style.Theme_Black_NoTitleBar);
-                            listaArticulosCliente.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100,0,0,0)));
-                            listaArticulosCliente.setContentView(R.layout.fragmenr_confirmar_pedido_fletero);
-                            listaArticulosCliente.setCancelable(true);
-                            listaArticulosCliente.show();
-                            //dialog.show(getActivity().getSupportFragmentManager(), "Dialogo1");
-                        }
-                    });
-                }
+
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -146,8 +134,35 @@ public class SolicitudesFletesFragment extends Fragment {
                         expandedPosition = isExpanded ? -1:position;
                         TransitionManager.beginDelayedTransition(RVSOLICITUDES);
                         notifyDataSetChanged();
-                        Toast.makeText(getContext(), "id cliente "+ idCliente_pedido, Toast.LENGTH_SHORT).show();
-                        mbtnAceptarPedido = v.findViewById(R.id.btnAceptarPedido_Solicitud);
+                        mbtnAceptarPedido = v.findViewById(R.id.btnInfoPedido_Solicitud);
+
+                      //  final Dialog listaArticulosCliente = new Dialog(getContext(), android.R.style.Theme_Black_NoTitleBar);
+                      //  listaArticulosCliente.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100,0,0,0)));
+                      //  listaArticulosCliente.setContentView(R.layout.fragment_confirmar_pedido);
+                      //  listaArticulosCliente.onAttachedToWindow();
+                      // listaArticulosCliente.setCanceledOnTouchOutside(true);
+                      //  listaArticulosCliente.setCancelable(true);
+
+                       // if (isExpanded) {
+                            mbtnAceptarPedido.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    fragment_ConfirmarPedido_Fletero dialog = new fragment_ConfirmarPedido_Fletero();
+                                    dialog.show(getActivity().getSupportFragmentManager(), "DialogoConfirmacion");
+
+                                   // Button btnConfirmarPedidoFlete = (Button) listaArticulosCliente.findViewById(R.id.btnAceptarPedido_Confirmado_Dialog);
+                                   // btnConfirmarPedidoFlete.setOnClickListener(new View.OnClickListener() {
+                                     //   @Override
+                                       // public void onClick(View view) {
+                                         //   Intent intent = new Intent(getContext(), MapsActivity_RastreoFletero.class);
+                                           // startActivity(intent);
+                                        //}
+                                    //});
+
+                                    //listaArticulosCliente.show();
+                                }
+                            });
+                        //}
                     }
                 });
 

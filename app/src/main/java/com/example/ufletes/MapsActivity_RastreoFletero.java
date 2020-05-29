@@ -31,7 +31,7 @@ import java.util.Locale;
 public class MapsActivity_RastreoFletero extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private Marker markerRastreo;
+    private Marker markerRastreo, markerClienteOrigen;
     private Location currentLocation;
     private static List<Address> strDireccionRastreo;
     private String addressRastreo;
@@ -75,12 +75,20 @@ public class MapsActivity_RastreoFletero extends FragmentActivity implements OnM
                         public void onMapReady(final GoogleMap googleMap) {
                             LatLng latLngM2 = new LatLng(locationM2.getLatitude(), locationM2.getLongitude());
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngM2, 15));
+                            googleMap.getUiSettings().setZoomControlsEnabled(true);
                             markerRastreo = googleMap.addMarker(new MarkerOptions()
                                             .position(latLngM2)
-                                            .draggable(true)
                                             .title("Ubicacion actual del fletero")
                                             .snippet(addressRastreo)
-                                    //.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
+                            );
+                            LatLng cooCliente = new LatLng(25.749302, -100.246452);
+
+                            markerClienteOrigen = googleMap.addMarker(new MarkerOptions()
+                                            .position(cooCliente)
+                                            .title("Ubicacion del cliente")
+                                            //.snippet(addressRastreo)
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                             );
 
                             Geocoder geocdireccionOrigen = new Geocoder(getApplicationContext(), Locale.getDefault());
@@ -105,8 +113,6 @@ public class MapsActivity_RastreoFletero extends FragmentActivity implements OnM
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-
-        mMap.getUiSettings().setZoomControlsEnabled(true);
 
     }
     @Override

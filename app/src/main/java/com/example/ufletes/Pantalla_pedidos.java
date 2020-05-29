@@ -126,7 +126,7 @@ public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickL
             mapSolicFlete.put("apellidop_s", MainActivity.apellidoCliente);
             mapSolicFlete.put("telefono_s", MainActivity.telefonoCliente);
             mapSolicFlete.put("idCliente_s", MainActivity.idDoc_Cliente);
-            mapSolicFlete.put("dirOrigen_s", strPedidosOrigen);
+            mapSolicFlete.put("dirOrigen_s", strPedidosOrigen); //Cambiar a coordenadas
             mapSolicFlete.put("dirDestino_s", strPedidoDestino);
             mapSolicFlete.put("statusSolicitud_s", "Disponible");
             mapSolicFlete.put("fecha_s", fechaPedido);

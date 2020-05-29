@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragment_ConfirmarPedido_Fletero">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textViewArticulooTEXT"
@@ -21,9 +18,9 @@
             android:textSize="20sp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/articulosClienteRVAct"
+            android:id="@+id/recyclerArticulosCliente"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="400dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,9 +39,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
                 android:paddingTop="8dp"
-                android:text="Aceptar" />
-        </LinearLayout>
+                android:text="Aceptar pedido" />
+
     </LinearLayout>
+
+
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
