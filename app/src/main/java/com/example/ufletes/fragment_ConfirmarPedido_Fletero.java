@@ -13,9 +13,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.bumptech.glide.Glide;
 import com.example.ufletes.holders.articulosClienteHolder;
@@ -49,11 +52,17 @@ public class fragment_ConfirmarPedido_Fletero extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragmenr_confirmar_pedido_fletero, container, false);
-
         return view;
     }
 
 
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(view);
+        return builder.create();
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -98,7 +107,6 @@ public class fragment_ConfirmarPedido_Fletero extends DialogFragment {
                         .into(holder.imageViewArticulo)
                 ;
             }
-
 
             @NonNull
             @Override

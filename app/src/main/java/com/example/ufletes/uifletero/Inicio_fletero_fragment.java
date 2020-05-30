@@ -127,6 +127,7 @@ public class Inicio_fletero_fragment extends Fragment {
                 holder.mtextViewMarcaV.setText((model.getMarca_v()));
                 holder.mtextViewTipoV.setText((model.getTipo_v()));
                 holder.mtextViewVolv.setText((model.getVol_v()));
+                holder.mtextViewMedida.setText(model.getMedida_v());
                 Glide.with(getContext())
                         .load(Registro_AgregarAuto.sPathFoto_Vehiculo)
                         .fitCenter()

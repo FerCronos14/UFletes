@@ -43,7 +43,7 @@ public class MyListaArticulosRecyclerViewAdapter extends FirestoreRecyclerAdapte
             holder.textViewDescripcionArticuloListado.setText((model.getDescri_a()));
             holder.textViewCantidadArticuloListado.setText((model.getCant_a()));
             Glide.with(ctx)
-                    .load(pantalla_AgregarArticulos.sPathFoto_Articulo) // seleccionar path correcto de articulo
+                    .load(model.getPathFoto_a()) // seleccionar path correcto de articulo
                     .fitCenter()
                     .centerCrop()
                     .placeholder(R.drawable.ic_noimg)

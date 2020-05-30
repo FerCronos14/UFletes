@@ -1,5 +1,6 @@
 package com.example.ufletes;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -150,7 +151,8 @@ public class SolicitudesFletesFragment extends Fragment {
                                     fragment_ConfirmarPedido_Fletero dialog = new fragment_ConfirmarPedido_Fletero();
                                     dialog.show(getActivity().getSupportFragmentManager(), "DialogoConfirmacion");
 
-                                   // Button btnConfirmarPedidoFlete = (Button) listaArticulosCliente.findViewById(R.id.btnAceptarPedido_Confirmado_Dialog);
+
+                                    // Button btnConfirmarPedidoFlete = (Button) listaArticulosCliente.findViewById(R.id.btnAceptarPedido_Confirmado_Dialog);
                                    // btnConfirmarPedidoFlete.setOnClickListener(new View.OnClickListener() {
                                      //   @Override
                                        // public void onClick(View view) {

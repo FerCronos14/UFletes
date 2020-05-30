@@ -32,6 +32,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText mtxtLogin_Correo;
@@ -88,6 +91,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 idDoc_Fletero = document.getId();
                                 correoFletero = document.getData().get("correo").toString();
+                                String auxIdDoc = document.getData().get("idDocFletero").toString();
+                                if (auxIdDoc.isEmpty()) {
+                                    Map<String, Object> mapUpDoc = new HashMap<>();
+                                    mapUpDoc.put("idDocFletero", idDoc_Fletero);
+                                    mFireStore.collection("Fletero")
+                                            .document(MainActivity.idDoc_Fletero)
+                                            .update(mapUpDoc)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                }
+                                            });
+                                }
                             }
                         }
                     }
@@ -107,6 +123,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 nombreCliente = document.getData().get("nombre").toString();
                                 apellidoCliente = document.getData().get("apellidop").toString();
                                 telefonoCliente = document.getData().get("telefono").toString();
+                                String auxIdDoc = document.getData().get("idDocCliente").toString();
+                                if (auxIdDoc.isEmpty()) {
+                                    Map<String, Object> mapUpDoc = new HashMap<>();
+                                    mapUpDoc.put("idDocCliente", idDoc_Cliente);
+                                    mFireStore.collection("Cliente")
+                                            .document(idDoc_Cliente)
+                                            .update(mapUpDoc)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                }
+                                            });
+                                }
                             }
                             ObtenerDatosFletero();
                             LogearUsuario();
@@ -127,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    mPDialog.dismiss();
+
                     if (correoUsuario.equals(Usuario_login)) {
                         //Toast.makeText(MainActivity.this, "Bienvenido " + nombreUsuario + " " + apellidoUsuario, Toast.LENGTH_LONG).show();
                         //Toast.makeText(MainActivity.this, "Bienvenido " + correoUsuario, Toast.LENGTH_LONG).show();
@@ -137,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //Toast.makeText(MainActivity.this, "Bienvenido " + Usuario_login, Toast.LENGTH_LONG).show();
                         startActivity(new Intent(MainActivity.this, Pantalla_Inicio_Fletero.class));
                     }
+                    mPDialog.dismiss();
                     //finish();
                 }else {
                     mPDialog.dismiss();

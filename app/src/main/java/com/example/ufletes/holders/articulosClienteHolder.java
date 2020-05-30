@@ -1,5 +1,6 @@
 package com.example.ufletes.holders;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;

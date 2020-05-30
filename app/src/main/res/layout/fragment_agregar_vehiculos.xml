@@ -8,15 +8,26 @@
     android:paddingBottom="8dp">
 
     <TextView
+        android:id="@+id/textViewTipoTEXT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo de caja"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewMarcaTEXT"
+        app:layout_constraintEnd_toStartOf="@+id/textViewCaracTEXT"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewMarcaTEXT"
+        app:layout_constraintTop_toTopOf="@+id/textViewMarcaTEXT" />
+
+    <TextView
         android:id="@+id/textViewTipo_V"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:text="Tipo"
         app:layout_constraintEnd_toStartOf="@+id/textViewVol_V"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textViewMarca_V"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/textViewMarca_V" />
 
     <ImageView
         android:id="@+id/imageViewVehiculoFletero"
@@ -29,15 +40,37 @@
         app:srcCompat="@drawable/ic_noimg" />
 
     <TextView
+        android:id="@+id/textViewMarcaTEXT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Marca"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/textViewTipoTEXT"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageViewVehiculoFletero"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/textViewMarca_V"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
         android:text="Marca"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewTipo_V"
-        app:layout_constraintEnd_toStartOf="@+id/textViewTipo_V"
+        app:layout_constraintStart_toStartOf="@+id/textViewMarcaTEXT"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMarcaTEXT" />
+
+    <TextView
+        android:id="@+id/textViewCaracTEXT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Características"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewTipoTEXT"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageViewVehiculoFletero"
-        app:layout_constraintTop_toTopOf="@+id/textViewTipo_V" />
+        app:layout_constraintStart_toEndOf="@+id/textViewTipoTEXT"
+        app:layout_constraintTop_toTopOf="@+id/textViewTipoTEXT" />
 
     <TextView
         android:id="@+id/textViewVol_V"
@@ -49,4 +82,13 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textViewTipo_V"
         app:layout_constraintTop_toTopOf="@+id/textViewTipo_V" />
+
+    <TextView
+        android:id="@+id/textViewMedidas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Medida"
+        app:layout_constraintStart_toStartOf="@+id/textViewVol_V"
+        app:layout_constraintTop_toBottomOf="@+id/textViewVol_V" />
 </androidx.constraintlayout.widget.ConstraintLayout>

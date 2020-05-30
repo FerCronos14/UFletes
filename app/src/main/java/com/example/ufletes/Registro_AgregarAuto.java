@@ -5,24 +5,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-import androidx.core.os.EnvironmentCompat;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ExifInterface;
-import android.media.MediaScannerConnection;
+import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,7 +25,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.ufletes.ui.Vehiculos_Lista;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,7 +35,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnPausedListener;
 import com.google.firebase.storage.OnProgressListener;
@@ -51,7 +43,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -61,12 +52,13 @@ import java.util.Map;
 public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVehiculosFragment.OnListFragmentInteractionListener, View.OnClickListener {
 
     private EditText mtxtMarcaVehiculo;
-    private EditText mtxtTipoVehiculo;
+    private EditText mtxtMedidasVehiculo;
     private EditText mtxtVolVehiculo;
 
     private String marcaVehiculo = "";
     private String tipoVehiculo = "";
     private String volVehiculo = "";
+    private String medidasVehiculo = "";
     public static String sPathFoto_Vehiculo = " ";
 
     private Button mbtnAgregarVehiculo;
@@ -103,8 +95,8 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
         setContentView(R.layout.activity_registro__agregar_auto);
 
         mtxtMarcaVehiculo = findViewById(R.id.editTextMarcaVehiculo);
-        mtxtTipoVehiculo = findViewById(R.id.editTextTipoVehiculo);
         mtxtVolVehiculo = findViewById(R.id.editTextCapacidadVehiculo);
+        mtxtMedidasVehiculo = findViewById(R.id.editMedidasVehiculo);
 
         mbtnAgregarVehiculo = findViewById(R.id.btnAñadirVehiculo);
         mbtnAgregarVehiculo.setOnClickListener(this);
@@ -113,24 +105,20 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
         mbtnFotoVehivulo.setOnClickListener(this);
 
         mPDialog = new ProgressDialog(this);
-        mspinnerCubicaje = findViewById(R.id.spinnerCubicaje_Vehiculo);
-        ArrayAdapter<CharSequence> adapterCubicaje = ArrayAdapter.createFromResource(this, R.array.spinnerCubicaje, android.R.layout.simple_spinner_item);
-        adapterCubicaje.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mspinnerCubicaje.setAdapter(adapterCubicaje);
+        mspinnerCubicaje = findViewById(R.id.spinnerTipo_Vehiculo);
+        final ArrayAdapter<CharSequence> adapterTipo = ArrayAdapter.createFromResource(this, R.array.SpinnerTipoCaja, android.R.layout.simple_spinner_item);
+        adapterTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mspinnerCubicaje.setAdapter(adapterTipo);
         mspinnerCubicaje.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String textSpinner = adapterView.getItemAtPosition(i).toString();
-                Toast.makeText(Registro_AgregarAuto.this, textSpinner, Toast.LENGTH_SHORT).show();
-                if (adapterView.getItemAtPosition(i).toString() == "Otro") {
-                    Toast.makeText(Registro_AgregarAuto.this, "jajajajajaj", Toast.LENGTH_SHORT).show();
-                    mtxtVolVehiculo.setVisibility(View.VISIBLE);
-                } else {
-                    mtxtVolVehiculo.setVisibility(View.GONE);
-
+                if (i >= 0) {
+                    tipoVehiculo = textSpinner;
                 }
-            }
+                Toast.makeText(Registro_AgregarAuto.this, tipoVehiculo, Toast.LENGTH_SHORT).show();
 
+            }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -139,6 +127,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
 
         mFireStore = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference();
+        getSupportActionBar().hide();
 
     }
 
@@ -153,11 +142,15 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
             case R.id.btnAñadirVehiculo:
                 if (marcaVehiculo.isEmpty()) {
                     Toast.makeText(Registro_AgregarAuto.this, "Favor de llenar nombre del articulo", Toast.LENGTH_SHORT).show();
-                } else {
+                }else if (tipoVehiculo.isEmpty() ){
+                    Toast.makeText(Registro_AgregarAuto.this, "Favor de seleccionar el tipo de caja", Toast.LENGTH_SHORT).show();
+                }
+                else {
                     final Map<String, Object> map = new HashMap<>();
                     map.put("marca_v", marcaVehiculo);
                     map.put("tipo_v", tipoVehiculo);
-                    map.put("vol_v", volVehiculo );
+                    map.put("vol_v", volVehiculo + " tonelada(s)");
+                    map.put("medida_v", medidasVehiculo + " mts³");
                     map.put("pathFoto_v", sPathFoto_Vehiculo);
 
                     mPDialog.setTitle("Subiendo...");
@@ -172,18 +165,19 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                             .document(MainActivity.idDoc_Fletero);
                     newPathFotoFletero.update(mapPathFoto)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(Registro_AgregarAuto.this, "successfully" , Toast.LENGTH_SHORT).show();
-                        }
-                    })
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(Registro_AgregarAuto.this, "Foto actualizada" , Toast.LENGTH_SHORT).show();
+                                }
+                            })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(Registro_AgregarAuto.this, "Error updating document" , Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Registro_AgregarAuto.this, "Error al actualizar foto" , Toast.LENGTH_SHORT).show();
 
                                 }
                             });;
+
 
                     mFireStore.collection("Fletero")
                             .document(MainActivity.idDoc_Fletero)
@@ -194,6 +188,11 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
 
                             mPDialog.dismiss();
                             Toast.makeText(Registro_AgregarAuto.this, "Vehiculo guardado", Toast.LENGTH_SHORT).show();
+                            mtxtMarcaVehiculo.setText("");
+                            mtxtMedidasVehiculo.setText("");
+                            mtxtVolVehiculo.setText("");
+                            finish();
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -201,9 +200,6 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                             Toast.makeText(Registro_AgregarAuto.this, "No se pudo guardar el vehiculo", Toast.LENGTH_SHORT).show();
                         }
                     });
-
-                    //Toast.makeText(pantalla_AgregarArticulos.this, "Favor de llenar los campos", Toast.LENGTH_SHORT).show();
-
                     break;
                 }
             case R.id.btnAgregarFotoVehiculo:
@@ -294,7 +290,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                     double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                    Toast.makeText(Registro_AgregarAuto.this, "Subido:  " + progress + "%", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Registro_AgregarAuto.this, "Subiendo imagen, espere por favor", Toast.LENGTH_SHORT).show();
 
                     System.out.println("Upload is " + progress + "% done");
                 }
@@ -326,8 +322,6 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         sPathFoto_Vehiculo = downloadUri.toString();
-                        Toast.makeText(Registro_AgregarAuto.this, sPathFoto_Vehiculo, Toast.LENGTH_SHORT).show();
-
                     } else {
                         // Handle failures
                         // ...
@@ -346,7 +340,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
 
                 byte[] b = stream.toByteArray();
                 Uri uri = data.getData();
-                final StorageReference filepath = mStorage.child("fotos_vehiculos").child(user.getUid()).child("camara/foto " + new Date());
+                final StorageReference filepath = mStorage.child("fotos_vehiculos").child(MainActivity.idDoc_Fletero).child("camara/foto " + new Date());
                 filepath.putBytes(b).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -391,12 +385,9 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
     @Override
     public void onClick(View view) {
         marcaVehiculo = mtxtMarcaVehiculo.getText().toString();
-        tipoVehiculo =  mtxtTipoVehiculo.getText().toString();
+        medidasVehiculo =  mtxtMedidasVehiculo.getText().toString();
         volVehiculo = mtxtVolVehiculo.getText().toString();
-        //Toast.makeText(MainActivity.this, "Bienvenido " + Usuario_login + "\n" + correoUsuario, Toast.LENGTH_LONG).show();
         manejoEventosAgregaVehiculos(view.getId());
     }
 
 }
-
-//https://www.youtube.com/watch?v=qYeVXGNG-b4

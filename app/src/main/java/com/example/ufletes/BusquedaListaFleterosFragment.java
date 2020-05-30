@@ -1,7 +1,10 @@
 package com.example.ufletes;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +33,7 @@ import androidx.fragment.app.FragmentManager;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,9 +42,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import static com.google.firebase.firestore.FirebaseFirestore.getInstance;
 
 public class BusquedaListaFleterosFragment extends Fragment {
@@ -49,12 +58,17 @@ public class BusquedaListaFleterosFragment extends Fragment {
     private FirestoreRecyclerAdapter<Fleteros_Lista, busqFleterosHolder> Adapter_Fleteros_Busqueda;
     private FirestoreRecyclerOptions<Fleteros_Lista> FirestoreRecyclerOptions;
     private Button filterButton;
+    private Button mbtnLlamarFletero;
     private EditText searchBox;
+    private int expandedPosition = -1;
+    private String idDocFletero_bus;
+    private ProgressDialog mPDialog;
     Query query;
     View view;
     List<Fleteros_Lista> fleteros_listaList;
 
     Context context;
+    private FirebaseFirestore mFireStore;
 
     public BusquedaListaFleterosFragment() {
     }
@@ -62,6 +76,8 @@ public class BusquedaListaFleterosFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFireStore = FirebaseFirestore.getInstance();
+        mPDialog = new ProgressDialog(getContext());
         //mSearchViewBusqFleteros = getActivity().findViewById(R.id.svBusqFletero);
     }
 
@@ -117,7 +133,7 @@ public class BusquedaListaFleterosFragment extends Fragment {
     private void attachRecyclerView() {
         Adapter_Fleteros_Busqueda = new FirestoreRecyclerAdapter<Fleteros_Lista, busqFleterosHolder>(FirestoreRecyclerOptions) {
             @Override
-            protected void onBindViewHolder(@NonNull busqFleterosHolder holder, int position, @NonNull Fleteros_Lista model) {
+            protected void onBindViewHolder(@NonNull final busqFleterosHolder holder, final int position, @NonNull final Fleteros_Lista model) {
                 Glide.with(getContext())
                         .load(model.getPathFoto_v())
                         .centerCrop()
@@ -126,6 +142,58 @@ public class BusquedaListaFleterosFragment extends Fragment {
 
                 holder.nombreBusqFletero.setText(String.format("%s %s", model.getNombre(), model.getApellidop()));
                 holder.numeroBusqFletero.setText(model.getTelefono());
+                final Uri phoneNumber = Uri.parse("tel:"+model.getTelefono());
+                final String auxIDFLETERO = model.getIdDocFletero();
+
+                final boolean isExpanded = position==expandedPosition;
+                holder.mllExpandAreaBusquedaBusq.setVisibility(isExpanded?View.VISIBLE:View.GONE);
+                holder.itemView.setActivated(isExpanded);
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPDialog.setTitle("Obteniendo información");
+                        mPDialog.setMessage("Espere un momento...");
+                        mPDialog.setCancelable(false);
+                        mPDialog.show();
+                        idDocFletero_bus = auxIDFLETERO;
+                        expandedPosition = isExpanded ? -1:position;
+                        TransitionManager.beginDelayedTransition(RVFleteros_Busqueda);
+                        notifyDataSetChanged();
+
+                        // consulta para obtener datos extras...
+                        mFireStore.collection("Fletero")
+                                .document(idDocFletero_bus)
+                                .collection("Vehiculos")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                holder.mtextViewMarcaV_Busq.setText(document.getData().get("marca_v").toString());
+                                                holder.mtextViewTipoV_Busq.setText(document.getData().get("tipo_v").toString());
+                                                holder.mtextViewMedida_Busq.setText(document.getData().get("medida_v").toString());
+                                                holder.mtextViewVolv_Busq.setText(document.getData().get("vol_v").toString());
+
+                                            }
+                                        }
+                                        mPDialog.dismiss();
+                                    }
+                                });
+
+                        // accion de llamar a feltero
+                        mbtnLlamarFletero = v.findViewById(R.id.btnLlamarFletero);
+                        mbtnLlamarFletero.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(getContext(), "Llamando", Toast.LENGTH_SHORT).show();
+                                Intent callIntent = new Intent(Intent.ACTION_DIAL,phoneNumber);
+                                startActivity(callIntent);
+                            }
+                        });
+                    }
+                });
+
             }
 
             @NonNull

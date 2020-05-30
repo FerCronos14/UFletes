@@ -54,6 +54,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.google.firebase.firestore.FirebaseFirestore.getInstance;
 
@@ -127,30 +128,6 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
                     mPDialog.setMessage("Registrando datos");
                     mPDialog.setCancelable(false);
                     mPDialog.show();
-/*
-                    Map<String, Object> mapPathFotoArticulo = new HashMap<>();
-                    mapPathFotoArticulo.put("pathFoto_a", sPathFoto_Articulo);
-
-                    DocumentReference newPathFotoFletero = mFireStore
-                            .collection("Cliente")
-                            .document(MainActivity.idDoc_Cliente)
-                            ;
-                    newPathFotoFletero.update(mapPathFotoArticulo)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(pantalla_AgregarArticulos.this, "successfully" , Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(pantalla_AgregarArticulos.this, "Error updating document" , Toast.LENGTH_SHORT).show();
-
-                                }
-                            });;
-
- */
 
                     mFireStore.collection("Cliente")
                             .document(MainActivity.idDoc_Cliente)
@@ -161,6 +138,9 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
                             mPDialog.dismiss();
                             //idDocArticulo = documentReference.getId();
                             Toast.makeText(pantalla_AgregarArticulos.this, "Articulo guardado" + idDocArticulo, Toast.LENGTH_SHORT).show();
+                            mtxtNombreArticulo.setText("");
+                            mtxtDescripcionArticulo.setText("");
+                            mtxtCantidadArticulo.setText("1");
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -229,22 +209,23 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
         return image;
     }
 
+    static final int REQUEST_TAKE_PHOTO = 1;
     private void tomarFoto_Articulo () {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             // Create the File where the photo should go
-            File photoFile = null;
+            File photoFileA = null;
             try {
-                photoFile = createImageFile();
+                photoFileA = createImageFile();
             } catch (IOException ex) {
                 // Error occurred while creating the File
             }
             // Continue only if the File was successfully created
-            if (photoFile != null) {
+            if (photoFileA != null) {
                 photoURIArticulo = FileProvider.getUriForFile(this,
                         BuildConfig.APPLICATION_ID + ".provider",
-                        photoFile);
+                        photoFileA);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURIArticulo.toString());
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
@@ -252,12 +233,12 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
     }
 
     private static final int GALLERY_INTENT = 10;
-    static final int REQUEST_TAKE_PHOTO = 1;
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_OK && requestCode == GALLERY_INTENT) {
+        if (resultCode == RESULT_OK && requestCode == GALLERY_INTENT) {
             Uri uriFotoArticulo = data.getData();
 
             final StorageReference DBArticuloPath = mStorage.child("fotos_articulos").child(MainActivity.idDoc_Cliente).child("galeria/" + uriFotoArticulo.getLastPathSegment());
@@ -272,7 +253,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                     double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                    Toast.makeText(pantalla_AgregarArticulos.this, "Subido:  " + progress + "%", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(pantalla_AgregarArticulos.this, "Subiendo imagen, espere por favor.", Toast.LENGTH_SHORT).show();
 
                     System.out.println("Upload is " + progress + "% done");
                 }
@@ -304,8 +285,6 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         sPathFoto_Articulo = downloadUri.toString();
-                        Toast.makeText(pantalla_AgregarArticulos.this, sPathFoto_Articulo, Toast.LENGTH_SHORT).show();
-
                     } else {
                         // Handle failures
                         // ...
@@ -323,7 +302,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
 
                 byte[] b = stream.toByteArray();
                 Uri uri = data.getData();
-                final StorageReference filepath = mStorage.child("fotos_vehiculos").child(user.getUid()).child("camara/foto " + new Date());
+                final StorageReference filepath = mStorage.child("fotos_articulos").child(MainActivity.idDoc_Cliente).child("camara/foto " + new Date());
                 filepath.putBytes(b).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

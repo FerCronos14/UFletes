@@ -11,7 +11,7 @@
         android:id="@+id/txtAgregarVehiculo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="612dp"
         android:text="Agregar vehículo"
         android:textSize="24sp"
@@ -25,31 +25,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="99dp"
-        android:layout_marginBottom="499dp"
         android:background="@drawable/fondo_textos"
         android:ems="10"
         android:hint="Marca del vehículo"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtAgregarVehiculo" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTipo_Vehiculo" />
 
     <EditText
-        android:id="@+id/editTextTipoVehiculo"
+        android:id="@+id/editMedidasVehiculo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="99dp"
-        android:layout_marginBottom="444dp"
         android:background="@drawable/fondo_textos"
         android:ems="10"
-        android:hint="Tipo de vehículo"
+        android:hint="Medidas (mts³)"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextMarcaVehiculo" />
@@ -58,29 +54,29 @@
         android:id="@+id/editTextCapacidadVehiculo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="99dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="99dp"
-        android:layout_marginBottom="389dp"
         android:background="@drawable/fondo_textos"
         android:ems="10"
-        android:hint="Capacidad del vehículo"
+        android:hint="Capacidad (toneladas)"
         android:inputType="textPersonName"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinnerCubicaje_Vehiculo"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTipoVehiculo" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editMedidasVehiculo" />
 
     <Button
-        style="@style/FondoBoton"
         android:id="@+id/btnAgregarFotoVehiculo"
+        style="@style/FondoBoton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="84dp"
         android:layout_marginEnd="160dp"
         android:text="¿Agregar foto del vehículo?"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextCapacidadVehiculo" />
 
@@ -100,14 +96,16 @@
         app:layout_constraintTop_toBottomOf="@+id/btnAgregarFotoVehiculo" />
 
     <Spinner
-        android:id="@+id/spinnerCubicaje_Vehiculo"
+        android:id="@+id/spinnerTipo_Vehiculo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginStart="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextCapacidadVehiculo"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="99dp"
+        android:background="@drawable/fondo_textos"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTipoVehiculo" />
+        app:layout_constraintTop_toBottomOf="@+id/txtAgregarVehiculo" />
 
 
 

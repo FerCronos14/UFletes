@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="15dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -38,6 +38,104 @@
         android:text="Telefono"
         app:layout_constraintStart_toStartOf="@+id/txtNombreFletero_ListaBusqueda"
         app:layout_constraintTop_toBottomOf="@+id/txtNombreFletero_ListaBusqueda" />
+
+        <LinearLayout
+            android:id="@+id/llExpandAreaBusquedaFleteros"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTelefono_ListaBusqueda">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="4dp"
+                >
+
+
+                <TextView
+                    android:id="@+id/textViewTipoTEXT_Busq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Tipo de caja"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textViewMarcaTEXT"
+                    app:layout_constraintStart_toEndOf="@+id/textViewMarcaTEXT_Busq"
+                    app:layout_constraintTop_toTopOf="@+id/textViewMarcaTEXT" />
+
+                <TextView
+                    android:id="@+id/textViewTipo_V_Busq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tipo"
+                    app:layout_constraintStart_toStartOf="@+id/textViewTipoTEXT_Busq"
+                    app:layout_constraintTop_toTopOf="@+id/textViewMarca_V_Busq" />
+
+                <TextView
+                    android:id="@+id/textViewMarcaTEXT_Busq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="Marca"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewMarca_V_Busq"
+                    android:layout_width="58dp"
+                    android:layout_height="42dp"
+                    android:text="Marca"
+                    app:layout_constraintStart_toStartOf="@+id/textViewMarcaTEXT_Busq"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewMarcaTEXT_Busq" />
+
+                <TextView
+                    android:id="@+id/textViewCaracTEXT_Busq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Características"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textViewTipoTEXT_Busq"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textViewTipoTEXT_Busq"
+                    app:layout_constraintTop_toTopOf="@+id/textViewTipoTEXT_Busq" />
+
+                <TextView
+                    android:id="@+id/textViewVol_V_Busq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Volumen"
+                    app:layout_constraintStart_toStartOf="@+id/textViewCaracTEXT_Busq"
+                    app:layout_constraintTop_toTopOf="@+id/textViewTipo_V_Busq" />
+
+                <TextView
+                    android:id="@+id/textViewMedidas_Busq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Medida"
+                    app:layout_constraintStart_toStartOf="@+id/textViewVol_V_Busq"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewVol_V_Busq" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/btnLlamarFletero"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:paddingTop="4dp"
+                android:layout_gravity="right"
+                android:text="Llamar" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -14,6 +14,7 @@ public class vehiculosFleterosHolder extends RecyclerView.ViewHolder{
     public final TextView mtextViewTipoV;
     public final TextView mtextViewMarcaV;
     public final TextView mtextViewVolv;
+    public final TextView mtextViewMedida;
     public final ImageView imgFoto_Vehiculo;
 
     public vehiculosFleterosHolder(@NonNull View itemView) {
@@ -21,6 +22,7 @@ public class vehiculosFleterosHolder extends RecyclerView.ViewHolder{
         mtextViewMarcaV = itemView.findViewById(R.id.textViewMarca_V);
         mtextViewTipoV = itemView.findViewById(R.id.textViewTipo_V);
         mtextViewVolv = itemView.findViewById(R.id.textViewVol_V);
+        mtextViewMedida = itemView.findViewById(R.id.textViewMedidas);
         imgFoto_Vehiculo = itemView.findViewById(R.id.imageViewVehiculoFletero);
 
     }

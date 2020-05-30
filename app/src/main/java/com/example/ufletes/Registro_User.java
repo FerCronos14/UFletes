@@ -47,6 +47,7 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
     private String Password_User_Register = "";
     private String ConfirmPassword_User_Register = "";
     static String TipoUsuario = "";
+    private String idDocumento = "";
 
     private FirebaseAuth mAuth;
     //private DatabaseReference mDatabase;
@@ -56,6 +57,8 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro__user);
+
+        getSupportActionBar().hide();
 
         mtxtNombre_User = findViewById(R.id.editTextNombre_User);
         mtxtApePaterno_User = findViewById(R.id.editTextApePaterno_User);
@@ -78,10 +81,8 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
 
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,
                 R.array.comboTipoUsuario, android.R.layout.simple_spinner_item);
-
-
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         comboUsuarios.setAdapter(adapter);
-
         comboUsuarios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -105,14 +106,6 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Favor de seleccionar un tipo de usuario", Toast.LENGTH_SHORT).show();
         }
         else {
-            Map<String, Object> map = new HashMap<>();
-            map.put("nombre", Nombre_User_Register);
-            map.put("apellidom", ApeMaterno_User_Register);
-            map.put("apellidop", ApePaterno_User_Register);
-            map.put("telefono", Tel_User_Register);
-            map.put("correo", Email_User_Register);
-            map.put("password", Password_User_Register);
-
             mAuth.createUserWithEmailAndPassword(Email_User_Register, Password_User_Register).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -125,7 +118,11 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
                         map.put("correo", Email_User_Register);
                         map.put("password", Password_User_Register);
                         if (TipoUsuario.contains("Fletero")) {
+                            map.put("idDocFletero", "");
                             map.put("pathFoto_v", "");
+                        }
+                        if (TipoUsuario.contains("Cliente")) {
+                            map.put("idDocCliente", "");
                         }
 
                         String id = mAuth.getCurrentUser().getUid();
@@ -135,13 +132,10 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 //String postId = " ";
+
                                 Toast.makeText(Registro_User.this, "Registro completo", Toast.LENGTH_SHORT).show();
-                               if (TipoUsuario.contains("Cliente") ) {
-                                    startActivity(new Intent(Registro_User.this, pantalla_busquedaFletero.class));
-                                } else if (TipoUsuario.contains("Fletero")) {
-                                    startActivity(new Intent(Registro_User.this, Pantalla_Inicio_Fletero.class));
-                                }
-                               finish();
+                                startActivity(new Intent(Registro_User.this, MainActivity.class));
+                                finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
