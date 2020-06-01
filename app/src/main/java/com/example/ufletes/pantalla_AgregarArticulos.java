@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,6 +18,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.transition.TransitionManager;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,7 @@ import com.bumptech.glide.Glide;
 import com.example.ufletes.holders.articulosClienteHolder;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.ObservableSnapshotArray;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -40,7 +44,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnPausedListener;
 import com.google.firebase.storage.OnProgressListener;
@@ -58,7 +65,7 @@ import java.util.Objects;
 
 import static com.google.firebase.firestore.FirebaseFirestore.getInstance;
 
-public class pantalla_AgregarArticulos extends AppCompatActivity implements ListaArticulosFragment.OnListFragmentInteractionListener, View.OnClickListener {
+public class pantalla_AgregarArticulos extends AppCompatActivity implements  View.OnClickListener {
 
     private EditText mtxtNombreArticulo;
     private TextView mtxtCantidadArticulo;
@@ -82,12 +89,18 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
     private FirebaseFirestore mFireStore;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private StorageReference mStorage;
-
+    private RecyclerView RVListaArticulos;
+    private FirestoreRecyclerAdapter<Articulos_Lista, articulosClienteHolder> Adapter_ListArticulos;
+    private FirestoreRecyclerOptions<Articulos_Lista> FirestoreRecyclerOptionsList;
+    private int expandedPosition = -1;
+    Query query;
+    View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla__agregar_articulos);
+        getSupportActionBar().hide();
 
         mtxtNombreArticulo = findViewById(R.id.editTextNombreArticulo);
         mtxtCantidadArticulo = findViewById(R.id.txtCantidadArticulo);
@@ -107,8 +120,78 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
 
         mFireStore = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference();
-        getSupportActionBar().hide();
 
+        RVListaArticulos = findViewById(R.id.listArticulosRVAct);
+        RVListaArticulos.setHasFixedSize(true);
+        LinearLayoutManager mlinearLayoutManager = new LinearLayoutManager(this);
+        RVListaArticulos.setLayoutManager(mlinearLayoutManager);
+        getData();
+
+    }
+
+    private void getData() {
+        query = getInstance().
+                collection("Cliente")
+                .document(MainActivity.idDoc_Cliente)
+                .collection("Articulos");
+
+        FirestoreRecyclerOptionsList = new FirestoreRecyclerOptions.Builder<Articulos_Lista>()
+                .setQuery(query, Articulos_Lista.class)
+                .setLifecycleOwner(this)
+                .build();
+        attachRecyclerView();
+        Adapter_ListArticulos.notifyDataSetChanged();
+    }
+
+    private void attachRecyclerView() {
+        Adapter_ListArticulos = new FirestoreRecyclerAdapter<Articulos_Lista, articulosClienteHolder>(FirestoreRecyclerOptionsList) {
+            @Override
+            protected void onBindViewHolder(@NonNull articulosClienteHolder holder, int position, @NonNull Articulos_Lista model) {
+                holder.textViewNombreArticuloListado.setText((model.getNombre_a()));
+                holder.textViewDescripcionArticuloListado.setText((model.getDescri_a()));
+                holder.textViewCantidadArticuloListado.setText((model.getCant_a()));
+                Glide.with(getApplicationContext())
+                        .load(model.getPathFoto_a()) // seleccionar path correcto de articulo
+                        .fitCenter()
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_noimg)
+                        .into(holder.imageViewArticulo)
+                ;
+/*
+                ObservableSnapshotArray<Articulos_Lista> observableSnapshotArray = getSnapshots();
+                DocumentReference documentReference =
+                        observableSnapshotArray.getSnapshot(position).getReference();
+
+                documentReference.delete();
+
+ */
+            }
+
+            @NonNull
+            @Override
+            public articulosClienteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                Toast.makeText(getApplication(), "ocreate holder" , Toast.LENGTH_SHORT).show();
+
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_listaarticulos, parent, false);
+                return new articulosClienteHolder(view);
+            }
+        };
+
+        RVListaArticulos.setAdapter(Adapter_ListArticulos);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Adapter_ListArticulos.startListening();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Adapter_ListArticulos.stopListening();
     }
 
     public void manejoEventosAgregaArticulos (int opcA) {
@@ -149,8 +232,9 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
                         }
                     });
 
-                    break;
+
                 }
+                break;
             case R.id.imageButtonMas:
                 cantidadArticulo += 1;
                 mtxtCantidadArticulo.setText(cantidadArticulo.toString());
@@ -166,7 +250,6 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
             case R.id.btnAgregarFoto_Articulo:
                 subirFotoArticulo();
                 break;
-
                 default:
                 break;
         }
@@ -338,9 +421,6 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
     }
 
 
-    @Override
-    public void onListFragmentInteraction(Articulos_Lista item) {
-    }
 
     @Override
     public void onClick(View view) {

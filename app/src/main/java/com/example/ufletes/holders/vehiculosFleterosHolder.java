@@ -2,6 +2,7 @@ package com.example.ufletes.holders;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ public class vehiculosFleterosHolder extends RecyclerView.ViewHolder{
     public final TextView mtextViewVolv;
     public final TextView mtextViewMedida;
     public final ImageView imgFoto_Vehiculo;
+    public LinearLayout mllExpandAreaVehiculos_V;
 
     public vehiculosFleterosHolder(@NonNull View itemView) {
         super(itemView);
@@ -24,6 +26,7 @@ public class vehiculosFleterosHolder extends RecyclerView.ViewHolder{
         mtextViewVolv = itemView.findViewById(R.id.textViewVol_V);
         mtextViewMedida = itemView.findViewById(R.id.textViewMedidas);
         imgFoto_Vehiculo = itemView.findViewById(R.id.imageViewVehiculoFletero);
+        mllExpandAreaVehiculos_V = itemView.findViewById(R.id.llExpandAreaVehiculos);
 
     }
 }

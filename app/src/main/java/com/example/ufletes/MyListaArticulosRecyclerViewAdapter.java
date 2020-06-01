@@ -4,16 +4,26 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.ufletes.ListaArticulosFragment.OnListFragmentInteractionListener;
+//import com.example.ufletes.ListaArticulosFragment.OnListFragmentInteractionListener;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.ObservableSnapshotArray;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -24,6 +34,7 @@ public class MyListaArticulosRecyclerViewAdapter extends FirestoreRecyclerAdapte
     //private final
     List<Articulos_Lista> mValues;
     private Context ctx;
+    private int expandedPosition = -1;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -49,6 +60,13 @@ public class MyListaArticulosRecyclerViewAdapter extends FirestoreRecyclerAdapte
                     .placeholder(R.drawable.ic_noimg)
                     .into(holder.imageViewArticulo)
             ;
+
+            ObservableSnapshotArray<Articulos_Lista> observableSnapshotArray = getSnapshots();
+            DocumentReference documentReference =
+                    observableSnapshotArray.getSnapshot(position).getReference();
+
+            documentReference.delete();
+
         }
     }
 
@@ -67,6 +85,8 @@ public class MyListaArticulosRecyclerViewAdapter extends FirestoreRecyclerAdapte
             //public final ImageView imageViewArticulo;
             public final ImageView imageViewArticulo;
 
+            public LinearLayout mllExpandAreaListArticulos;
+
             public Articulos_Lista mItem;
 
             public ViewHolder(@NonNull View view) {
@@ -76,6 +96,7 @@ public class MyListaArticulosRecyclerViewAdapter extends FirestoreRecyclerAdapte
                 textViewDescripcionArticuloListado = view.findViewById(R.id.textViewListado_Descripcion);
                 textViewCantidadArticuloListado = view.findViewById(R.id.textViewListado_Cantidad);
                 imageViewArticulo = view.findViewById(R.id.imageViewListado_Foto_Articulo);
+                //mllExpandAreaListArticulos= view.findViewById(R.id.llExpandAreaListArticulos);
 
             }
 

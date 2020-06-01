@@ -3,6 +3,7 @@ package com.example.ufletes.holders;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ public class articulosClienteHolder  extends RecyclerView.ViewHolder {
     public final TextView textViewDescripcionArticuloListado;
     public final TextView textViewCantidadArticuloListado;
     public final ImageView imageViewArticulo;
+    public LinearLayout mllExpandAreaListArticulos;
 
 
     public articulosClienteHolder(@NonNull View itemView) {

@@ -32,12 +32,14 @@ import androidx.fragment.app.FragmentManager;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.ObservableSnapshotArray;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -155,11 +157,11 @@ public class BusquedaListaFleterosFragment extends Fragment {
                         mPDialog.setMessage("Espere un momento...");
                         mPDialog.setCancelable(false);
                         mPDialog.show();
+
                         idDocFletero_bus = auxIDFLETERO;
                         expandedPosition = isExpanded ? -1:position;
                         TransitionManager.beginDelayedTransition(RVFleteros_Busqueda);
                         notifyDataSetChanged();
-
                         // consulta para obtener datos extras...
                         mFireStore.collection("Fletero")
                                 .document(idDocFletero_bus)
@@ -174,7 +176,6 @@ public class BusquedaListaFleterosFragment extends Fragment {
                                                 holder.mtextViewTipoV_Busq.setText(document.getData().get("tipo_v").toString());
                                                 holder.mtextViewMedida_Busq.setText(document.getData().get("medida_v").toString());
                                                 holder.mtextViewVolv_Busq.setText(document.getData().get("vol_v").toString());
-
                                             }
                                         }
                                         mPDialog.dismiss();
@@ -203,45 +204,7 @@ public class BusquedaListaFleterosFragment extends Fragment {
                 return new busqFleterosHolder(view);
             }
         };
-
-         /*   context = view.getContext();
-
-            mFirestore = FirebaseFirestore.getInstance();
-            CollectionReference colFletero =  mFirestore.collection("Fletero");
-            //query = colFletero.orderBy("nombre", Query.Direction.ASCENDING);
-
-            //query = mFirestore.collection("Fletero").orderBy("nombre").startAt(searchName).endAt(searchName + "\uf8ff")
-
-            if (Filtro_Fleteros_Fragment.mBusqueda.contains("Acendente")) {
-                query = mFirestore.collection("Fletero").orderBy("nombre", Query.Direction.ASCENDING);
-            }
-            if (Filtro_Fleteros_Fragment.mBusqueda.contains("Descendente")) {
-                query = mFirestore.collection("Fletero").orderBy("nombre", Query.Direction.DESCENDING);
-            }
-            if (Filtro_Fleteros_Fragment.mBusqueda.isEmpty() || Filtro_Fleteros_Fragment.mBusqueda.contains("normal")) {
-                query = mFirestore.collection("Fletero").orderBy("correo");
-            }
-//https://stackoverflow.com/questions/49995926/how-to-search-firebase-text-by-lower-case-also
-//https://stackoverflow.com/questions/58458640/is-it-possible-to-filter-a-firestore-recyclerview-no-third-party-app
-            RVFleteros_Busqueda = (RecyclerView) view;
-
-            FirestoreRecyclerOptions =
-                    new FirestoreRecyclerOptions.Builder<Fleteros_Lista>()
-                            .setQuery(query, Fleteros_Lista.class).build();
-
-            Adapter_Fleteros_Busqueda = new MyBusquedaListaFleterosRecyclerViewAdapter(getActivity(), FirestoreRecyclerOptions);
-            Adapter_Fleteros_Busqueda.notifyDataSetChanged();
-            if (mColumnCount <= 1) {
-                RVFleteros_Busqueda.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                RVFleteros_Busqueda.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            RVFleteros_Busqueda.setAdapter(Adapter_Fleteros_Busqueda);
-//------------------------------------------------------------------------------------------------------------------------------------------
-
-
-          */
-         RVFleteros_Busqueda.setAdapter(Adapter_Fleteros_Busqueda);
+        RVFleteros_Busqueda.setAdapter(Adapter_Fleteros_Busqueda);
 
     }
 
@@ -291,50 +254,6 @@ public class BusquedaListaFleterosFragment extends Fragment {
         Adapter_Fleteros_Busqueda.notifyDataSetChanged();
     }
 
-    /*
-    public void filtroInicial() {
-        mFirestore = FirebaseFirestore.getInstance();
-        query = mFirestore.collection("Fletero").orderBy("correo");
-        recyclerattach();
-        Adapter_Fleteros_Busqueda.notifyDataSetChanged();
-    }
-
-
-    public void filtroAscendente () {
-        mFirestore = FirebaseFirestore.getInstance();
-        query = mFirestore.collection("Fletero").orderBy("nombre", Query.Direction.ASCENDING);
-        recyclerattach();
-        Adapter_Fleteros_Busqueda.notifyDataSetChanged();
-    }
-
-    public void filtroDescendente() {
-        mFirestore = FirebaseFirestore.getInstance();
-        query = mFirestore.collection("Fletero").orderBy("nombre", Query.Direction.DESCENDING);
-        recyclerattach();
-        Adapter_Fleteros_Busqueda.notifyDataSetChanged();
-    }
-
-    public void recyclerattach() {
-        context = view.getContext();
-
-        RVFleteros_Busqueda = (RecyclerView) view;
-        FirestoreRecyclerOptions =
-                new FirestoreRecyclerOptions.Builder<Fleteros_Lista>()
-                        .setQuery(query, Fleteros_Lista.class).build();
-
-        Adapter_Fleteros_Busqueda = new MyBusquedaListaFleterosRecyclerViewAdapter(getActivity(), FirestoreRecyclerOptions);
-        Adapter_Fleteros_Busqueda.notifyDataSetChanged();
-
-        if (mColumnCount <= 1) {
-            RVFleteros_Busqueda.setLayoutManager(new LinearLayoutManager(context));
-        } else {
-            RVFleteros_Busqueda.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-        }
-
-        RVFleteros_Busqueda.setAdapter(Adapter_Fleteros_Busqueda);
-    }
-
-     */
 
     @Override
     public void onStart() {
@@ -348,40 +267,4 @@ public class BusquedaListaFleterosFragment extends Fragment {
         Adapter_Fleteros_Busqueda.stopListening();
     }
 
-    /*
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-
-        Toast.makeText(getContext(), "ATTACH", Toast.LENGTH_LONG).show();
-    }
-
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-        Toast.makeText(getContext(), "LIASLASDSAL", Toast.LENGTH_LONG).show();
-    }
-
-
-
-
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(Fleteros_Lista item);
-    }
-
-    //Una buena opcion para pasar los datos al adapter es justamente ponerlos como parametro de este metodo y luego pasarlos al adapter
-    public void updateListaFleteros(){
-        //Aca deberias actualizar los datos del adapter... en el codigo no veo dodne le cargas los datos, pero aqui deberias actualizarlos y luego hacer el notifyDataSetChanged() que le indicara que tiene que refrescar el recycler y actualizar lo que esta mostrando.
-        RVFleteros_Busqueda.setAdapter(new MyBusquedaListaFleterosRecyclerViewAdapter(getActivity(), FirestoreRecyclerOptions));
-    }
-     */
 }

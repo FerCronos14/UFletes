@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Looper;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ import com.example.ufletes.holders.vehiculosFleterosHolder;
 import com.example.ufletes.ui.Vehiculos_Lista;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.ObservableSnapshotArray;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -45,9 +47,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.util.List;
@@ -67,7 +73,7 @@ public class Inicio_fletero_fragment extends Fragment {
     View view;
     private Button mbtnAgregarVehiculo_Fletero_Home;
 
-    private GoogleMap mMap;
+    private Button mbtnElimiarVehiculo;
     private Location currentLocation;
     private static List<Address> strDireccionRastreo;
     private String addressRastreo;
@@ -75,6 +81,8 @@ public class Inicio_fletero_fragment extends Fragment {
     LocationRequest mLocationRequest;
     LocationCallback mLocationCallback;
     private static final int REQUEST_CODE = 101;
+
+    private int expandedPosition = -1;
 
     public Inicio_fletero_fragment() {
         // Required empty public constructor
@@ -123,18 +131,44 @@ public class Inicio_fletero_fragment extends Fragment {
     private void attachRecyclerView() {
         Adapter_Vehiculos = new FirestoreRecyclerAdapter<Vehiculos_Lista, vehiculosFleterosHolder>(FirestoreRecyclerOptions) {
             @Override
-            protected void onBindViewHolder(@NonNull vehiculosFleterosHolder holder, int position, @NonNull Vehiculos_Lista model) {
+            protected void onBindViewHolder(@NonNull vehiculosFleterosHolder holder, final int position, @NonNull Vehiculos_Lista model) {
                 holder.mtextViewMarcaV.setText((model.getMarca_v()));
                 holder.mtextViewTipoV.setText((model.getTipo_v()));
                 holder.mtextViewVolv.setText((model.getVol_v()));
                 holder.mtextViewMedida.setText(model.getMedida_v());
+
+                ObservableSnapshotArray<Vehiculos_Lista> observableSnapshotArray = getSnapshots();
+                final DocumentReference documentReference =
+                        observableSnapshotArray.getSnapshot(position).getReference();
+
                 Glide.with(getContext())
-                        .load(Registro_AgregarAuto.sPathFoto_Vehiculo)
+                        .load(model.getPathFoto_v())
                         .fitCenter()
                         .centerCrop()
                         .placeholder(R.drawable.ic_vehiculo_na)
                         .into(holder.imgFoto_Vehiculo)
                 ;
+                final boolean isExpanded = position==expandedPosition;
+                holder.mllExpandAreaVehiculos_V.setVisibility(isExpanded?View.VISIBLE:View.GONE);
+                holder.itemView.setActivated(isExpanded);
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        expandedPosition = isExpanded ? -1:position;
+                        TransitionManager.beginDelayedTransition(RVVehiculos);
+                        notifyDataSetChanged();
+
+                        // accion de llamar a feltero
+                        mbtnElimiarVehiculo = v.findViewById(R.id.btnIEliminar_ListaArticulos);
+                        mbtnElimiarVehiculo.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(getContext(), "Eliminando"+ documentReference.get(), Toast.LENGTH_SHORT).show();
+                                documentReference.delete();
+                            }
+                        });
+                    }
+                });
             }
 
             @NonNull
