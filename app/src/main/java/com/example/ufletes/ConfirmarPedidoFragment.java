@@ -62,7 +62,7 @@ public class ConfirmarPedidoFragment extends Fragment {
     private void getData() {
         query = getInstance()
                 .collection("Cliente")
-                .document("QjQzVMbqNXfDscOWT9Vd")
+                .document(SolicitudesFletesFragment.idCliente_pedido)
                 .collection("Articulos");
 
         FirestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Articulos_Lista>()

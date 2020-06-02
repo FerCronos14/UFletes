@@ -23,6 +23,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.ufletes.holders.articulosClienteHolder;
 import com.example.ufletes.holders.solicitudesHolder;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -40,8 +42,8 @@ public class SolicitudesFletesFragment extends Fragment {
     private FirestoreRecyclerAdapter<Solicitudes_Lista, solicitudesHolder> Adapter_Solicitudes;
     private FirestoreRecyclerOptions<Solicitudes_Lista> FirestoreRecyclerOptions;
 
+
     private Button filterButton;
-    private EditText searchBox;
     private Button mbtnAceptarPedido;
 
 
@@ -49,8 +51,10 @@ public class SolicitudesFletesFragment extends Fragment {
 
     Query query;
     View view;
+    Dialog listaArticulosCliente;
     private FirebaseFirestore mFirestore;
     private int expandedPosition = -1;
+
 
 
 
@@ -82,13 +86,11 @@ public class SolicitudesFletesFragment extends Fragment {
         final String[] order = {"Recientes", "Antiguos", "Neutral"};
 
         filterButton = view.findViewById(R.id.filterButtonSolicitudes);
-        searchBox = view.findViewById(R.id.searchBoxSolicitudes);
-
 
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity());
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity(), R.style.RoundShapeTheme);
                 materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
                 materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
                     @Override
@@ -127,7 +129,6 @@ public class SolicitudesFletesFragment extends Fragment {
                 final boolean isExpanded = position==expandedPosition;
                 holder.mllExpandArea.setVisibility(isExpanded?View.VISIBLE:View.GONE);
                 holder.itemView.setActivated(isExpanded);
-
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -137,20 +138,30 @@ public class SolicitudesFletesFragment extends Fragment {
                         notifyDataSetChanged();
                         mbtnAceptarPedido = v.findViewById(R.id.btnInfoPedido_Solicitud);
 
-                      //  final Dialog listaArticulosCliente = new Dialog(getContext(), android.R.style.Theme_Black_NoTitleBar);
-                      //  listaArticulosCliente.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100,0,0,0)));
-                      //  listaArticulosCliente.setContentView(R.layout.fragment_confirmar_pedido);
-                      //  listaArticulosCliente.onAttachedToWindow();
-                      // listaArticulosCliente.setCanceledOnTouchOutside(true);
-                      //  listaArticulosCliente.setCancelable(true);
+                        listaArticulosCliente = new Dialog(getContext(), android.R.style.Theme_Black_NoTitleBar);
+                        listaArticulosCliente.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100,0,0,0)));
+                        listaArticulosCliente.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        listaArticulosCliente.setContentView(R.layout.fragment_confirmar_pedido);
+                        listaArticulosCliente.onAttachedToWindow();
+                        listaArticulosCliente.setCanceledOnTouchOutside(true);
+                        listaArticulosCliente.setCancelable(true);
 
                        // if (isExpanded) {
                             mbtnAceptarPedido.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    fragment_ConfirmarPedido_Fletero dialog = new fragment_ConfirmarPedido_Fletero();
-                                    dialog.show(getActivity().getSupportFragmentManager(), "DialogoConfirmacion");
-
+                                    //fragment_ConfirmarPedido_Fletero dialog = new fragment_ConfirmarPedido_Fletero();
+                                    //dialog.show(getActivity().getSupportFragmentManager(), "DialogoConfirmacion");
+                                    Query query = mFirestore.collection("Cliente")
+                                            .document(idCliente_pedido)
+                                            .collection("Articulos");
+                                    RecyclerView recyclerView = (RecyclerView) listaArticulosCliente.findViewById(R.id.confirmacionArticulosClienteRVAct);
+                                    FirestoreRecyclerOptions<Articulos_Lista> FirestoreRecyclerOptions =
+                                            new FirestoreRecyclerOptions.Builder<Articulos_Lista>()
+                                                    .setQuery(query, Articulos_Lista.class).build();
+                                    MyListaArticulosRecyclerViewAdapter Adapter_Articulos = new MyListaArticulosRecyclerViewAdapter(getContext(), FirestoreRecyclerOptions);
+                                    recyclerView.setAdapter(Adapter_Articulos);
+                                    listaArticulosCliente.show();
 
                                     // Button btnConfirmarPedidoFlete = (Button) listaArticulosCliente.findViewById(R.id.btnAceptarPedido_Confirmado_Dialog);
                                    // btnConfirmarPedidoFlete.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +171,6 @@ public class SolicitudesFletesFragment extends Fragment {
                                            // startActivity(intent);
                                         //}
                                     //});
-
                                     //listaArticulosCliente.show();
                                 }
                             });
@@ -203,12 +213,11 @@ public class SolicitudesFletesFragment extends Fragment {
         final String[] order = {"Recientes", "Antiguos", "Neutral"};
 
         filterButton = view.findViewById(R.id.filterButtonSolicitudes);
-        searchBox = view.findViewById(R.id.searchBoxSolicitudes);
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity());
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity(), R.style.RoundShapeTheme);
                 materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
                 materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
                     @Override
