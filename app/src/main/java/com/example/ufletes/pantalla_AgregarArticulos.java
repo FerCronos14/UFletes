@@ -94,14 +94,21 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
     private FirestoreRecyclerOptions<Articulos_Lista> FirestoreRecyclerOptionsList;
     private int expandedPosition = -1;
     Query query;
-    View view;
+    String mCurrentPhotoPath;
+    static final int REQUEST_TAKE_PHOTO = 1;
+    private static final int GALLERY_INTENT = 10;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla__agregar_articulos);
         getSupportActionBar().hide();
+        createInstances();
+        loadData();
+    }
 
+    private void createInstances() {
         mtxtNombreArticulo = findViewById(R.id.editTextNombreArticulo);
         mtxtCantidadArticulo = findViewById(R.id.txtCantidadArticulo);
         mtxtDescripcionArticulo = findViewById(R.id.editTextDescripcionArticulo);
@@ -110,7 +117,6 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
         mbtnSumar = findViewById(R.id.imageButtonMas);
         mbtnRestar = findViewById(R.id.imageButtonMenos);
         mbtnFotoArticulo = findViewById(R.id.btnAgregarFoto_Articulo);
-
         mbtnAgregarArticulo.setOnClickListener(pantalla_AgregarArticulos.this);
         mbtnRestar.setOnClickListener(pantalla_AgregarArticulos.this);
         mbtnSumar.setOnClickListener(pantalla_AgregarArticulos.this);
@@ -122,16 +128,14 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
         mStorage = FirebaseStorage.getInstance().getReference();
 
         RVListaArticulos = findViewById(R.id.listArticulosRVAct);
-        RVListaArticulos.setHasFixedSize(true);
-        LinearLayoutManager mlinearLayoutManager = new LinearLayoutManager(this);
-        RVListaArticulos.setLayoutManager(mlinearLayoutManager);
-        getData();
-
     }
 
-    private void getData() {
-        query = getInstance().
-                collection("Cliente")
+    private void loadData() {
+        RVListaArticulos.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+
+        query = getInstance()
+                .collection("Cliente")
                 .document(MainActivity.idDoc_Cliente)
                 .collection("Articulos");
 
@@ -139,11 +143,8 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
                 .setQuery(query, Articulos_Lista.class)
                 .setLifecycleOwner(this)
                 .build();
-        attachRecyclerView();
-        Adapter_ListArticulos.notifyDataSetChanged();
-    }
 
-    private void attachRecyclerView() {
+
         Adapter_ListArticulos = new FirestoreRecyclerAdapter<Articulos_Lista, articulosClienteHolder>(FirestoreRecyclerOptionsList) {
             @Override
             protected void onBindViewHolder(@NonNull articulosClienteHolder holder, int position, @NonNull Articulos_Lista model) {
@@ -155,16 +156,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
                         .fitCenter()
                         .centerCrop()
                         .placeholder(R.drawable.ic_noimg)
-                        .into(holder.imageViewArticulo)
-                ;
-/*
-                ObservableSnapshotArray<Articulos_Lista> observableSnapshotArray = getSnapshots();
-                DocumentReference documentReference =
-                        observableSnapshotArray.getSnapshot(position).getReference();
-
-                documentReference.delete();
-
- */
+                        .into(holder.imageViewArticulo);
             }
 
             @NonNull
@@ -177,8 +169,9 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
             }
         };
 
+        RVListaArticulos.setLayoutManager(linearLayoutManager);
         RVListaArticulos.setAdapter(Adapter_ListArticulos);
-
+        Adapter_ListArticulos.notifyDataSetChanged();
     }
 
     @Override
@@ -266,7 +259,6 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
                     tomarFoto_Articulo();
                 } else {
                     if (opciones[i].equals("Cargar imagen")) {
-
                         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         intent.setType("image/");
                         startActivityForResult(intent.createChooser(intent, "Seleccione la aplicación"), 10);
@@ -281,7 +273,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
         alertOpciones.show();
     }
 
-    String mCurrentPhotoPath;
+
     private File createImageFile () throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "Backup_" + timeStamp + "_";
@@ -292,7 +284,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
         return image;
     }
 
-    static final int REQUEST_TAKE_PHOTO = 1;
+
     private void tomarFoto_Articulo () {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -315,9 +307,6 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
         }
     }
 
-    private static final int GALLERY_INTENT = 10;
-
-    static final int REQUEST_IMAGE_CAPTURE = 1;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

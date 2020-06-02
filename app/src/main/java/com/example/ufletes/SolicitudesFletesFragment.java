@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ufletes.holders.articulosClienteHolder;
+import com.example.ufletes.holders.pedidosHolder;
 import com.example.ufletes.holders.solicitudesHolder;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -42,7 +43,7 @@ public class SolicitudesFletesFragment extends Fragment {
     private FirestoreRecyclerAdapter<Solicitudes_Lista, solicitudesHolder> Adapter_Solicitudes;
     private FirestoreRecyclerOptions<Solicitudes_Lista> FirestoreRecyclerOptions;
 
-
+    private FirestoreRecyclerAdapter<Articulos_Lista, pedidosHolder> adapter;
     private Button filterButton;
     private Button mbtnAceptarPedido;
 
@@ -90,7 +91,7 @@ public class SolicitudesFletesFragment extends Fragment {
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity(), R.style.RoundShapeTheme);
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity());
                 materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
                 materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
                     @Override
@@ -137,44 +138,68 @@ public class SolicitudesFletesFragment extends Fragment {
                         TransitionManager.beginDelayedTransition(RVSOLICITUDES);
                         notifyDataSetChanged();
                         mbtnAceptarPedido = v.findViewById(R.id.btnInfoPedido_Solicitud);
+                       mbtnAceptarPedido.setOnClickListener(new View.OnClickListener() {
+                           @Override
+                           public void onClick(View v) {
 
-                        listaArticulosCliente = new Dialog(getContext(), android.R.style.Theme_Black_NoTitleBar);
-                        listaArticulosCliente.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100,0,0,0)));
-                        listaArticulosCliente.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        listaArticulosCliente.setContentView(R.layout.fragment_confirmar_pedido);
-                        listaArticulosCliente.onAttachedToWindow();
-                        listaArticulosCliente.setCanceledOnTouchOutside(true);
-                        listaArticulosCliente.setCancelable(true);
 
-                       // if (isExpanded) {
-                            mbtnAceptarPedido.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    //fragment_ConfirmarPedido_Fletero dialog = new fragment_ConfirmarPedido_Fletero();
-                                    //dialog.show(getActivity().getSupportFragmentManager(), "DialogoConfirmacion");
-                                    Query query = mFirestore.collection("Cliente")
-                                            .document(idCliente_pedido)
-                                            .collection("Articulos");
-                                    RecyclerView recyclerView = (RecyclerView) listaArticulosCliente.findViewById(R.id.confirmacionArticulosClienteRVAct);
-                                    FirestoreRecyclerOptions<Articulos_Lista> FirestoreRecyclerOptions =
-                                            new FirestoreRecyclerOptions.Builder<Articulos_Lista>()
-                                                    .setQuery(query, Articulos_Lista.class).build();
-                                    MyListaArticulosRecyclerViewAdapter Adapter_Articulos = new MyListaArticulosRecyclerViewAdapter(getContext(), FirestoreRecyclerOptions);
-                                    recyclerView.setAdapter(Adapter_Articulos);
-                                    listaArticulosCliente.show();
+                               AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                               LayoutInflater inflater = getLayoutInflater();
+                               View convertView = inflater.inflate(R.layout.fragment_confirmar_pedido, null);
 
-                                    // Button btnConfirmarPedidoFlete = (Button) listaArticulosCliente.findViewById(R.id.btnAceptarPedido_Confirmado_Dialog);
-                                   // btnConfirmarPedidoFlete.setOnClickListener(new View.OnClickListener() {
-                                     //   @Override
-                                       // public void onClick(View view) {
-                                         //   Intent intent = new Intent(getContext(), MapsActivity_RastreoFletero.class);
-                                           // startActivity(intent);
-                                        //}
-                                    //});
-                                    //listaArticulosCliente.show();
-                                }
-                            });
-                        //}
+
+                              query = getInstance()
+                                       .collection("Cliente")
+                                       .document(idCliente_pedido)
+                                       .collection("Articulos");
+                               RecyclerView recyclerView = convertView.findViewById(R.id.confirmacionArticulosClienteRVAct);
+                               recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                               recyclerView.setHasFixedSize(true);
+
+
+                               FirestoreRecyclerOptions<Articulos_Lista> options = new FirestoreRecyclerOptions.Builder<Articulos_Lista>()
+                                        .setQuery(query, Articulos_Lista.class)
+                                        .build();
+                                adapter = new FirestoreRecyclerAdapter<Articulos_Lista, pedidosHolder>(options) {
+                                    @NonNull
+                                    @Override
+                                    public pedidosHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                                        View view = LayoutInflater
+                                                .from(parent.getContext())
+                                                .inflate(R.layout.fragment_listaarticulos, parent, false);
+                                        return new pedidosHolder(view);
+                                    }
+
+                                    @Override
+                                    protected void onBindViewHolder(@NonNull pedidosHolder holder, int position, @NonNull Articulos_Lista model) {
+                                        holder.textViewNombreArticuloListado.setText((model.getNombre_a()));
+                                        holder.textViewDescripcionArticuloListado.setText((model.getDescri_a()));
+                                        holder.textViewCantidadArticuloListado.setText((model.getCant_a()));
+                                        Glide.with(getContext())
+                                                .load(model.getPathFoto_a())
+                                                .fitCenter()
+                                                .centerCrop()
+                                                .placeholder(R.drawable.ic_noimg)
+                                                .into(holder.imageViewArticulo);
+                                    }
+                                };
+
+                               //MyListaArticulosRecyclerViewAdapter adapter = new MyListaArticulosRecyclerViewAdapter(getContext(), options);
+                               adapter.startListening();
+                               adapter.notifyDataSetChanged();
+                               recyclerView.setAdapter(adapter);
+                               alertDialog.setView(convertView);
+
+                               AlertDialog dialog = alertDialog.create();
+                               dialog.getWindow().setLayout(600, 400);
+
+
+
+                               dialog.show();
+                               adapter.notifyDataSetChanged();
+
+                           }
+                       });
                     }
                 });
 
@@ -217,7 +242,7 @@ public class SolicitudesFletesFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity(), R.style.RoundShapeTheme);
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity());
                 materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
                 materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
                     @Override
