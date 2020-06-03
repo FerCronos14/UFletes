@@ -46,8 +46,6 @@ public class fragment_ConfirmarPedido_Fletero extends DialogFragment {
         super.onCreate(savedInstanceState);
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

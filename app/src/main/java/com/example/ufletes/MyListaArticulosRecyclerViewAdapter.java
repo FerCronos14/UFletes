@@ -1,21 +1,24 @@
 package com.example.ufletes;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-//import com.example.ufletes.ListaArticulosFragment.OnListFragmentInteractionListener;
+import com.example.ufletes.ListaArticulosFragment.OnListFragmentInteractionListener;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firebase.ui.firestore.ObservableSnapshotArray;
@@ -31,10 +34,11 @@ import java.util.List;
 public class MyListaArticulosRecyclerViewAdapter extends FirestoreRecyclerAdapter<Articulos_Lista, MyListaArticulosRecyclerViewAdapter.ViewHolder> {
     //RecyclerView.Adapter<MyListaArticulosRecyclerViewAdapter.ViewHolder>
 
-    //private final
     List<Articulos_Lista> mValues;
     private Context ctx;
     private int expandedPosition = -1;
+    CardView cvListArticulos;
+    Button mbtnEliminarArticulo;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -48,11 +52,16 @@ public class MyListaArticulosRecyclerViewAdapter extends FirestoreRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyListaArticulosRecyclerViewAdapter.ViewHolder holder, int position, @NonNull Articulos_Lista model) {
+    public void onBindViewHolder(@NonNull final MyListaArticulosRecyclerViewAdapter.ViewHolder holder, final int position, @NonNull Articulos_Lista model) {
         {
             holder.textViewNombreArticuloListado.setText((model.getNombre_a()));
             holder.textViewDescripcionArticuloListado.setText((model.getDescri_a()));
             holder.textViewCantidadArticuloListado.setText((model.getCant_a()));
+
+            ObservableSnapshotArray<Articulos_Lista> observableSnapshotArray = getSnapshots();
+            final DocumentReference documentReference =
+                    observableSnapshotArray.getSnapshot(position).getReference();
+
             Glide.with(ctx)
                     .load(model.getPathFoto_a()) // seleccionar path correcto de articulo
                     .fitCenter()
@@ -60,13 +69,25 @@ public class MyListaArticulosRecyclerViewAdapter extends FirestoreRecyclerAdapte
                     .placeholder(R.drawable.ic_noimg)
                     .into(holder.imageViewArticulo)
             ;
+            final boolean isExpanded = position==expandedPosition;
+            holder.mllExpandAreaListArticulos.setVisibility(isExpanded?View.VISIBLE:View.GONE);
+            holder.mView.setActivated(isExpanded);
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    expandedPosition = isExpanded ? -1:position;
+                    TransitionManager.beginDelayedTransition(cvListArticulos);
+                    notifyDataSetChanged();
+                    mbtnEliminarArticulo = view.findViewById(R.id.btnEliminar_listArticulos);
+                    mbtnEliminarArticulo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            documentReference.delete();
 
-            ObservableSnapshotArray<Articulos_Lista> observableSnapshotArray = getSnapshots();
-            DocumentReference documentReference =
-                    observableSnapshotArray.getSnapshot(position).getReference();
-
-            documentReference.delete();
-
+                        }
+                    });
+                }
+            });
         }
     }
 
@@ -96,7 +117,8 @@ public class MyListaArticulosRecyclerViewAdapter extends FirestoreRecyclerAdapte
                 textViewDescripcionArticuloListado = view.findViewById(R.id.textViewListado_Descripcion);
                 textViewCantidadArticuloListado = view.findViewById(R.id.textViewListado_Cantidad);
                 imageViewArticulo = view.findViewById(R.id.imageViewListado_Foto_Articulo);
-                //mllExpandAreaListArticulos= view.findViewById(R.id.llExpandAreaListArticulos);
+                mllExpandAreaListArticulos= view.findViewById(R.id.llExpandAreaListaArticulosA);
+                cvListArticulos= view.findViewById(R.id.cardviewListArticulos);
 
             }
 

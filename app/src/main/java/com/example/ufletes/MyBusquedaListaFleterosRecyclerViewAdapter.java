@@ -1,9 +1,5 @@
 package com.example.ufletes;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.ClipData;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,23 +7,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import android.widget.Filter;
-import android.widget.Filterable;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-//import com.example.ufletes.BusquedaListaFleterosFragment.OnListFragmentInteractionListener;
-import com.example.ufletes.ui.Vehiculos_Lista;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyBusquedaListaFleterosRecyclerViewAdapter extends FirestoreRecyclerAdapter<Fleteros_Lista,MyBusquedaListaFleterosRecyclerViewAdapter.ViewHolder> {
 
     List<Fleteros_Lista> mValues;
     List<Fleteros_Lista> mValuesFiltrado;
-//    OnListFragmentInteractionListener mListener;
+    ListaArticulosFragment.OnListFragmentInteractionListener mListener;
 
     private Context ctx;
     /**

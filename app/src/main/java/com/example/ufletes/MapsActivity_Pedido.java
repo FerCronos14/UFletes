@@ -142,7 +142,7 @@ public class MapsActivity_Pedido extends FragmentActivity implements
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            Toast.makeText(getApplicationContext(), "Longitud: " + currentLocation.getLongitude() + "Latitud: " + currentLocation.getLatitude(), Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), "Longitud: " + currentLocation.getLongitude() + "Latitud: " + currentLocation.getLatitude(), Toast.LENGTH_LONG).show();
 
 
                             googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -224,23 +224,14 @@ public class MapsActivity_Pedido extends FragmentActivity implements
         mMap = googleMap;
 
         mMap.setOnMarkerClickListener(this);
-       // mMap.setOnMapLongClickListener(this);
-       // mMap.setOnMarkerDragListener(this);
-
-
 
         // obtener coordenadas ubicacion actual
         locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = locManager.getBestProvider(new Criteria(), false);
 
-
         mMap.setMyLocationEnabled(false);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
-
-
-        //Location loc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        //locOrigen = new LatLng(loc.getLatitude(), loc.getLongitude());
 
         locListener = new LocationListener() {
             @Override
@@ -262,25 +253,8 @@ public class MapsActivity_Pedido extends FragmentActivity implements
 
 
                 locOrigen = new LatLng(location.getLatitude(), location.getLongitude());
-                /*
-                // obtener direccion convirtiendo las coordenadas
-
-                Geocoder geocdireccionOrigen = new Geocoder(getApplicationContext(), Locale.getDefault());
-                try {
-                    strDireccionOridgen = geocdireccionOrigen.getFromLocation(location.getLatitude(),location.getLongitude(),1);
-                    addressOrigen = strDireccionOridgen.get(0).getAddressLine(0);
-                    //Toast.makeText(this, "Direccion pa: " + strDireccionOridgen.get(0).getAddressLine(0), Toast.LENGTH_LONG).show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                 */
-                //Toast.makeText(getApplicationContext(), "Longitud: " + location.getLongitude() + "Latitud: " + location.getLatitude(), Toast.LENGTH_LONG).show();
             }
         };
-
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locOrigen, 15));
-
     }
 
 

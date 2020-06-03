@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,7 +81,7 @@ public class BusquedaListaFleterosFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFireStore = FirebaseFirestore.getInstance();
-        mPDialog = new ProgressDialog(getContext());
+        mPDialog = new ProgressDialog(getContext(), R.style.CustomAlertDialog);
         //mSearchViewBusqFleteros = getActivity().findViewById(R.id.svBusqFletero);
     }
 
@@ -101,12 +103,11 @@ public class BusquedaListaFleterosFragment extends Fragment {
 
         final String[] order = getResources().getStringArray(R.array.order);
         filterButton = view.findViewById(R.id.filterButtonBusqFletero);
-        searchBox = view.findViewById(R.id.searchBoxBusqFletero);
 
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity());
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity(), R.style.RoundShapeTheme);
                 materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
                 materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
                     @Override
@@ -114,6 +115,35 @@ public class BusquedaListaFleterosFragment extends Fragment {
                         changeOrder(order[which]);
                     }
                 }).show();
+            }
+        });
+
+        searchBox = view.findViewById(R.id.searchBoxBusqFletero);
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Adapter_Fleteros_Busqueda.stopListening();
+                String searchText = searchBox.getText().toString();
+                query = getInstance()
+                        .collection("Fletero")
+                        .orderBy("nombre", Query.Direction.ASCENDING)
+                        .startAt(searchText)
+                        .endAt(searchText  + "\uf8ff")
+                ;
+
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                FirestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Fleteros_Lista>()
+                        .setQuery(query, Fleteros_Lista.class)
+                        .build();
+                attachRecyclerView();
+                Adapter_Fleteros_Busqueda.startListening();
+                Adapter_Fleteros_Busqueda.notifyDataSetChanged();
             }
         });
         getData();
@@ -228,12 +258,10 @@ public class BusquedaListaFleterosFragment extends Fragment {
         final String[] order = getResources().getStringArray(R.array.order);
 
         filterButton = view.findViewById(R.id.filterButtonBusqFletero);
-        searchBox = view.findViewById(R.id.searchBox);
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity());
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity(), R.style.RoundShapeTheme);
                 materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
                 materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
                     @Override
@@ -241,8 +269,6 @@ public class BusquedaListaFleterosFragment extends Fragment {
                         changeOrder(order[which]);
                     }
                 }).show();
-
-
             }
         });
 

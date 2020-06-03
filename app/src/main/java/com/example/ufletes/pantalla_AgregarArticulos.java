@@ -65,7 +65,7 @@ import java.util.Objects;
 
 import static com.google.firebase.firestore.FirebaseFirestore.getInstance;
 
-public class pantalla_AgregarArticulos extends AppCompatActivity implements  View.OnClickListener {
+public class pantalla_AgregarArticulos extends AppCompatActivity implements ListaArticulosFragment.OnListFragmentInteractionListener, View.OnClickListener {
 
     private EditText mtxtNombreArticulo;
     private TextView mtxtCantidadArticulo;
@@ -76,6 +76,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
     private String descripcionArticulo ="";
     static String sPathFoto_Articulo = " ";
     static String idDocArticulo = "";
+    static String idDocArticulo2 = "";
 
     private Button mbtnAgregarArticulo;
     private ImageButton mbtnSumar;
@@ -116,82 +117,10 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
         mbtnSumar.setOnClickListener(pantalla_AgregarArticulos.this);
         mbtnFotoArticulo.setOnClickListener(pantalla_AgregarArticulos.this);
 
-        mPDialog = new ProgressDialog(this);
+        mPDialog = new ProgressDialog(this, R.style.CustomAlertDialog);
 
         mFireStore = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference();
-
-        RVListaArticulos = findViewById(R.id.listArticulosRVAct);
-        RVListaArticulos.setHasFixedSize(true);
-        LinearLayoutManager mlinearLayoutManager = new LinearLayoutManager(this);
-        RVListaArticulos.setLayoutManager(mlinearLayoutManager);
-        getData();
-
-    }
-
-    private void getData() {
-        query = getInstance().
-                collection("Cliente")
-                .document(MainActivity.idDoc_Cliente)
-                .collection("Articulos");
-
-        FirestoreRecyclerOptionsList = new FirestoreRecyclerOptions.Builder<Articulos_Lista>()
-                .setQuery(query, Articulos_Lista.class)
-                .setLifecycleOwner(this)
-                .build();
-        attachRecyclerView();
-        Adapter_ListArticulos.notifyDataSetChanged();
-    }
-
-    private void attachRecyclerView() {
-        Adapter_ListArticulos = new FirestoreRecyclerAdapter<Articulos_Lista, articulosClienteHolder>(FirestoreRecyclerOptionsList) {
-            @Override
-            protected void onBindViewHolder(@NonNull articulosClienteHolder holder, int position, @NonNull Articulos_Lista model) {
-                holder.textViewNombreArticuloListado.setText((model.getNombre_a()));
-                holder.textViewDescripcionArticuloListado.setText((model.getDescri_a()));
-                holder.textViewCantidadArticuloListado.setText((model.getCant_a()));
-                Glide.with(getApplicationContext())
-                        .load(model.getPathFoto_a()) // seleccionar path correcto de articulo
-                        .fitCenter()
-                        .centerCrop()
-                        .placeholder(R.drawable.ic_noimg)
-                        .into(holder.imageViewArticulo)
-                ;
-/*
-                ObservableSnapshotArray<Articulos_Lista> observableSnapshotArray = getSnapshots();
-                DocumentReference documentReference =
-                        observableSnapshotArray.getSnapshot(position).getReference();
-
-                documentReference.delete();
-
- */
-            }
-
-            @NonNull
-            @Override
-            public articulosClienteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                Toast.makeText(getApplication(), "ocreate holder" , Toast.LENGTH_SHORT).show();
-
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_listaarticulos, parent, false);
-                return new articulosClienteHolder(view);
-            }
-        };
-
-        RVListaArticulos.setAdapter(Adapter_ListArticulos);
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Adapter_ListArticulos.startListening();
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Adapter_ListArticulos.stopListening();
     }
 
     public void manejoEventosAgregaArticulos (int opcA) {
@@ -224,6 +153,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
                             mtxtNombreArticulo.setText("");
                             mtxtDescripcionArticulo.setText("");
                             mtxtCantidadArticulo.setText("1");
+                            sPathFoto_Articulo = "";
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -323,20 +253,23 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == GALLERY_INTENT) {
             Uri uriFotoArticulo = data.getData();
+            mPDialog.setTitle("Subiendo imagen, espere por favor.");
+            mPDialog.setMessage("Espere un momento...");
+            mPDialog.setCancelable(false);
+            mPDialog.show();
 
             final StorageReference DBArticuloPath = mStorage.child("fotos_articulos").child(MainActivity.idDoc_Cliente).child("galeria/" + uriFotoArticulo.getLastPathSegment());
             DBArticuloPath.putFile(uriFotoArticulo)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                             Toast.makeText(pantalla_AgregarArticulos.this, "Se subio exitosamente", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                     double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                    Toast.makeText(pantalla_AgregarArticulos.this, "Subiendo imagen, espere por favor.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(pantalla_AgregarArticulos.this, "Subiendo imagen, espere por favor.", Toast.LENGTH_SHORT).show();
 
                     System.out.println("Upload is " + progress + "% done");
                 }
@@ -345,7 +278,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
                 public void onPaused(UploadTask.TaskSnapshot taskSnapshot) {
                     System.out.println("Upload is paused");
                     Toast.makeText(pantalla_AgregarArticulos.this, "Ha sido pausado...", Toast.LENGTH_SHORT).show();
-
+                    mPDialog.dismiss();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -368,6 +301,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         sPathFoto_Articulo = downloadUri.toString();
+                        mPDialog.dismiss();
                     } else {
                         // Handle failures
                         // ...
@@ -378,11 +312,14 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
 
         } else {
             if (resultCode == RESULT_OK && requestCode == REQUEST_IMAGE_CAPTURE) {
+                mPDialog.setTitle("Subiendo imagen, espere por favor.");
+                mPDialog.setMessage("Espere un momento...");
+                mPDialog.setCancelable(false);
+                mPDialog.show();
 
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-
                 byte[] b = stream.toByteArray();
                 Uri uri = data.getData();
                 final StorageReference filepath = mStorage.child("fotos_articulos").child(MainActivity.idDoc_Cliente).child("camara/foto " + new Date());
@@ -412,6 +349,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
                         if (task.isSuccessful()) {
                             Uri downloadUri = task.getResult();
                             sPathFoto_Articulo = downloadUri.toString();
+                            mPDialog.dismiss();
                         } else {
                         }
                     }
@@ -420,7 +358,10 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements  Vie
         }
     }
 
+    @Override
+    public void onListFragmentInteraction(Articulos_Lista item) {
 
+    }
 
     @Override
     public void onClick(View view) {

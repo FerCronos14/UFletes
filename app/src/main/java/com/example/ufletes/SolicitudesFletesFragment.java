@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ufletes.holders.articulosClienteHolder;
+import com.example.ufletes.holders.pedidosHolder;
 import com.example.ufletes.holders.solicitudesHolder;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -34,12 +35,14 @@ import com.google.firebase.firestore.Query;
 
 import static com.google.firebase.firestore.FirebaseFirestore.getInstance;
 
+
 public class SolicitudesFletesFragment extends Fragment {
 
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private RecyclerView RVSOLICITUDES;
     private FirestoreRecyclerAdapter<Solicitudes_Lista, solicitudesHolder> Adapter_Solicitudes;
+    private FirestoreRecyclerAdapter<Articulos_Lista, pedidosHolder> adapter;
     private FirestoreRecyclerOptions<Solicitudes_Lista> FirestoreRecyclerOptions;
 
 
@@ -138,39 +141,70 @@ public class SolicitudesFletesFragment extends Fragment {
                         notifyDataSetChanged();
                         mbtnAceptarPedido = v.findViewById(R.id.btnInfoPedido_Solicitud);
 
-                        listaArticulosCliente = new Dialog(getContext(), android.R.style.Theme_Black_NoTitleBar);
-                        listaArticulosCliente.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100,0,0,0)));
-                        listaArticulosCliente.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        listaArticulosCliente.setContentView(R.layout.fragment_confirmar_pedido);
-                        listaArticulosCliente.onAttachedToWindow();
-                        listaArticulosCliente.setCanceledOnTouchOutside(true);
-                        listaArticulosCliente.setCancelable(true);
-
                        // if (isExpanded) {
-                            mbtnAceptarPedido.setOnClickListener(new View.OnClickListener() {
+                        mbtnAceptarPedido.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    //fragment_ConfirmarPedido_Fletero dialog = new fragment_ConfirmarPedido_Fletero();
-                                    //dialog.show(getActivity().getSupportFragmentManager(), "DialogoConfirmacion");
-                                    Query query = mFirestore.collection("Cliente")
+                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                                    LayoutInflater inflater = getLayoutInflater();
+                                    View convertView = inflater.inflate(R.layout.fragment_confirmar_pedido, null);
+
+
+                                    query = getInstance()
+                                            .collection("Cliente")
                                             .document(idCliente_pedido)
                                             .collection("Articulos");
-                                    RecyclerView recyclerView = (RecyclerView) listaArticulosCliente.findViewById(R.id.confirmacionArticulosClienteRVAct);
-                                    FirestoreRecyclerOptions<Articulos_Lista> FirestoreRecyclerOptions =
-                                            new FirestoreRecyclerOptions.Builder<Articulos_Lista>()
-                                                    .setQuery(query, Articulos_Lista.class).build();
-                                    MyListaArticulosRecyclerViewAdapter Adapter_Articulos = new MyListaArticulosRecyclerViewAdapter(getContext(), FirestoreRecyclerOptions);
-                                    recyclerView.setAdapter(Adapter_Articulos);
-                                    listaArticulosCliente.show();
+                                    RecyclerView recyclerView = convertView.findViewById(R.id.confirmacionArticulosClienteRVAct);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                    recyclerView.setHasFixedSize(true);
 
-                                    // Button btnConfirmarPedidoFlete = (Button) listaArticulosCliente.findViewById(R.id.btnAceptarPedido_Confirmado_Dialog);
-                                   // btnConfirmarPedidoFlete.setOnClickListener(new View.OnClickListener() {
-                                     //   @Override
-                                       // public void onClick(View view) {
-                                         //   Intent intent = new Intent(getContext(), MapsActivity_RastreoFletero.class);
-                                           // startActivity(intent);
-                                        //}
-                                    //});
+
+                                    FirestoreRecyclerOptions<Articulos_Lista> options = new FirestoreRecyclerOptions.Builder<Articulos_Lista>()
+                                            .setQuery(query, Articulos_Lista.class)
+                                            .build();
+                                    adapter = new FirestoreRecyclerAdapter<Articulos_Lista, pedidosHolder>(options) {
+                                        @NonNull
+                                        @Override
+                                        public pedidosHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                                            View view = LayoutInflater
+                                                    .from(parent.getContext())
+                                                    .inflate(R.layout.fragment_listaarticulos, parent, false);
+                                            return new pedidosHolder(view);
+                                        }
+
+                                        @Override
+                                        protected void onBindViewHolder(@NonNull pedidosHolder holder, int position, @NonNull Articulos_Lista model) {
+                                            holder.textViewNombreArticuloListado.setText((model.getNombre_a()));
+                                            holder.textViewDescripcionArticuloListado.setText((model.getDescri_a()));
+                                            holder.textViewCantidadArticuloListado.setText((model.getCant_a()));
+                                            Glide.with(getContext())
+                                                    .load(model.getPathFoto_a())
+                                                    .fitCenter()
+                                                    .centerCrop()
+                                                    .placeholder(R.drawable.ic_noimg)
+                                                    .into(holder.imageViewArticulo);
+                                        }
+                                    };
+
+                                    adapter.startListening();
+                                    adapter.notifyDataSetChanged();
+                                    recyclerView.setAdapter(adapter);
+                                    alertDialog.setView(convertView);
+
+                                    AlertDialog dialog = alertDialog.create();
+                                    dialog.getWindow().setLayout(600, 400);
+
+                                    dialog.show();
+                                    adapter.notifyDataSetChanged();
+
+                                    Button btnDetallePedidoFlete = (Button) convertView.findViewById(R.id.btnAceptarPedido_Confirmado_Dialog);
+                                    btnDetallePedidoFlete.setOnClickListener(new View.OnClickListener() {
+                                       @Override
+                                         public void onClick(View view) {
+                                            Intent intent = new Intent(getContext(), MapsActivity_RastreoFletero.class);
+                                            startActivity(intent);
+                                        }
+                                    });
                                     //listaArticulosCliente.show();
                                 }
                             });

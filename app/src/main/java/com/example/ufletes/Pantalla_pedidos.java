@@ -73,7 +73,7 @@ public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickL
         mbtnSolicitar_Flete = findViewById(R.id.btnPedirFlete_Pedidos);
         mbtnSolicitar_Flete.setOnClickListener(this);
 
-        mPDialog = new ProgressDialog(this);
+        mPDialog = new ProgressDialog(this, R.style.CustomAlertDialog);
         mFireStore = FirebaseFirestore.getInstance();
 
         txtOrigen = findViewById(R.id.editTextDireccion_Pedidos);

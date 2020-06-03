@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mFireStore = FirebaseFirestore.getInstance();
 
-        mPDialog = new ProgressDialog(this);
+        mPDialog = new ProgressDialog(this, R.style.CustomAlertDialog);
 
         compruebaPermisoSD();
 

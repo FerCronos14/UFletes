@@ -104,7 +104,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
         mbtnFotoVehivulo = findViewById(R.id.btnAgregarFotoVehiculo);
         mbtnFotoVehivulo.setOnClickListener(this);
 
-        mPDialog = new ProgressDialog(this);
+        mPDialog = new ProgressDialog(this, R.style.CustomAlertDialog);
         mspinnerCubicaje = findViewById(R.id.spinnerTipo_Vehiculo);
         final ArrayAdapter<CharSequence> adapterTipo = ArrayAdapter.createFromResource(this, R.array.SpinnerTipoCaja, android.R.layout.simple_spinner_item);
         adapterTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -191,6 +191,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                             mtxtMarcaVehiculo.setText("");
                             mtxtMedidasVehiculo.setText("");
                             mtxtVolVehiculo.setText("");
+                            sPathFoto_Vehiculo = "";
                             finish();
 
                         }
@@ -276,6 +277,10 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == GALLERY_INTENT) {
+            mPDialog.setTitle("Subiendo imagen, espere por favor.");
+            mPDialog.setMessage("Espere un momento...");
+            mPDialog.setCancelable(false);
+            mPDialog.show();
             Uri uriFotoVehiculo = data.getData();
 
             final StorageReference DBVehiculoPath = mStorage.child("fotos_vehiculos").child(MainActivity.idDoc_Fletero).child("galeria/" + uriFotoVehiculo.getLastPathSegment());
@@ -290,7 +295,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                     double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                    Toast.makeText(Registro_AgregarAuto.this, "Subiendo imagen, espere por favor", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Registro_AgregarAuto.this, "Subiendo imagen, espere por favor", Toast.LENGTH_SHORT).show();
 
                     System.out.println("Upload is " + progress + "% done");
                 }
@@ -299,6 +304,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                 public void onPaused(UploadTask.TaskSnapshot taskSnapshot) {
                     System.out.println("Upload is paused");
                     Toast.makeText(Registro_AgregarAuto.this, "Ha sido pausado...", Toast.LENGTH_SHORT).show();
+                    mPDialog.dismiss();
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -322,6 +328,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         sPathFoto_Vehiculo = downloadUri.toString();
+                        mPDialog.dismiss();
                     } else {
                         // Handle failures
                         // ...
@@ -333,6 +340,10 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
         }else {
 
             if (resultCode == RESULT_OK && requestCode == REQUEST_IMAGE_CAPTURE) {
+                mPDialog.setTitle("Subiendo imagen, espere por favor.");
+                mPDialog.setMessage("Espere un momento...");
+                mPDialog.setCancelable(false);
+                mPDialog.show();
 
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -367,6 +378,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                         if (task.isSuccessful()) {
                             Uri downloadUri = task.getResult();
                             sPathFoto_Vehiculo = downloadUri.toString();
+                            mPDialog.dismiss();
                         } else {
                         }
                     }

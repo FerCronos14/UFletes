@@ -3,6 +3,7 @@ package com.example.ufletes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -48,6 +49,8 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
     private String ConfirmPassword_User_Register = "";
     static String TipoUsuario = "";
     private String idDocumento = "";
+    private ProgressDialog mPDialog;
+
 
     private FirebaseAuth mAuth;
     //private DatabaseReference mDatabase;
@@ -70,6 +73,7 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
         mtxtConfirmPassword_Register_User = findViewById(R.id.editTextConfirmPass_Register_User);
 
         comboUsuarios = findViewById(R.id.spinnerTipoUsuario);
+        mPDialog = new ProgressDialog(this, R.style.CustomAlertDialog);
 
         mAuth = FirebaseAuth.getInstance();
         //mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -110,6 +114,11 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        mPDialog.setTitle("Iniciando sesion");
+                        mPDialog.setMessage("Espere un momento...");
+                        mPDialog.setCancelable(false);
+                        mPDialog.show();
+
                         Map<String, Object> map = new HashMap<>();
                         map.put("nombre", Nombre_User_Register);
                         map.put("apellidom", ApeMaterno_User_Register);
@@ -132,6 +141,7 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 //String postId = " ";
+                                mPDialog.dismiss();
 
                                 Toast.makeText(Registro_User.this, "Registro completo", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(Registro_User.this, MainActivity.class));
@@ -140,6 +150,7 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                                mPDialog.dismiss();
                                 Toast.makeText(Registro_User.this, "No se pudo completar el registro", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -149,6 +160,7 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
                         } else {
                             Toast.makeText(Registro_User.this, "No se pudo guardar los datos", Toast.LENGTH_SHORT).show();
                         }
+                        mPDialog.dismiss();
                         //Toast.makeText(Registro_User.this, "No se pudo registrar el usuario", Toast.LENGTH_SHORT).show();
                     }
                 }
