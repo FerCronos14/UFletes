@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    tools:context=".TermsCondActivity">
+
+    <TextView
+        android:id="@+id/textViewTermCondTEXT"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="35dp"
+        android:gravity="center"
+        android:text="Términos y condiciones de la aplicación"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/fondo_textos"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTermCondTEXT">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewTCA1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="AVISO 1"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCta1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Los Servicios, así como los contenidos, solo podrán ser utilizados por personas físicas mayores de edad, o por personas morales jurídicas, por lo que al hacer uso del la Aplicación, el Usuario manifiesta, en caso de ser persona física, ser mayor de edad y contar con la capacidad suficiente para obligarse conforme a los Términos y Condiciones; o en caso de representar a una persona moral o jurídica, contar con las facultades suficientes para obligarla conforme al presente documento."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCta2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="4dp"
+                android:text="Los padres o tutores de menores de edad serán responsables por los actos por ellos realizados según lo dispuesto por estos Términos y Condiciones, incluyendo los daños causados a terceros, acciones realizadas por ellos y que estén prohibidas por Ley y por las disposiciones de este acuerdo, sin perjuicio de la responsabilidad del Usuario."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="SERVICIOS"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCts1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="Por medio de la aplicación, UFletes ofrece a sus Usuarios una plataforma tecnológica, por medio de la cual los Usuarios pueden solicitar información, así como contratar servicios de transporte de carga y paquetería locales vía terrestre prestados por terceros (los “Servicios”) proveedores de servicios de paquetería y trasporte de mercancías (los “Transportistas”). Los Transportistas son terceros independientes de UFletes, con recursos humanos y materiales propios, limitándose la participación de UFletes a una mera intermediación entre el oferente y demandante de los mismos."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCU"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="CUENTA DEL USUARIO"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtcu1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Para poder hacer uso de los Servicios disponibles en la Aplicación, el Usuario deberá registrarse mediante la creación de una cuenta, para lo cual deberá ingresar la información que sea requerida para crear las cuentas, tales como datos de identificación, número telefónico, datos de tarjetas de crédito, correo electrónico, entre otros, y creará una contraseña personal (password), la cual le servirá para ingresar en cualquier momento a dicha cuenta. El Usuario reconoce que la información proporcionada sobre él mismo es verdadera, correcta, actual y completa, responsabilizándose civil y penalmente de dicha información, así como manifiesta haber leído, comprendido y aceptado el Aviso de Privacidad que se encuentra a su disposición en la Aplicación. En caso que la información del Usuario al momento de crear su cuenta resultare falsa, equivocada o incompleta, de tal modo que resulte imposible la comprobación e identificación del Usuario, UFletes tendrá el derecho de suspender o cancelar inmediatamente la cuenta del Usuario por los daños finalmente ocasionados. La veracidad y autenticidad de los datos proporcionados por los Usuarios es requisito esencial para el mantenimiento del registro. No obstante lo anterior, el uso de los Servicios parte de la buena fe entre las partes, en virtud de lo cual UFletes no tendrá la obligación (pero sí conservará el derecho, ejercible en cualquier momento) de verificar la autenticidad y/o exactitud de la información proporcionada por el Usuario"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtcu2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="El Usuario podrá acceder y modificar o actualizar la información de su cuenta en cualquier momento"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtcu3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="En caso de robo o extravío de la contraseña personal del Usuario del dispositivo móvil, este se obliga a notificar dicha situación a UFletes por medio de su área de operaciones de manera inmediata, a través del correo electrónico fer2314@gmail.com y el teléfono  de Lunes a Viernes con el horario de 8:00 AM a 18:00 PM, en el entendido que el Usuario será el único responsable de los daños y perjuicios que se pudieran ocasionar por terceros mediante el uso de la cuenta del Usuario."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtcu4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="El Usuario podrá cancelar su cuenta o desinstalar la Aplicación en cualquier momento, en el entendido que UFletes no será responsable de cualquier pérdida de información que pudiera sufrir durante dicho proceso. Asimismo, la cancelación de la cuenta o la desinstalación de la Aplicación no libera al Usuario de cualquier obligación o responsabilidad adquirida por este con anterioridad.
+Asimismo, el Usuario reconoce que UFletes podrá en cualquier momento y sin necesidad de aviso previo, suspender o cancelar la cuenta del Usuario, en caso de que a criterio de UFletes, el Usuario haga uso de la misma en contravención a cualquier disposición de los presentes Términos y Condiciones, por lo que el Usuario libera a UFletes de cualquier responsabilidad derivada de dicha suspensión o cancelación."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTUS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="USO DE LOS SERVICIOS"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtus1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="El Usuario registrado podrá acceder por medio de su cuenta a los diversos Contenidos, así como a los Servicios ofrecidos a través de la Aplicación, para efecto de lo cual deberá proporcionar información adicional que le sea requerida por UFletes, la cual podrá incluir, sin limitar, su localización o la de los bienes que pretende enviar (el “Paquete”), así como el domicilio al que desea enviarlo, la forma de pago y una breve descripción del tipo de bienes que contendrá el Paquete, entre otros."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtus2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Una vez ingresada la información requerida, la Aplicación generarán una orden de servicio en nombre del Usuario, la cual será enviada al Transportista pertinente, el cual podrá aceptar o rechazar dicha Orden de Servicio. En el supuesto de que el Transportista rechace la Orden de Servicio, esta podrá ser reenviada a otro(s) Transportista(s), o rechazada definitivamente, en cuyo caso le será notificada dicha situación al Usuario. En caso que el Transportista acepte la Orden de Servicio, le será notificado al Usuario y, en su caso, cualquier información adicional que resulte pertinente para la correcta prestación de dichos servicios por parte de los Transportistas. Una vez que se tenga la aceptación de la Orden de Servicio por parte del Transportista, este y el Usuario se entenderán obligados por los términos contenidos en el modelo de contrato de servicios que los Transportistas que aceptan Órdenes de Servicio a través de la Aplicación ha convenido en usar a efecto de otorgar a los Usuarios un trato similar."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtus3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="A efecto de que el Usuario esté en posibilidades de recibir los servicios de mensajería o paquetería, UFletes canaliza la Orden de Servicio a cuantos Transportistas que se encuentren disponibles y el Usuario elige al Transportista, en el entendido que UFletes no garantiza al Usuario que dicha Orden de Servicios sea aceptada por alguno de ellos, toda vez que la aceptación o rechazo de dichas Órdenes de Servicio será a discreción de los Transportistas."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtus4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Por medio de la Aplicación, el Usuario podrá dar seguimiento al estatus de sus envíos, así como, en su caso, de la ubicación de sus Paquetes una vez que hayan sido recolectados por el Transportista. En caso de que el Paquete no haya podido ser entregado a su destinatario por causas no imputables a UFletes o al Transportista, se le notificará al Usuario en su cuenta a través del área de Operaciones de UFletes, en cuyo caso el Usuario podrá optar por la devolución del Paquete al punto de recolección, o por un intento adicional de entrega, se dará un tiempo máximo de espera para la entrega de 15 minutos, en el entendido que cada intento adicional será cobrado conforme a la Tarifa vigente. En caso de no poder entregar el paquete en el domicilio señalado, será devuelto al remitente aplicando el cargo por el servicio. Pasada esta fecha el paquete será destruido y UFletes no será responsable del mismo."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtus5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="El Usuario reconoce que los Servicios de UFletes se limitan al licenciamiento de la Aplicación, así como a la intermediación entre el Usuario y el Transportista, por lo que una vez aceptada una Orden de Servicio por algún Transportista, será responsabilidad exclusiva de este el prestar los servicios de mensajería o paquetería en favor del Usuario, toda vez que UFletes NO PRESTA SERVICIOS DE MENSAJERÍA O PAQUETERÍA, ni participa de manera activa en la prestación de los mismos."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTPF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="PAGOS Y FACTURACIÓN"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtpf1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="El usuario reconoce y acepta realizar el pago de los servicios de mensajería y paquetería directamente por cuenta y nombre del transportista. Dicho pago se deberá de acordar al momento de finalizar el servicio. El transportista reconoce y acepta recibir el pago por sus servicios de mensajería y paquetería por cuenta y nombre del Usuario. Dicho pago se deberá de acordar al momento de finalizar el servicio."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtpf2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="De igual manera, será responsabilidad del Usuario contar con fondos suficientes para el pago del servicio otorgado por el Transportista, por lo que en caso de que no sea posible realizar el cobro de la Tarifa correspondiente, la Orden de Servicio podrá ser cancelada de manera inmediata, siendo responsable el Usuario por cualquier daño o perjuicio ocasionado al Transportista y/o a UFletes por dicha cancelación."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtpf3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="El Usuario reconoce que UFletes únicamente presta servicios de intermediación por cuenta de los Transportistas, por lo que cualquier aclaración o reclamación relacionada con dichos pagos, siempre que no tenga que ver con la plataforma o el procesador de pagos, deberá ser presentada directamente al Transportista."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTZC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ZONAS DE COBERTURA"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtzc1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Los servicios de mensajería y paquetería únicamente estarán disponibles en las zonas geográficas marcadas dentro de la Aplicación, en el entendido que los Transportistas únicamente podrán prestar dichos servicios siempre y cuando el punto de recolección y el de entrega se encuentren dentro de una misma Zona de Cobertura, o en Zonas de Cobertura contiguas, siempre que el tipo de servicio lo permita."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtzc2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="UFletes se reserva el derecho de modificar las Zonas de Cobertura en cualquier momento, sin necesidad de aviso previo y mediante su simple actualización en la Aplicación.
+Por lo anterior, el Usuario deberá verificar que el servicio que pretende solicitar se encuentra dentro de alguna Zona de Cobertura previo a su solicitud.
+En cualquier caso, la Zona de Cobertura se limitará a áreas urbanas que previamente se señalen el día que el Usuario solicite el servicio."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTPQ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="PAQUETES"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtpq1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="El Usuario únicamente podrá hacer uso de los servicios de mensajería y paquetería para enviar Paquetes que contengan bienes permitidos por las leyes aplicables, así como de los expresamente señalados en la Aplicación, por lo que el Usuario será el único responsable de la veracidad de la información proporcionada a UFletes en la Orden de Servicio, así como del contenido de los Paquetes enviados. En ningún caso el Paquete podrá exceder los límites establecidos por el tipo de servicio y transporte, y deberá entregarse debidamente envuelto y rotulado o con embalaje que permita su manejo, reparto y entrega a cargo del Transportista, desde su origen hasta su destino final."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtpq2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="De igual manera, será responsabilidad del Usuario entregar al Transportista el Paquete debidamente sellado o empacado de tal manera que el contenido no sea visible y que no pueda sufrir daños o menoscabos durante su transportación con un manejo no especializado. El Transportista podrá negarse a recibir o transportar Paquetes que no reúnan las características anteriores o que a su juicio requieran de un manejo especializado, en cuyo caso no habrá lugar a reembolso alguno al Usuario.
+Asimismo, el Usuario deberá observar las políticas de valor máximo permitido y límites de responsabilidad, aplicables al contenido de los Paquetes, los cuales se encuentran disponibles en la Aplicación."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtpq3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="En virtud de lo anterior, el Usuario se obliga a sacar en paz y a salvo a UFletes, sus afiliadas, funcionarios, empleados y contratistas, así como a los Transportistas, sus funcionarios, empleados y contratistas, de cualquier procedimiento judicial o administrativo que se llegare a instaurar en su contra por cualquier autoridad o tercero, derivado de cualquier incumplimiento a sus obligaciones conforme al presente apartado, obligándose de igual manera a indemnizar a la partes mencionadas por los daños y perjuicios que se les pudiera ocasionar como consecuencia de dicho procedimiento, incluyendo sin limitar, honorarios de abogados y demás costas judiciales."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtp4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="Los Transportistas podrán, mas no tendrán la obligación de, inspeccionar los Paquetes en cualquier momento, así como permitir a las autoridades competentes que así lo requieran, a llevar a cabo las inspecciones que consideren pertinentes. Asimismo, UFletes y/o los Transportistas se reservan el derecho a notificar a las autoridades correspondientes en caso de detectar algún incumplimiento a lo dispuesto en el presente apartado, que a su juicio pudiera constituir una violación a la legislación aplicable o a derechos de terceros."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="CONTENIDOS"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtctn1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Los Contenidos mostrados en la Aplicación podrá ser propios o de terceros, y podrán incluir todo tipo de archivos tales como textos, imágenes, sonidos y videos, así como enlaces (links) a otros sitios o aplicaciones ajenos a UFletes.
+El acceso a cualquier Contenido, incluyendo los enlaces mostrados en la Aplicación, son opcionales y serán bajo el riesgo y responsabilidad exclusiva del Usuario, quien reconoce que tiene en todo momento absoluta discrecionalidad de activar o no dichos enlaces."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtctn2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Por lo anterior y toda vez que UFletes no tiene control sobre los Contenidos de terceros, incluidos los sitios o aplicaciones a que lleven los enlaces, UFletes no será responsable por los contenidos, materiales, acciones y/o servicios prestados por los mismos, ni por daños o pérdidas ocasionadas por la utilización de los mismos, sean causadas directa o indirectamente. La presencia de enlaces a otros sitios web no implica una sociedad, relación, aprobación, patrocinio o respaldo de UFletes a dichos sitios y sus contenidos.
+Los Contenidos disponibles en la Aplicación estará sujeta a la disponibilidad o vigencia del mismo. UFletes no garantiza que los Contenidos o los Servicios satisfagan los requerimientos del Usuario o que los mismos no sufran interrupciones, sean seguros o estén exentos de errores, malware o virus, por lo que UFletes se reserva el derecho para suspender o adicionar cualquier Contenido en cualquier momento."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtctn3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="Se encuentra terminantemente prohibido cualquier tipo de copia, distribución, transmisión, retransmisión, publicación, impresión, difusión y/o explotación comercial de los Contenidos puestos a disposición del Usuario a través de la Aplicación sin el previo consentimiento expreso y por escrito de UFletes o, en su caso, del titular de los derechos de propiedad intelectual correspondientes. El incumplimiento de lo aquí mencionado sujetará al infractor a todos los reclamos civiles y sanciones penales que pudieran corresponder conforme a la legislación aplicable, independientemente de la cancelación de la cuenta del Usuario infractor."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTAUP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ACCESO Y USO DE LA APLICACIÓN"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtaup1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Se encuentra estrictamente prohibido al Usuario violar o intentar violar la seguridad de la Aplicación, incluyendo, sin limitación: acceder a datos no destinados al Usuario o iniciar sesión en un servidor o cuenta en la que el Usuario no esté autorizado a ingresar, intentar interferir con el Servicio a cualquier otro usuario, huésped o red, incluyendo, sin limitación, a través del envío de virus, sobrecarga, inundación, spam, enviar correo no solicitado, incluyendo promociones y/o publicidad de productos o servicios, falsificar cualquier encabezado de TCP/IP o cualquier parte de la información del encabezado en cualquier correo electrónico o grupo de noticias, así como la utilización de robots, arañas, orugas, scraper, o cualquier otro medio automatizado para acceder o utilizar los Servicios."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtaup2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="El Usuario se obliga a no utilizar ningún dispositivo, software o rutina para interferir o intentar interferir con el uso correcto de la Aplicación o cualquier actividad llevada a cabo en los mismos.
+Cada Usuario será responsable del equipo o dispositivos y servicios de telefonía e internet que pudiera requerir para el perfecto acceso al uso de la Aplicación. El Usuario será el único responsable de eventuales daños que su equipo pudiera sufrir debido al mal uso de cualquier hardware, software o conexiones, así como de la compatibilidad con la Aplicación."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtaup3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Asimismo, el Usuario reconoce que la utilización de la Aplicación pueden generar costos adicionales por el uso de datos móviles o internet proporcionados por la compañía de telefonía o internet con la que el Usuario tenga contratados dichos servicios, por lo que UFletes no será responsable de tales costos, ni del servicio que proporcione dicha compañía en favor del Usuario.
+Cualquier violación al sistema o red de seguridad de la Aplicación podrá dar lugar a la cancelación de la cuenta del Usuario, así como al inicio de cualquier procedimiento de responsabilidad civil o penal en contra del Usuario."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtaup4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="El Usuario reconoce que podrían presentarse (i) interrupciones en la prestación de los Servicios o las Actualizaciones, o, incluso, (ii) otros hechos ocurridos por causas fuera de control de UFletes. UFletes no podrá ser responsabilizado de cualesquiera datos perdidos durante la transmisión de información por medio de Internet.
+UFletes está exento de cualquier responsabilidad que ocurra por interrupciones o suspensiones del servicio de acceso a Internet ocasionadas por la falla en el sistema de telecomunicaciones, en el suministro de energía eléctrica, casos fortuitos o de fuerza mayor o una acción de terceros que puedan inhabilitar los equipos que suministran el acceso a la red."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtaup5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Por lo anterior, UFletes no se responsabiliza por cualquier daño, perjuicio o pérdida al Usuario causados por fallas en el sistema, en el servidor o en Internet. UFletes tampoco será responsable por cualquier virus que pudiera infectar el equipo del Usuario como consecuencia del acceso, uso o examen de la Aplicación a raíz de cualquier transferencia de datos, archivos, imágenes, textos, o audio contenidos en el mismo. Los Usuarios no podrán imputarle responsabilidad alguna ni exigir pago de daños o perjuicios, en virtud de dificultades técnicas o fallas en los sistemas o en Internet. UFletes no garantiza el acceso y uso continuado o ininterrumpido de los Servicios."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtaup6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="La Aplicación o cualquier Actualización a los mismos pueden eventualmente no estar disponibles debido a dificultades técnicas o fallas de Internet, o por cualquier otra circunstancia ajena a UFletes; en tales casos se procurará restablecerlo con la mayor celeridad posible sin que por ello pueda imputársele algún tipo de responsabilidad. UFletes no será responsable por ningún error u omisión contenidos en la Aplicación.
+UFletes podrá, en cualquier momento y a su exclusivo criterio, descontinuar, suspender, terminar o alterar la forma de acceso a la Aplicación con relación a cualquier contenido, periodo de disponibilidad, actualización y equipamiento necesarios para el acceso y/o utilización de los mismos. UFletes se reserva el derecho de descontinuar la diseminación de cualquier información, alterar o eliminar métodos de transmisión, alterar la velocidad de transmisión de datos o cualesquiera otras características de señal."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTLU"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="LICENCIA DE USO"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtlu1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="Por medio de este documento y sujeto al cumplimiento de los presentes Términos y Condiciones, UFletes otorga en favor del Usuario una licencia personal limitada, no exclusiva, no transferible, no sublicenciable, revocable, por plazo indeterminado, para (i) descargar, instalar y utilizar la Aplicación en su dispositivo móvil, y (ii) para utilizar los Servicios; en ambos casos dicha licencia será para uso personal del Usuario y en ningún caso podrá ser sublicenciada, revendida o de cualquier otra forma explotada sin el consentimiento previo y por escrito de UFletes.
+Cualquier uso no autorizado de la Aplicación en contravención a los presentes Términos y Condiciones dará lugar a la terminación inmediata y sin necesidad de resolución judicial de la licencia otorgada en favor del Usuario conforme al párrafo anterior."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTPI"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="PROPIEDAD INTELECTUAL"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtPI1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="El software asociado a la Aplicación, así como todos los Contenidos disponibles en los mismos, incluyendo los enlaces, son, para efectos del presente documento, propiedad exclusiva de UFletes y están protegidas por las leyes y los tratados internacionales en materia de derechos de autor, marcas, patentes, modelos y diseños industriales aplicables en México.
+Queda prohibida la copia, distribución, transmisión, publicación, conexión, ingeniería inversa o cualquier otro tipo de modificación de la Aplicación o de los Contenidos sin expresa y previa autorización de UFletes o, en su caso, del titular de los derechos de propiedad correspondientes."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtPI2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Asimismo, se encuentra prohibido al Usuario sublicenciar, vender, revender, transferir, ceder o de cualquier forma explotar o poner a disposición de cualquier tercero la Aplicación, así como crear vínculos en internet hacia o desde la Aplicación, o reproducirlos en sitios “espejo”, sin la autorización previa y por escrito de UFletes.
+Cualquier violación a lo dispuesto en este apartado constituirá una infracción a los derechos de propiedad intelectual y sujetará al Usuario a las sanciones administrativas, civiles y penales que resulten aplicables."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtPI3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="UFletes se reserva todos los derechos no expresamente otorgados bajo el presente documento. El Usuario declara y reconoce que la descarga de cualquier contenido de la Aplicación no le confiere la propiedad sobre el mismo.
+Cualesquiera marcas exhibidas en la Aplicación o en cualquier enlace no deben ser consideradas como de dominio público y no son propiedad exclusiva de los terceros contratantes de UFletes."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtPI4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="UFletes no tiene el deber o la responsabilidad de proporcionar al Usuario cualesquiera indicaciones que auxilien a la identificación del contenido como protegido por derechos de propiedad intelectual. El Usuario será el único responsable de cualesquiera daños a terceros que resultaren de la violación de derechos de propiedad intelectual, en virtud de la utilización no autorizada del mencionado Contenido.
+Ninguna disposición del presente documento deberá interpretarse como una venta, cesión, transmisión, licencia exclusiva ni cualquier otro tipo de transferencia en favor del Usuario respecto de los derechos de propiedad intelectual de UFletes."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTACT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ACTUALIZACIONES"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtact1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="UFletes podrá, mas no será su obligación, en cualquier momento, realizar modificaciones, adiciones o mejoras a la Aplicación, incluyendo sin limitar, a los Contenidos así como a las funciones y versiones del software de la Aplicación en general (las Actualizaciones). Dichas Actualizaciones tienen como objetivo mejorar los Servicios en beneficio del Usuario, así como mostrar Contenidos acordes y actualizados con los intereses de los Usuarios en todo momento, o, en su caso, reparar alguna falla que pudiera presentar la Aplicación."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtact2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Cuando exista alguna Actualización disponible para el dispositivo del Usuario, UFletes podrá enviar una notificación al Usuario por medio de la Aplicación, correo electrónico, mensaje de texto, o por cualquier otro medio de comunicación proporcionado por el Usuario.
+UFletes se reserva el derecho de establecer alguna contraprestación a cargo del Usuario por la descarga e instalación de cualquier Actualización."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtact3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="La descarga e instalación de las Actualizaciones son opcionales para el Usuario, en el entendido que algunas Actualizaciones pueden resultar indispensables para la continuidad de la prestación de los Servicios en su favor, por lo que en caso de que el Usuario se abstenga de descargar e instalar alguna Actualización, la Aplicación podrían dejar de funcionar en su equipo. UFletes no será responsable de cualquier daño o pérdida que pudiere ocasionarse al Usuario como consecuencia de la omisión en la descarga e instalación de cualquier Actualización.
+Los presentes Términos y Condiciones serán aplicables para cualquier Actualización de la Aplicación, salvo estipulación en contrario, por lo que en caso de que el Usuario descargue o instale cualquier Actualización, se entenderá que acepta los mismos."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTPRI"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="PRIVACIDAD"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtpri1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="UFletes implementará todas las medidas posibles para mantener la confidencialidad y la seguridad de la información del Usuario, pero no responderá por los daños o perjuicios que pudieran derivarse de la violación de esas medidas por parte de terceros que utilicen las redes públicas o Internet, alterando los sistemas de seguridad para obtener acceso a la información de los Usuarios."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtpri2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="Sin perjuicio de lo anterior, el uso de la Aplicación se encuentran condicionados a la lectura y aceptación por parte del Usuario de la Política de Privacidad, la cual se encuentra a su disposición tanto en la Aplicación, por lo que en caso de que el Usuario continúe utilizando la Aplicación, el Usuario manifiesta su conformidad con dicha Política de Privacidad."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTLIM"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="LÍMITES DE RESPONSABILIDAD Y GARANTÍAS"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtlim1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="El Usuario comprende y está de acuerdo en que el acceso y utilización de la Aplicación es realizado de conformidad con su criterio exclusivo y bajo su propio riesgo y que será el único responsable de cualesquiera daños causados a su sistema de computación o a su dispositivo móvil, intercepción o pérdida de datos resultante de la utilización de los Servicios o de la descarga (download) de materiales o datos contenidos en la Aplicación, o en los enlaces.
+Bajo ninguna circunstancia UFletes, sus empleados, contratantes, directores o agentes serán responsables de cualquier daño, ya sea directo o indirecto, que resulte del uso, o uso inapropiado de la Aplicación, incluyendo pero no limitándose al uso de los Contenidos disponibles a través de los mismos."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtlim2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Asimismo, toda vez que los Servicios proporcionados por UFletes se limitan a la intermediación y recepción pasiva de pagos por cuenta de los Transportistas a través de la Aplicación, el Usuario reconoce que la calidad de los servicios de paquetería y mensajería será enteramente responsabilidad de los Transportistas, quienes son personas independientes a UFletes, y quienes prestarán en última instancia dichos servicios en favor del Usuario. Cualquier reclamación que el Usuario pretenda hacer valer en relación con los servicios de mensajería y paquetería, deberá ser remitida directamente al Transportista."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtlim3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="En virtud de lo anterior, el Usuario está de acuerdo en sacar en paz y a salvo a UFletes, sus empresas afiliadas, sus socios, funcionarios, empleados, comisionistas, terceros contratantes y asociados por cualesquiera reclamaciones, procesos, acciones, así como cualesquiera otras responsabilidades (inclusive honorarios jurídicos) derivados del uso de los servicios de mensajería o paquetería prestados por los Transportistas, de la utilización indebida de los Servicios, de la violación de estos Términos y Condiciones, la violación de los derechos de cualquier otra persona o entidad incluyendo sin limitar de los Transportistas, o cualquier violación de las declaraciones, garantías y acuerdos hechos aquí por el Usuario, así como indemnizarlos por los daños y perjuicios que correspondieren."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtlim4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="Estas limitaciones también se aplicarán con respecto a las pérdidas, daños y perjuicios sufridos por el Usuario o cualquier tercero en relación con cualesquiera contenidos, productos, servicios, ofertas o promociones vendidas o abastecidas por terceros, y no por UFletes, a través de los sitios o enlaces mostrados en la Aplicación.
+En caso de que el usuario requiera un seguro para su mercancía es responsabilidad de este contratar una póliza a través de su aseguradora de confianza."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCOO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="COOKIES"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtcoo1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="El Usuario que utilice los Servicios, conviene en recibir Cookies que les transmitan los servidores de UFletes."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTPAR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="TÉRMINOS Y CONDICIONES PARTICULARES"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtpar1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="A los Servicios les serán aplicables en lo general los presentes Términos y Condiciones, sin embargo, a cada Servicio le podrán ser aplicables términos y condiciones particulares (los Términos y Condiciones Particulares), mismos que se encontrarán a disposición del Usuario a través de la Aplicación.
+En caso que alguna disposición contenida en los presentes Términos y Condiciones contravenga lo establecido en los Términos y Condiciones Particulares, prevalecerá lo dispuesto en estos últimos, sin perjuicio de que sean aplicables en lo general las demás disposiciones del presente documento."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTMOD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="MODIFICACIONES"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtmod1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:text="El presente documento constituye el acuerdo integral entre UFletes y el Usuario relacionado con los asuntos contenidos en el mismo. UFletes se reserva el derecho de, a su exclusivo criterio, adicionar, enmendar o de cualquier otra forma modificar el presente documento sin necesidad de previo aviso, mediante su publicación en la Aplicación. Por lo anterior, es recomendable que el Usuario vuelva a leer con regularidad este documento, de forma que se mantenga siempre informado sobre eventuales modificaciones.
+Si hubiese cualquier modificación al presente documento y el Usuario continuara utilizando los Servicios, se entenderá que el Usuario ha leído y aceptado los nuevos Términos y Condiciones."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTVIG"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="MODIFICACIONES"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtvig1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="La vigencia del presente acuerdo comenzará en la fecha en que el Usuario instale la Aplicación en su dispositivo móvil, o de cualquier forma comience a hacer uso de los Servicios por medio de la Aplicación, y continuará vigente durante todo el tiempo en que haga uso de los mismos, pudiendo el Usuario terminarlo en cualquier momento sin necesidad de aviso previo, a efecto de lo cual deberá (i) saldar cualquier adeudo pendiente de pago; (ii) cancelar su cuenta y desinstalar la Aplicación, en su caso; y (iii) abstenerse de hacer uso de los Servicios.
+Por su parte, UFletes se reserva el derecho a dar por terminado el presente documento así como a cesar la prestación de los Servicios en cualquier momento, sin necesidad de aviso previo."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTDFIN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="DISPOSICIONES FINALES"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTCtdfin1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="El Usuario acepta que en adición a los presentes Términos y Condiciones, el uso de la Aplicación se encuentra sujeto a los términos y condiciones aplicables para la plataforma o servidores del Dispositivo Móvil del Usuario.
+Ningún Usuario podrá ceder o transferir en favor de ningún tercero sus derechos y obligaciones conforme al presente, sin autorización previa y por escrito de UFletes. UFletes podrá ceder libremente sus derechos y obligaciones a cualquier tercero."
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textViewTCtdfin2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="4dp"
+                android:text="Para todo lo relacionado con el cumplimiento y la interpretación de los presentes Términos y Condiciones, las partes se someten a la legislación aplicable, así como a la jurisdicción de los tribunales competentes del estado de Nuevo Léon, renunciando en este acto a cualquier fuero que por razón de su domicilio presente o futuro pudiera corresponderles.
+El Usuario en este acto, acepta que ha leído detenidamente y comprende el contenido y alcance de todas y cada una de las disposiciones contenidas en los Términos y Condiciones y en la Política de Privacidad."
+                android:textSize="12dp" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+    <CheckBox
+        android:id="@+id/checkBoxAcTC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Acepto Términos y Condiciones"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView2" />
+
+    <Button
+        style="@style/FondoBoton"
+        android:id="@+id/btnAcptarTC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Siguiente"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxAcTC"/>
+
+    <Button
+        style="@style/FondoBoton"
+        android:id="@+id/btnCreditos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Creditos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAcptarTC"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

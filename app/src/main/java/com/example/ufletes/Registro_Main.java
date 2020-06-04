@@ -15,14 +15,10 @@ public class Registro_Main extends AppCompatActivity implements View.OnClickList
     public void manejoEventosRegistroMain (int opc) {
         switch (opc) {
             case R.id.btnRegistroFletero_Main:
-                //Intent intentRegistro_Fletero = new Intent(this, Registro_Fletero.class);
-                //Intent intent = new Intent(Registro_Main.this, Registro_Fletero.class);
                 startActivity(new Intent(Registro_Main.this, fragment_ConfirmarPedido_Fletero.class));
                 break;
             case R.id.btnRegistoCliente_Main:
-                //Intent intentRegistro_User = new Intent(this, Registro_User.class);
-                //intent = new Intent(Registro_Main.this, Registro_User.class);
-                startActivity(new Intent(Registro_Main.this, Registro_User.class));
+                //startActivity(new Intent(MainActivity.this, TermsCondActivity.class));
                 break;
             default:
                 break;

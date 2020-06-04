@@ -46,10 +46,11 @@ public class SolicitudesFletesFragment extends Fragment {
     private FirestoreRecyclerOptions<Solicitudes_Lista> FirestoreRecyclerOptions;
 
     private Button filterButton;
-    private Button mbtnAceptarPedido;
+    private Button btnDetallePedidoFlete;
 
 
-    static String idCliente_pedido;
+    static String idCliente_pedido, strcooOrigen_cliente, strcooDestino_cliente;
+
 
     Query query;
     View view;
@@ -127,6 +128,8 @@ public class SolicitudesFletesFragment extends Fragment {
                 holder.mtextViewDirDestinoSolicitud.setText(model.getDirDestino_s());
                 holder.mtextViewFechaSolicitud.setText(model.getFecha_s());
                 final String auxidCliente_pedido = model.getIdCliente_s();
+                final String auxDirOrigen = model.getDirOrigen_s();
+                final String auxDirDestino = model.getDirDestino_s();
 
                 final boolean isExpanded = position==expandedPosition;
                 holder.mllExpandArea.setVisibility(isExpanded?View.VISIBLE:View.GONE);
@@ -136,17 +139,18 @@ public class SolicitudesFletesFragment extends Fragment {
                     public void onClick(View v) {
                         idCliente_pedido = auxidCliente_pedido;
                         expandedPosition = isExpanded ? -1:position;
+
                         TransitionManager.beginDelayedTransition(RVSOLICITUDES);
                         notifyDataSetChanged();
-                        mbtnAceptarPedido = v.findViewById(R.id.btnInfoPedido_Solicitud);
+                        btnDetallePedidoFlete = v.findViewById(R.id.btnInfoPedido_Solicitud);
                        // if (isExpanded) {
-                        mbtnAceptarPedido.setOnClickListener(new View.OnClickListener() {
+                        /*
+                        btnDetallePedidoFlete.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                                     LayoutInflater inflater = getLayoutInflater();
                                     View convertView = inflater.inflate(R.layout.fragment_confirmar_pedido, null);
-
 
                                     query = getInstance()
                                             .collection("Cliente")
@@ -195,8 +199,8 @@ public class SolicitudesFletesFragment extends Fragment {
                                     dialog.show();
                                     adapter.notifyDataSetChanged();
 
-                                    Button btnDetallePedidoFlete = (Button) convertView.findViewById(R.id.btnAceptarPedido_Confirmado_Dialog);
-                                    btnDetallePedidoFlete.setOnClickListener(new View.OnClickListener() {
+                                    Button mbtnAceptarPedido = (Button) convertView.findViewById(R.id.btnAceptarPedido_Confirmado_Dialog);
+                                    mbtnAceptarPedido.setOnClickListener(new View.OnClickListener() {
                                        @Override
                                          public void onClick(View view) {
                                             Intent intent = new Intent(getContext(), MapsActivity_RastreoFletero.class);
@@ -207,7 +211,8 @@ public class SolicitudesFletesFragment extends Fragment {
                                 }
                             });
                         //}
-                       mbtnAceptarPedido.setOnClickListener(new View.OnClickListener() {
+                        */
+                        btnDetallePedidoFlete.setOnClickListener(new View.OnClickListener() {
                            @Override
                            public void onClick(View v) {
 
@@ -259,7 +264,7 @@ public class SolicitudesFletesFragment extends Fragment {
                                recyclerView.setAdapter(adapter);
                                alertDialog.setView(convertView);
 
-                               AlertDialog dialog = alertDialog.create();
+                               final AlertDialog dialog = alertDialog.create();
                                dialog.getWindow().setLayout(600, 400);
 
 
@@ -267,8 +272,28 @@ public class SolicitudesFletesFragment extends Fragment {
                                dialog.show();
                                adapter.notifyDataSetChanged();
 
+                               Button mbtnAceptarPedido = (Button) convertView.findViewById(R.id.btnAceptarPedido_Confirmado_Dialog);
+                               mbtnAceptarPedido.setOnClickListener(new View.OnClickListener() {
+                                   @Override
+                                   public void onClick(View view) {
+                                       strcooOrigen_cliente = auxDirOrigen;
+                                       Intent intent = new Intent(getContext(), MapsActivity_RastreoFletero.class);
+                                       startActivity(intent);
+                                   }
+                               });
+
+                               Button mbtnCancelarPedido = convertView.findViewById(R.id.btnCancelarPedido_Confirmado_Dialog);
+                               mbtnCancelarPedido.setOnClickListener(new View.OnClickListener() {
+                                   @Override
+                                   public void onClick(View view) {
+                                       dialog.dismiss();
+                                   }
+                               });
+
                            }
                        });
+
+
                     }
                 });
 

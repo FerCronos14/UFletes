@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,9 +22,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -37,6 +41,7 @@ public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickL
     //private String toallitahumeda = (String) getIntent().getStringExtra("miLista");
     private ProgressDialog mPDialog;
     private FirebaseFirestore mFireStore;
+    private static List<Address> strDireccionDestino_pedido;
 
     private void manejoEventosPantalla_pedidos (int opc) {
         switch (opc) {
@@ -83,7 +88,6 @@ public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickL
         if(parametros !=null){
              String datos = parametros.getString("DireccionOrigenMaps");
                 txtOrigen.setText(datos);
-                Toast.makeText(this, "Direccion de origen OnCreate" + datos, Toast.LENGTH_LONG).show();
         }
         compruebaPermisoGPS();
 
@@ -163,6 +167,7 @@ public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickL
 
         if (strPedidoDestino != null) {
             txtDestino.setText(strPedidoDestino);
+
         }
     }
 

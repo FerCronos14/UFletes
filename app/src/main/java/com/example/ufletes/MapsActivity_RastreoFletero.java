@@ -34,6 +34,8 @@ public class MapsActivity_RastreoFletero extends FragmentActivity implements OnM
     private Marker markerRastreo, markerClienteOrigen;
     private Location currentLocation;
     private static List<Address> strDireccionRastreo;
+    private static List<Address> strDireccionCliente;
+    static Double cooLatitudCliente, cooLongitudCliente;
     private String addressRastreo;
 
     FusedLocationProviderClient fusedLocation;
@@ -82,7 +84,16 @@ public class MapsActivity_RastreoFletero extends FragmentActivity implements OnM
                                             .snippet(addressRastreo)
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
                             );
-                            LatLng cooCliente = new LatLng(25.749302, -100.246452);
+
+                            Geocoder geocdireccionDestino = new Geocoder(getApplicationContext(), Locale.getDefault());
+                            try {
+                                strDireccionCliente = geocdireccionDestino.getFromLocationName(SolicitudesFletesFragment.strcooOrigen_cliente, 1);
+                                cooLatitudCliente = strDireccionCliente.get(0).getLatitude();
+                                cooLongitudCliente = strDireccionCliente.get(0).getLongitude();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            LatLng cooCliente = new LatLng(cooLatitudCliente, cooLongitudCliente);
 
                             markerClienteOrigen = googleMap.addMarker(new MarkerOptions()
                                             .position(cooCliente)
@@ -98,7 +109,6 @@ public class MapsActivity_RastreoFletero extends FragmentActivity implements OnM
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            Toast.makeText(getApplicationContext(), "Longitud: " + currentLocation.getLongitude() + "Latitud: " + currentLocation.getLatitude(), Toast.LENGTH_LONG).show();
                        }
                     });
 

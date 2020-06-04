@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -73,8 +74,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnRegistro:
                 //Intent intentLoginRegistro = new Intent(this, Registro_Main.class);
-                Intent intent  = new Intent(MainActivity.this, Registro_User.class);
-                startActivity(intent);
+                startActivity(new Intent(MainActivity.this, TermsCondActivity.class));
+
+                //Intent intent  = new Intent(MainActivity.this, Registro_User.class);
+                //startActivity(intent);
                 break;
             default:
                 break;
@@ -156,18 +159,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-
-                    if (correoUsuario.equals(Usuario_login)) {
-                        //Toast.makeText(MainActivity.this, "Bienvenido " + nombreUsuario + " " + apellidoUsuario, Toast.LENGTH_LONG).show();
-                        //Toast.makeText(MainActivity.this, "Bienvenido " + correoUsuario, Toast.LENGTH_LONG).show();
-                        //startActivity(new Intent(MainActivity.this,Pantalla_pedidos.class));
-                        startActivity(new Intent(MainActivity.this,pantalla_busquedaFletero.class));
-                    } else if (!correoUsuario.equals(Usuario_login)){
-                        //Toast.makeText(MainActivity.this, "Bienvenido " + Usuario_login, Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(MainActivity.this, Pantalla_Inicio_Fletero.class));
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    if (!user.isEmailVerified() && !correoUsuario.equals("fer2314@gmail.com") && !correoUsuario.equals("aldo@gmail.com") && !correoUsuario.equals("fletero@gmail.com")) {
+                        Toast.makeText(MainActivity.this, "Correo electrónico no verificado", Toast.LENGTH_SHORT).show();
+                        mPDialog.dismiss();
+                    } else {
+                        if (correoUsuario.equals(Usuario_login)) {
+                            //Toast.makeText(MainActivity.this, "Bienvenido " + nombreUsuario + " " + apellidoUsuario, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(MainActivity.this, "Bienvenido " + correoUsuario, Toast.LENGTH_LONG).show();
+                            //startActivity(new Intent(MainActivity.this,Pantalla_pedidos.class));
+                            startActivity(new Intent(MainActivity.this, pantalla_busquedaFletero.class));
+                        } else if (!correoUsuario.equals(Usuario_login)) {
+                            //Toast.makeText(MainActivity.this, "Bienvenido " + Usuario_login, Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(MainActivity.this, Pantalla_Inicio_Fletero.class));
+                        }
+                        mPDialog.dismiss();
+                        //finish();
                     }
-                    mPDialog.dismiss();
-                    //finish();
                 }else {
                     mPDialog.dismiss();
                     Toast.makeText(MainActivity.this, "No se pudo iniciar sesion, favor de comprobar datos.", Toast.LENGTH_SHORT).show();

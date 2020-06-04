@@ -263,7 +263,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 photoURI = FileProvider.getUriForFile(this,
-                        BuildConfig.APPLICATION_ID + ".provider",
+                        "com.example.ufletes.provider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI.toString());
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);

@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -145,6 +146,9 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
 
                                 Toast.makeText(Registro_User.this, "Registro completo", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(Registro_User.this, MainActivity.class));
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                user.sendEmailVerification();
+                                Toast.makeText(Registro_User.this, "Correo de verificación enviado, verifique en su correo registrado", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {

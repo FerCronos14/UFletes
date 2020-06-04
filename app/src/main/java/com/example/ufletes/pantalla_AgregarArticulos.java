@@ -236,9 +236,9 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
             }
             // Continue only if the File was successfully created
             if (photoFileA != null) {
-                photoURIArticulo = FileProvider.getUriForFile(this,
-                        BuildConfig.APPLICATION_ID + ".provider",
-                        photoFileA);
+                photoURIArticulo = FileProvider.getUriForFile(pantalla_AgregarArticulos.this,
+                         "com.example.ufletes.provider"
+                        , photoFileA);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURIArticulo.toString());
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }

@@ -105,9 +105,6 @@ public class MapsActivity_Pedido extends FragmentActivity implements
                 intent.putExtra("DireccionOrigenMaps", addressOrigen);
                 Pantalla_pedidos.strPedidoDestino = addressDestino;
                 Pantalla_pedidos.strPedidosOrigen = addressOrigen;
-                //Toast.makeText(this, "Direccion de origen" + addressOrigen, Toast.LENGTH_LONG).show();
-
-                //startActivity(intent);
                 finish();
             }
         });
@@ -124,16 +121,9 @@ public class MapsActivity_Pedido extends FragmentActivity implements
                     smf.getMapAsync(new OnMapReadyCallback() {
                         @Override
                         public void onMapReady(final GoogleMap googleMap) {
-                            LatLng latLngM2 = new LatLng(locationM2.getLatitude(), locationM2.getLongitude());
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngM2, 15));
-                            markerOrigen = googleMap.addMarker(new MarkerOptions()
-                                            .position(latLngM2)
-                                            .draggable(true)
-                                            .title("Ubicacion Actual")
-                                    .snippet(addressOrigen)
-                                    //.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                            );
+                            Toast.makeText(getApplicationContext(), "Puede cambiar su dirección si deja presionado el puntero. ", Toast.LENGTH_LONG).show();
 
+                            LatLng latLngM2 = new LatLng(locationM2.getLatitude(), locationM2.getLongitude());
                             Geocoder geocdireccionOrigen = new Geocoder(getApplicationContext(), Locale.getDefault());
                             try {
                                 strDireccionOridgen = geocdireccionOrigen.getFromLocation(locationM2.getLatitude(),locationM2.getLongitude(),1);
@@ -142,18 +132,20 @@ public class MapsActivity_Pedido extends FragmentActivity implements
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            //Toast.makeText(getApplicationContext(), "Longitud: " + currentLocation.getLongitude() + "Latitud: " + currentLocation.getLatitude(), Toast.LENGTH_LONG).show();
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngM2, 15));
+                            markerOrigen = googleMap.addMarker(new MarkerOptions()
+                                            .position(latLngM2)
+                                            .draggable(true)
+                                            .title("Ubicacion Actual")
+                                    .snippet(addressOrigen)
+                                    //.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                            );
+                            Toast.makeText(getApplicationContext(), "Deje pulsado el mapa para sleccionar destino. ", Toast.LENGTH_LONG).show();
 
 
                             googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
                                 @Override
                                 public void onMapLongClick(LatLng position) {
-                                        markerDestino = googleMap.addMarker(new MarkerOptions()
-                                                .position(position)
-                                                .draggable(true)
-                                                .title("Destino")
-                                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                                        );
                                     locDestino = position;
                                     Geocoder geocdireccionDestino = new Geocoder(getApplicationContext(), Locale.getDefault());
                                     try {
@@ -163,6 +155,16 @@ public class MapsActivity_Pedido extends FragmentActivity implements
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
+                                    Toast.makeText(getApplicationContext(), "Direccion de destin: " + addressDestino, Toast.LENGTH_LONG).show();
+
+                                    markerDestino = googleMap.addMarker(new MarkerOptions()
+                                                .position(position)
+                                                .draggable(true)
+                                                .title("Destino")
+                                                .snippet(addressDestino)
+                                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                                        );
+
                                 }
                             });
 
@@ -180,8 +182,9 @@ public class MapsActivity_Pedido extends FragmentActivity implements
                                 @Override
                                 public void onMarkerDragEnd(Marker marker) {
                                     if(marker.equals(markerOrigen)) {
+                                        Toast.makeText(getApplicationContext(), "Su ubicación ha sido actualizada. ", Toast.LENGTH_LONG).show();
+
                                         LatLng cooOrigen = marker.getPosition();
-                                        Toast.makeText(getApplication(), "Direccion de origen" + cooOrigen, Toast.LENGTH_LONG).show();
                                         Geocoder geocdireccionOrigen = new Geocoder(getApplicationContext(), Locale.getDefault());
                                         try {
                                             strDireccionOridgen = geocdireccionOrigen.getFromLocation(cooOrigen.latitude, cooOrigen.longitude, 1);
@@ -193,6 +196,8 @@ public class MapsActivity_Pedido extends FragmentActivity implements
                                         marker.showInfoWindow();
                                     }
                                     if(marker.equals(markerDestino)){
+                                        Toast.makeText(getApplicationContext(), "Ubicación actualizada. ", Toast.LENGTH_LONG).show();
+
                                         LatLng cooDestino = marker.getPosition();
                                         Geocoder geocdireccionDestino = new Geocoder(getApplicationContext(), Locale.getDefault());
                                         try {
@@ -261,7 +266,7 @@ public class MapsActivity_Pedido extends FragmentActivity implements
     @Override
     public boolean onMarkerClick(Marker marker) {
         if(marker.equals(markerOrigen)) {
-            Toast.makeText(this, addressOrigen, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, addressOrigen, Toast.LENGTH_LONG).show();
         }
         return false;
     }
