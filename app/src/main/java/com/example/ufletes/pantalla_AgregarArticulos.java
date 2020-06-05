@@ -187,7 +187,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
 
     private void subirFotoArticulo() {
         final CharSequence[] opciones = {"Tomar foto", "Cargar imagen", "Cancelar"};
-        final AlertDialog.Builder alertOpciones = new AlertDialog.Builder((pantalla_AgregarArticulos.this));
+        final AlertDialog.Builder alertOpciones = new AlertDialog.Builder((pantalla_AgregarArticulos.this), R.style.CustomAlertDialog);
         alertOpciones.setTitle("Seleccione una opción");
         alertOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
             @Override

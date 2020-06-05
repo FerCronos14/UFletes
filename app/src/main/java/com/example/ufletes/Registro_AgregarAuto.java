@@ -147,6 +147,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                 }
                 else {
                     final Map<String, Object> map = new HashMap<>();
+
                     map.put("marca_v", marcaVehiculo);
                     map.put("tipo_v", tipoVehiculo);
                     map.put("vol_v", volVehiculo + " tonelada(s)");
@@ -213,7 +214,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
 
     private void subirFoto() {
         final CharSequence[] opciones = {"Tomar foto", "Cargar imagen", "Cancelar"};
-        final AlertDialog.Builder alertOpciones = new AlertDialog.Builder((Registro_AgregarAuto.this));
+        final AlertDialog.Builder alertOpciones = new AlertDialog.Builder((Registro_AgregarAuto.this), R.style.CustomAlertDialog);
         alertOpciones.setTitle("Seleccione una opción");
         alertOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
             @Override

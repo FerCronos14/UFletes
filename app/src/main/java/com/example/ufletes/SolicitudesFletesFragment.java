@@ -93,7 +93,7 @@ public class SolicitudesFletesFragment extends Fragment {
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity());
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity(), R.style.RoundShapeTheme);
                 materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
                 materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
                     @Override
@@ -143,75 +143,6 @@ public class SolicitudesFletesFragment extends Fragment {
                         TransitionManager.beginDelayedTransition(RVSOLICITUDES);
                         notifyDataSetChanged();
                         btnDetallePedidoFlete = v.findViewById(R.id.btnInfoPedido_Solicitud);
-                       // if (isExpanded) {
-                        /*
-                        btnDetallePedidoFlete.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                                    LayoutInflater inflater = getLayoutInflater();
-                                    View convertView = inflater.inflate(R.layout.fragment_confirmar_pedido, null);
-
-                                    query = getInstance()
-                                            .collection("Cliente")
-                                            .document(idCliente_pedido)
-                                            .collection("Articulos");
-                                    RecyclerView recyclerView = convertView.findViewById(R.id.confirmacionArticulosClienteRVAct);
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                    recyclerView.setHasFixedSize(true);
-
-
-                                    FirestoreRecyclerOptions<Articulos_Lista> options = new FirestoreRecyclerOptions.Builder<Articulos_Lista>()
-                                            .setQuery(query, Articulos_Lista.class)
-                                            .build();
-                                    adapter = new FirestoreRecyclerAdapter<Articulos_Lista, pedidosHolder>(options) {
-                                        @NonNull
-                                        @Override
-                                        public pedidosHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                                            View view = LayoutInflater
-                                                    .from(parent.getContext())
-                                                    .inflate(R.layout.fragment_listaarticulos, parent, false);
-                                            return new pedidosHolder(view);
-                                        }
-
-                                        @Override
-                                        protected void onBindViewHolder(@NonNull pedidosHolder holder, int position, @NonNull Articulos_Lista model) {
-                                            holder.textViewNombreArticuloListado.setText((model.getNombre_a()));
-                                            holder.textViewDescripcionArticuloListado.setText((model.getDescri_a()));
-                                            holder.textViewCantidadArticuloListado.setText((model.getCant_a()));
-                                            Glide.with(getContext())
-                                                    .load(model.getPathFoto_a())
-                                                    .fitCenter()
-                                                    .centerCrop()
-                                                    .placeholder(R.drawable.ic_noimg)
-                                                    .into(holder.imageViewArticulo);
-                                        }
-                                    };
-
-                                    adapter.startListening();
-                                    adapter.notifyDataSetChanged();
-                                    recyclerView.setAdapter(adapter);
-                                    alertDialog.setView(convertView);
-
-                                    AlertDialog dialog = alertDialog.create();
-                                    dialog.getWindow().setLayout(600, 400);
-
-                                    dialog.show();
-                                    adapter.notifyDataSetChanged();
-
-                                    Button mbtnAceptarPedido = (Button) convertView.findViewById(R.id.btnAceptarPedido_Confirmado_Dialog);
-                                    mbtnAceptarPedido.setOnClickListener(new View.OnClickListener() {
-                                       @Override
-                                         public void onClick(View view) {
-                                            Intent intent = new Intent(getContext(), MapsActivity_RastreoFletero.class);
-                                            startActivity(intent);
-                                        }
-                                    });
-                                    //listaArticulosCliente.show();
-                                }
-                            });
-                        //}
-                        */
                         btnDetallePedidoFlete.setOnClickListener(new View.OnClickListener() {
                            @Override
                            public void onClick(View v) {
@@ -336,7 +267,7 @@ public class SolicitudesFletesFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity());
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity() , R.style.RoundShapeTheme);
                 materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
                 materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
                     @Override

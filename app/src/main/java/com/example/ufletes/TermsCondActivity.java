@@ -43,7 +43,7 @@ public class TermsCondActivity extends AppCompatActivity implements View.OnClick
                 }
                 break;
             case R.id.btnCreditos:
-                final Dialog dialog_creditos= new Dialog(this);
+                final Dialog dialog_creditos= new Dialog(this, R.style.CustomAlertDialog);
                 //dialog_creditos.getWindow().setBackgroundDrawable(new ColorDrawable(Color.));
                 dialog_creditos.setContentView(R.layout.cuadro_dialogo_creditos);
                 dialog_creditos.setTitle("Creditos");

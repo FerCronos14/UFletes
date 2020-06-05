@@ -84,8 +84,9 @@
 
     <Button
         android:id="@+id/btnCerrar_Creditos_Dialog"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
         android:layout_width="match_parent"
+        android:textColor="@color/colorPrimary"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
         android:paddingTop="8dp"
