@@ -28,4 +28,5 @@
     <string name="filter_btn_title">Filtrar</string>
     <string name="hint_searchbox">Busqueda</string>
     <string name="title_activity_maps__rastreo_fletero">Map</string>
+    <string name="title_pedido">Pedido</string>
 </resources>

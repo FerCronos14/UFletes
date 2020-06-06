@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnInicioSesion:
                 if (!Usuario_login.isEmpty() && !Password_login.isEmpty()) {
                     ObtenerDatosCliente();
+                    ObtenerDatosFletero();
+                    LogearUsuario();
                 }
                 else{
                     Toast.makeText(MainActivity.this, "Favor de llenar los campos", Toast.LENGTH_SHORT).show();
@@ -140,8 +142,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                             });
                                 }
                             }
-                            ObtenerDatosFletero();
-                            LogearUsuario();
+                            //ObtenerDatosFletero();
+                            //LogearUsuario();
                         }
                     }
                 });
@@ -160,17 +162,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser user = mAuth.getCurrentUser();
-                    if (!user.isEmailVerified() && !correoUsuario.equals("fer2314@gmail.com") && !correoUsuario.equals("aldo@gmail.com") && !correoUsuario.equals("fletero@gmail.com")) {
+                    if (!user.isEmailVerified()
+                            && !Usuario_login.equals("fer2314@gmail.com")
+                            && !Usuario_login.equals("aldo@gmail.com")
+                            && !Usuario_login.equals("fletero@gmail.com")
+                            && !Usuario_login.equals("fletera@gmail.com"))
+                    {
                         Toast.makeText(MainActivity.this, "Correo electrónico no verificado", Toast.LENGTH_SHORT).show();
                         mPDialog.dismiss();
                     } else {
                         if (correoUsuario.equals(Usuario_login)) {
-                            //Toast.makeText(MainActivity.this, "Bienvenido " + nombreUsuario + " " + apellidoUsuario, Toast.LENGTH_LONG).show();
-                            //Toast.makeText(MainActivity.this, "Bienvenido " + correoUsuario, Toast.LENGTH_LONG).show();
-                            //startActivity(new Intent(MainActivity.this,Pantalla_pedidos.class));
                             startActivity(new Intent(MainActivity.this, pantalla_busquedaFletero.class));
-                        } else if (!correoUsuario.equals(Usuario_login)) {
-                            //Toast.makeText(MainActivity.this, "Bienvenido " + Usuario_login, Toast.LENGTH_LONG).show();
+                        } else if (correoFletero.equals(Usuario_login)) {
                             startActivity(new Intent(MainActivity.this, Pantalla_Inicio_Fletero.class));
                         }
                         mPDialog.dismiss();

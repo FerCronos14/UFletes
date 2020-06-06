@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    app:cardCornerRadius="15dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="10dp"
+        android:paddingBottom="8dp">
+
+
+        <TextView
+            android:id="@+id/textViewNombreCliente_Pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Nombre"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewTelCliente_Pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/telefono"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNombreCliente_Pedido" />
+
+        <TextView
+            android:id="@+id/textViewTEXTODirOrigen_Pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Direccion de origen"
+            app:layout_constraintEnd_toStartOf="@+id/textViewTEXTODirDestino_Pedido"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTelCliente_Pedido" />
+
+        <TextView
+            android:id="@+id/textViewTEXTODirDestino_Pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Direccion de destino"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textViewTEXTODirOrigen_Pedido"
+            app:layout_constraintTop_toTopOf="@+id/textViewTEXTODirOrigen_Pedido" />
+
+        <TextView
+            android:id="@+id/textViewDirOrigen_Pedido"
+            android:layout_width="143dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:autoSizeTextType="none"
+            android:text="Origen"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewDireccionPedido"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTEXTODirOrigen_Pedido" />
+
+        <ImageView
+            android:id="@+id/imageViewDireccionPedido"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/textViewDirDestino_Pedido"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textViewDirOrigen_Pedido"
+            app:layout_constraintTop_toTopOf="@+id/textViewDirOrigen_Pedido"
+            app:srcCompat="@drawable/ic_right_arrows" />
+
+        <TextView
+            android:id="@+id/textViewDirDestino_Pedido"
+            android:layout_width="143dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Destino"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageViewDireccionPedido"
+            app:layout_constraintTop_toTopOf="@+id/textViewDirOrigen_Pedido" />
+
+        <TextView
+            android:id="@+id/textViewFechaPedido_Pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Fecha"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/llExpandAreaPedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDirOrigen_Pedido">
+
+            <Button
+                android:id="@+id/btnInfoPedido_Pedido"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:paddingTop="8dp"
+                android:layout_gravity="right"
+                android:text="Finalizar"
+                />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

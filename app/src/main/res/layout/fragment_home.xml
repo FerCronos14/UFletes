@@ -36,7 +36,7 @@
         android:layout_marginStart="35dp"
         android:layout_marginEnd="35dp"
         android:layout_marginBottom="300dp"
-        android:text="Uno de nuestro objetivo es brindar una experiencia amigable y sencilla a los usuarios que necesiten hacer fletes puedan hacerlo desde su celular."
+        android:text="Uno de nuestros objetivos es brindar una experiencia amigable y sencilla a los usuarios que necesiten hacer fletes puedan hacerlo desde su celular."
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

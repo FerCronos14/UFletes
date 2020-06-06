@@ -29,7 +29,9 @@ import com.example.ufletes.holders.pedidosHolder;
 import com.example.ufletes.holders.solicitudesHolder;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.ObservableSnapshotArray;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -59,8 +61,6 @@ public class SolicitudesFletesFragment extends Fragment {
     private int expandedPosition = -1;
 
 
-
-
     public SolicitudesFletesFragment() {
     }
 
@@ -73,7 +73,6 @@ public class SolicitudesFletesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_solicitudes_fletes_list, container, false);
-
         return view;
     }
 
@@ -108,7 +107,8 @@ public class SolicitudesFletesFragment extends Fragment {
 
     private void getData() {
         query = getInstance()
-                .collection("Pedidos");
+                .collection("Pedidos")
+                .whereEqualTo("statusSolicitud_s", "Disponible");
 
         FirestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Solicitudes_Lista>()
                 .setQuery(query, Solicitudes_Lista.class)
@@ -130,6 +130,9 @@ public class SolicitudesFletesFragment extends Fragment {
                 final String auxidCliente_pedido = model.getIdCliente_s();
                 final String auxDirOrigen = model.getDirOrigen_s();
                 final String auxDirDestino = model.getDirDestino_s();
+                ObservableSnapshotArray<Solicitudes_Lista> observableSnapshotArray = getSnapshots();
+                final DocumentReference documentReference_Solicitudes =
+                        observableSnapshotArray.getSnapshot(position).getReference();
 
                 final boolean isExpanded = position==expandedPosition;
                 holder.mllExpandArea.setVisibility(isExpanded?View.VISIBLE:View.GONE);
@@ -148,7 +151,7 @@ public class SolicitudesFletesFragment extends Fragment {
                            public void onClick(View v) {
 
 
-                               AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                               AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext(), R.style.CustomAlertDialog);
                                LayoutInflater inflater = getLayoutInflater();
                                View convertView = inflater.inflate(R.layout.fragment_confirmar_pedido, null);
 
@@ -197,9 +200,6 @@ public class SolicitudesFletesFragment extends Fragment {
 
                                final AlertDialog dialog = alertDialog.create();
                                dialog.getWindow().setLayout(600, 400);
-
-
-
                                dialog.show();
                                adapter.notifyDataSetChanged();
 
@@ -208,8 +208,11 @@ public class SolicitudesFletesFragment extends Fragment {
                                    @Override
                                    public void onClick(View view) {
                                        strcooOrigen_cliente = auxDirOrigen;
+                                       documentReference_Solicitudes.update("statusSolicitud_s", "Ocupado");
+                                       documentReference_Solicitudes.update("idFletero_s", MainActivity.idDoc_Fletero);
                                        Intent intent = new Intent(getContext(), MapsActivity_RastreoFletero.class);
                                        startActivity(intent);
+                                       Adapter_Solicitudes.notifyDataSetChanged();
                                    }
                                });
 

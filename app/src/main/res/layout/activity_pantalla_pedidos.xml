@@ -116,6 +116,7 @@
         android:id="@+id/editTextDestino_pedido"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
         android:layout_marginEnd="35dp"
         android:layout_marginBottom="372dp"
         android:background="@drawable/fondo_textos"
@@ -123,7 +124,7 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/txtDestino_pedido"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtDestino_pedido"
         app:layout_constraintVertical_bias="0.0" />
 

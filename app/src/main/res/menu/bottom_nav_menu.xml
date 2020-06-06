@@ -11,6 +11,9 @@
         android:icon="@drawable/fletero"
         android:title="@string/title_fleteros" />
 
-
+    <item
+        android:id="@+id/navigation_OrdenPedido"
+        android:icon="@drawable/fletero"
+        android:title="@string/title_pedido" />
 
 </menu>

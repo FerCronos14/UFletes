@@ -230,7 +230,8 @@ public class BusquedaListaFleterosFragment extends Fragment {
             @NonNull
             @Override
             public busqFleterosHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_busqueda_lista_fleteros, parent, false);
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.fragment_busqueda_lista_fleteros, parent, false);
                 return new busqFleterosHolder(view);
             }
         };
