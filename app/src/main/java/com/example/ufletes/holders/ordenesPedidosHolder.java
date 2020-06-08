@@ -12,6 +12,7 @@ import com.example.ufletes.R;
 public class ordenesPedidosHolder  extends RecyclerView.ViewHolder{
 
     public final TextView mtextViewNombrePedido;
+    public final TextView mtextViewNombreFleteroPedido;
     public final TextView mtextViewTelefonoPedido;
     //public final TextView mtextViewStatusPedido;
     public final TextView mtextViewDirOrigenPedido;
@@ -23,6 +24,7 @@ public class ordenesPedidosHolder  extends RecyclerView.ViewHolder{
         super(itemView);
 
         mtextViewNombrePedido = itemView.findViewById(R.id.textViewNombreCliente_Pedido);
+        mtextViewNombreFleteroPedido = itemView.findViewById(R.id.tvNomFleteroAceptado);
         mtextViewTelefonoPedido = itemView.findViewById(R.id.textViewTelCliente_Pedido);
         mtextViewDirOrigenPedido = itemView.findViewById(R.id.textViewDirOrigen_Pedido);
         mtextViewDirDestinoPedido = itemView.findViewById(R.id.textViewDirDestino_Pedido);

@@ -111,7 +111,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
             android:paddingTop="8dp"
-            android:layout_gravity="right"
+            android:textColor="#FF2222"
+            android:gravity="right"
             android:text="Eliminar"
             />
 

@@ -37,8 +37,8 @@ public class MyListaArticulosRecyclerViewAdapter extends FirestoreRecyclerAdapte
     List<Articulos_Lista> mValues;
     private Context ctx;
     private int expandedPosition = -1;
-    CardView cvListArticulos;
     Button mbtnEliminarArticulo;
+    CardView cvListArticulos;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link

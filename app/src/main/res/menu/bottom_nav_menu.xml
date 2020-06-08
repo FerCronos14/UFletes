@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/navigation_OrdenPedido"
-        android:icon="@drawable/fletero"
+        android:icon="@drawable/ic_pedido_black_24dp"
         android:title="@string/title_pedido" />
 
 </menu>

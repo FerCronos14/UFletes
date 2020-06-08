@@ -16,80 +16,87 @@
 
 
         <TextView
-            android:id="@+id/textViewNombreCliente_Pedido"
+            android:id="@+id/textViewNomTEXT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Nombre"
+            android:layout_marginTop="24dp"
+            android:text="Nombre:"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewNombreCliente_Pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Nombre"
+            app:layout_constraintStart_toEndOf="@+id/textViewNomTEXT"
+            app:layout_constraintTop_toTopOf="@+id/textViewNomTEXT" />
+
+        <TextView
+            android:id="@+id/textViewTelTEXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Telefono:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNomTEXT" />
 
         <TextView
             android:id="@+id/textViewTelCliente_Pedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
             android:text="@string/telefono"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewNombreCliente_Pedido" />
+            app:layout_constraintStart_toEndOf="@+id/textViewTelTEXT"
+            app:layout_constraintTop_toTopOf="@+id/textViewTelTEXT" />
 
         <TextView
             android:id="@+id/textViewTEXTODirOrigen_Pedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:text="Direccion de origen"
-            app:layout_constraintEnd_toStartOf="@+id/textViewTEXTODirDestino_Pedido"
-            app:layout_constraintHorizontal_bias="0.5"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTelCliente_Pedido" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewTelTEXT" />
 
         <TextView
             android:id="@+id/textViewTEXTODirDestino_Pedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="Direccion de destino"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textViewTEXTODirOrigen_Pedido"
-            app:layout_constraintTop_toTopOf="@+id/textViewTEXTODirOrigen_Pedido" />
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDirOrigen_Pedido" />
 
         <TextView
             android:id="@+id/textViewDirOrigen_Pedido"
-            android:layout_width="143dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
             android:autoSizeTextType="none"
             android:text="Origen"
-            app:layout_constraintEnd_toStartOf="@+id/imageViewDireccionPedido"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewTEXTODirOrigen_Pedido" />
 
-        <ImageView
-            android:id="@+id/imageViewDireccionPedido"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            app:layout_constraintEnd_toStartOf="@+id/textViewDirDestino_Pedido"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textViewDirOrigen_Pedido"
-            app:layout_constraintTop_toTopOf="@+id/textViewDirOrigen_Pedido"
-            app:srcCompat="@drawable/ic_right_arrows" />
-
         <TextView
             android:id="@+id/textViewDirDestino_Pedido"
-            android:layout_width="143dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
             android:text="Destino"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageViewDireccionPedido"
-            app:layout_constraintTop_toTopOf="@+id/textViewDirOrigen_Pedido" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTEXTODirDestino_Pedido" />
 
         <TextView
             android:id="@+id/textViewFechaPedido_Pedido"
@@ -98,8 +105,34 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="Fecha"
+            app:layout_constraintBottom_toTopOf="@+id/textViewNombreCliente_Pedido"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvNomFleteroAceptadoTEXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="42dp"
+            android:layout_marginEnd="8dp"
+            android:text="Aceptado por:"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tvNomFleteroAceptado"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDirDestino_Pedido" />
+
+        <TextView
+            android:id="@+id/tvNomFleteroAceptado"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Nombre Fletero"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/tvNomFleteroAceptadoTEXT"
+            app:layout_constraintTop_toTopOf="@+id/tvNomFleteroAceptadoTEXT" />
 
         <LinearLayout
             android:id="@+id/llExpandAreaPedido"
@@ -110,15 +143,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDirOrigen_Pedido">
+            app:layout_constraintTop_toBottomOf="@+id/tvNomFleteroAceptadoTEXT">
 
             <Button
-                android:id="@+id/btnInfoPedido_Pedido"
+                android:id="@+id/btnFinalizar_Pedido"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
                 android:paddingTop="8dp"
+                android:textColor="#FF2222"
                 android:layout_gravity="right"
                 android:text="Finalizar"
                 />

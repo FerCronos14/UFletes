@@ -49,10 +49,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static String idDoc_Cliente = "";
     static String nombreCliente = "";
     static String apellidoCliente = "";
+    static String apellidomatCliente = "";
     static String telefonoCliente = "";
     //=============================================== Datos Fleteros ============================
     public static String idDoc_Fletero = "";
     static String correoFletero = "";
+    static String nombreFleteroM = "";
+    static String apellidopFleteroM = "";
+    static String apellidomFleteroM = "";
 
     private FirebaseAuth mAuth;
     //private DatabaseReference mDatabase;
@@ -85,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
     private void ObtenerDatosFletero (){
         mFireStore.collection("Fletero")
                 .whereEqualTo("correo", Usuario_login)
@@ -96,6 +101,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 idDoc_Fletero = document.getId();
                                 correoFletero = document.getData().get("correo").toString();
+                                nombreFleteroM = document.getData().get(("nombre")).toString();
+                                apellidopFleteroM = document.getData().get("apellidop").toString();
+                                apellidomFleteroM = document.getData().get("apellidom").toString();
                                 String auxIdDoc = document.getData().get("idDocFletero").toString();
                                 if (auxIdDoc.isEmpty()) {
                                     Map<String, Object> mapUpDoc = new HashMap<>();
@@ -114,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
     }
+
     private void ObtenerDatosCliente (){
         mFireStore.collection("Cliente")
                 .whereEqualTo("correo", Usuario_login)
@@ -127,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 idDoc_Cliente = document.getId();
                                 nombreCliente = document.getData().get("nombre").toString();
                                 apellidoCliente = document.getData().get("apellidop").toString();
+                                apellidomatCliente = document.getData().get("apellidom").toString();
                                 telefonoCliente = document.getData().get("telefono").toString();
                                 String auxIdDoc = document.getData().get("idDocCliente").toString();
                                 if (auxIdDoc.isEmpty()) {

@@ -5,8 +5,12 @@
         android:title="Inicio"
         android:icon="@drawable/ic_home_black_24dp"/>
 
-    <item android:id="@+id/menu_pedidos_fletero"
-        android:title="Pedidos"
+    <item android:id="@+id/menu_solcitudes_fletero"
+        android:title="Solicitudes"
         android:icon="@drawable/ic_people_black_24dp"/>
+
+    <item android:id="@+id/menu_orden_fletero"
+        android:title="Pedidos"
+        android:icon="@drawable/ic_pedido_black_24dp"/>
 
 </menu>

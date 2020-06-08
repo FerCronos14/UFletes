@@ -61,8 +61,7 @@ public class SolicitudesFletesFragment extends Fragment {
     private int expandedPosition = -1;
 
 
-    public SolicitudesFletesFragment() {
-    }
+    public SolicitudesFletesFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -150,11 +149,13 @@ public class SolicitudesFletesFragment extends Fragment {
                            @Override
                            public void onClick(View v) {
 
+                               ObservableSnapshotArray<Solicitudes_Lista> observableSnapshotArray = getSnapshots();
+                               final DocumentReference documentReference_Articulos =
+                                       observableSnapshotArray.getSnapshot(position).getReference();
 
                                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext(), R.style.CustomAlertDialog);
                                LayoutInflater inflater = getLayoutInflater();
                                View convertView = inflater.inflate(R.layout.fragment_confirmar_pedido, null);
-
 
                               query = getInstance()
                                        .collection("Cliente")
@@ -163,7 +164,6 @@ public class SolicitudesFletesFragment extends Fragment {
                                RecyclerView recyclerView = convertView.findViewById(R.id.confirmacionArticulosClienteRVAct);
                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                recyclerView.setHasFixedSize(true);
-
 
                                FirestoreRecyclerOptions<Articulos_Lista> options = new FirestoreRecyclerOptions.Builder<Articulos_Lista>()
                                         .setQuery(query, Articulos_Lista.class)
@@ -191,9 +191,7 @@ public class SolicitudesFletesFragment extends Fragment {
                                                 .into(holder.imageViewArticulo);
                                     }
                                 };
-
-                               //MyListaArticulosRecyclerViewAdapter adapter = new MyListaArticulosRecyclerViewAdapter(getContext(), options);
-                               adapter.startListening();
+                                adapter.startListening();
                                adapter.notifyDataSetChanged();
                                recyclerView.setAdapter(adapter);
                                alertDialog.setView(convertView);
@@ -210,6 +208,9 @@ public class SolicitudesFletesFragment extends Fragment {
                                        strcooOrigen_cliente = auxDirOrigen;
                                        documentReference_Solicitudes.update("statusSolicitud_s", "Ocupado");
                                        documentReference_Solicitudes.update("idFletero_s", MainActivity.idDoc_Fletero);
+                                       documentReference_Solicitudes.update("nombre_f_s", MainActivity.nombreFleteroM);
+                                       documentReference_Solicitudes.update("apellidop_f_s", MainActivity.apellidopFleteroM);
+                                       documentReference_Solicitudes.update("apellidom_f_s", MainActivity.apellidopFleteroM);
                                        Intent intent = new Intent(getContext(), MapsActivity_RastreoFletero.class);
                                        startActivity(intent);
                                        Adapter_Solicitudes.notifyDataSetChanged();
@@ -251,16 +252,19 @@ public class SolicitudesFletesFragment extends Fragment {
         if (s.equals("Recientes")){
             query = getInstance()
                     .collection("Pedidos")
-                    .orderBy("fecha_s", Query.Direction.DESCENDING);
+                    .orderBy("fecha_s", Query.Direction.DESCENDING)
+                    .whereEqualTo("statusSolicitud_s", "Disponible");
         }
         else if (s.equals("Antiguos")){
             query = getInstance()
                     .collection("Pedidos")
-                    .orderBy("fecha_s", Query.Direction.ASCENDING);
+                    .orderBy("fecha_s", Query.Direction.ASCENDING)
+                    .whereEqualTo("statusSolicitud_s", "Disponible");
         }
 
         else if(s.equals("Neutral")){
-            query = getInstance().collection("Pedidos");
+            query = getInstance().collection("Pedidos")
+                    .whereEqualTo("statusSolicitud_s", "Disponible");
         }
 
         final String[] order = {"Recientes", "Antiguos", "Neutral"};

@@ -115,6 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
             android:paddingTop="8dp"
+            android:textColor="#FF2222"
             android:layout_gravity="right"
             android:text="Eliminar"
             />

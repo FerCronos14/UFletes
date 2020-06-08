@@ -128,9 +128,13 @@ public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickL
             Map<String, Object> mapSolicFlete = new HashMap<>();
             mapSolicFlete.put("nombre_s", MainActivity.nombreCliente);
             mapSolicFlete.put("apellidop_s", MainActivity.apellidoCliente);
+            mapSolicFlete.put("apellidom_s", MainActivity.apellidomatCliente);
             mapSolicFlete.put("telefono_s", MainActivity.telefonoCliente);
             mapSolicFlete.put("idCliente_s", MainActivity.idDoc_Cliente);
             mapSolicFlete.put("idFletero_s", "");
+            mapSolicFlete.put("nombre_f_s", "");
+            mapSolicFlete.put("apellidop_f_s", "");
+            mapSolicFlete.put("apellidom_f_s", "");
             mapSolicFlete.put("dirOrigen_s", strPedidosOrigen); //Cambiar a coordenadas
             mapSolicFlete.put("dirDestino_s", strPedidoDestino);
             mapSolicFlete.put("statusSolicitud_s", "Disponible");
@@ -148,6 +152,7 @@ public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickL
                 public void onSuccess(DocumentReference documentReference) {
                     mPDialog.dismiss();
                     Toast.makeText(Pantalla_pedidos.this, "Solicitud guardada", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

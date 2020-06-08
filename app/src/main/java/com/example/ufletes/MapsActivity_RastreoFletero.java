@@ -76,7 +76,7 @@ public class MapsActivity_RastreoFletero extends FragmentActivity implements OnM
                         @Override
                         public void onMapReady(final GoogleMap googleMap) {
                             LatLng latLngM2 = new LatLng(locationM2.getLatitude(), locationM2.getLongitude());
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngM2, 15));
+
                             googleMap.getUiSettings().setZoomControlsEnabled(true);
                             markerRastreo = googleMap.addMarker(new MarkerOptions()
                                             .position(latLngM2)
@@ -109,6 +109,7 @@ public class MapsActivity_RastreoFletero extends FragmentActivity implements OnM
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cooCliente, 15));
                        }
                     });
 

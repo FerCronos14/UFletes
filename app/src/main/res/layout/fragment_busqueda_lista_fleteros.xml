@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,12 +63,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="10dp"
                     android:text="Tipo de caja"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/textViewMarcaTEXT"
                     app:layout_constraintStart_toEndOf="@+id/textViewMarcaTEXT_Busq"
-                    app:layout_constraintTop_toTopOf="@+id/textViewMarcaTEXT" />
+                    app:layout_constraintTop_toTopOf="@+id/textViewMarcaTEXT_Busq" />
 
                 <TextView
                     android:id="@+id/textViewTipo_V_Busq"
@@ -83,6 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
                     android:text="Marca"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
