@@ -80,7 +80,7 @@ public class MapsActivity_RastreoFletero extends FragmentActivity implements OnM
                             googleMap.getUiSettings().setZoomControlsEnabled(true);
                             markerRastreo = googleMap.addMarker(new MarkerOptions()
                                             .position(latLngM2)
-                                            .title("Ubicacion actual del fletero")
+                                            .title(getApplicationContext().getResources().getString(R.string.ubicacion_actual_fletero))
                                             .snippet(addressRastreo)
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
                             );
@@ -97,8 +97,8 @@ public class MapsActivity_RastreoFletero extends FragmentActivity implements OnM
 
                             markerClienteOrigen = googleMap.addMarker(new MarkerOptions()
                                             .position(cooCliente)
-                                            .title("Ubicacion del cliente")
-                                            //.snippet(addressRastreo)
+                                            .title(getApplicationContext().getResources().getString(R.string.ubicacion_cliente))
+                                            .snippet(String.valueOf(strDireccionCliente))
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                             );
 
@@ -122,9 +122,6 @@ public class MapsActivity_RastreoFletero extends FragmentActivity implements OnM
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

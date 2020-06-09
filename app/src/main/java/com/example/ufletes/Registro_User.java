@@ -92,9 +92,9 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 TipoUsuario = adapterView.getItemAtPosition(i).toString();
-                if (TipoUsuario.contains("tipo")) { }
+                if (TipoUsuario.contains("tipo") || TipoUsuario.contains("type")) { }
                 else {
-                    Toast.makeText(adapterView.getContext(), "Ha seleccionado: " + adapterView.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(adapterView.getContext(), R.string.ha_seleccionado + adapterView.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -107,16 +107,16 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
     }
 
     private void RegistroUser() {
-        if (TipoUsuario.contains("tipo")) {
-            Toast.makeText(this, "Favor de seleccionar un tipo de usuario", Toast.LENGTH_SHORT).show();
+        if (TipoUsuario.contains("tipo")  || TipoUsuario.contains("type")) {
+            Toast.makeText(this, R.string.favor_seleccionar_usuario, Toast.LENGTH_SHORT).show();
         }
         else {
             mAuth.createUserWithEmailAndPassword(Email_User_Register, Password_User_Register).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        mPDialog.setTitle("Iniciando sesion");
-                        mPDialog.setMessage("Espere un momento...");
+                        mPDialog.setTitle(R.string.iniciando_sesion);
+                        mPDialog.setMessage(Registro_User.this.getResources().getString(R.string.dialog_espere));
                         mPDialog.setCancelable(false);
                         mPDialog.show();
 
@@ -127,12 +127,15 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
                         map.put("telefono", Tel_User_Register);
                         map.put("correo", Email_User_Register);
                         map.put("password", Password_User_Register);
-                        if (TipoUsuario.contains("Fletero")) {
+                        if (TipoUsuario.contains("Fletero") || TipoUsuario.contains("Shipper") ) {
                             map.put("idDocFletero", "");
                             map.put("pathFoto_v", "");
+                            TipoUsuario = "Fletero";
                         }
-                        if (TipoUsuario.contains("Cliente")) {
+                        if (TipoUsuario.contains("Cliente") || TipoUsuario.contains("Customer")) {
                             map.put("idDocCliente", "");
+                            TipoUsuario = "Cliente";
+
                         }
 
                         String id = mAuth.getCurrentUser().getUid();
@@ -144,25 +147,25 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
                                 //String postId = " ";
                                 mPDialog.dismiss();
 
-                                Toast.makeText(Registro_User.this, "Registro completo", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Registro_User.this, R.string.registro_completo, Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(Registro_User.this, MainActivity.class));
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 user.sendEmailVerification();
-                                Toast.makeText(Registro_User.this, "Correo de verificación enviado, verifique en su correo registrado", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Registro_User.this, R.string.send_email, Toast.LENGTH_SHORT).show();
                                 finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 mPDialog.dismiss();
-                                Toast.makeText(Registro_User.this, "No se pudo completar el registro", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Registro_User.this, R.string.error, Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else {
                         if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                            Toast.makeText(Registro_User.this, "Usuario ya existe", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Registro_User.this, R.string.usuario_ya_existe, Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(Registro_User.this, "No se pudo guardar los datos", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Registro_User.this, R.string.error, Toast.LENGTH_SHORT).show();
                         }
                         mPDialog.dismiss();
                         //Toast.makeText(Registro_User.this, "No se pudo registrar el usuario", Toast.LENGTH_SHORT).show();
@@ -190,15 +193,15 @@ public class Registro_User extends AppCompatActivity implements View.OnClickList
                 !ConfirmPassword_User_Register.isEmpty()) {
             if(Password_User_Register.length() >= 6) {
                 if (!ConfirmPassword_User_Register.equals(Password_User_Register)) {
-                    Toast.makeText(Registro_User.this, "Contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Registro_User.this, R.string.contraseñas_no_coinciden, Toast.LENGTH_SHORT).show();
                 }else {
                     RegistroUser();
                 }
             }else {
-                Toast.makeText(Registro_User.this, "Contraseña menor a 6", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Registro_User.this, R.string.contraseña_6, Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(Registro_User.this, "Favor de llenar campos requeridos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Registro_User.this, R.string.favrllenarcampor, Toast.LENGTH_SHORT).show();
         }
 
     }

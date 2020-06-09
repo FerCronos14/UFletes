@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/menu_home_fletero"
-        android:title="Inicio"
+        android:title="@string/title_inicio"
         android:icon="@drawable/ic_home_black_24dp"/>
 
     <item android:id="@+id/menu_solcitudes_fletero"
-        android:title="Solicitudes"
+        android:title="@string/title_solicitudes"
         android:icon="@drawable/ic_people_black_24dp"/>
 
     <item android:id="@+id/menu_orden_fletero"
-        android:title="Pedidos"
+        android:title="@string/pedidos"
         android:icon="@drawable/ic_pedido_black_24dp"/>
 
 </menu>

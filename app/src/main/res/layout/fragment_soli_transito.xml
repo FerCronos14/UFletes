@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:layout_gravity="center"
-        android:text="Solicitud en tránsito"
+        android:text="@string/solicitud_en_tr_nsito"
         android:textSize="24sp"
          />
 

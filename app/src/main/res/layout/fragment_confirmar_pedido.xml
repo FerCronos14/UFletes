@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Articulo(s)"
+        android:text="@string/articulo_s"
         android:textSize="20sp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -27,14 +27,15 @@
         android:layout_height="wrap_content"
         android:gravity="right"
         android:orientation="horizontal">
-    <Button
-        android:id="@+id/btnCancelarPedido_Confirmado_Dialog"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:paddingTop="8dp"
-        android:text="Cancelar" />
+
+        <Button
+            android:id="@+id/btnCancelarPedido_Confirmado_Dialog"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:paddingTop="8dp"
+            android:text="@string/cerrar" />
     <Button
         android:id="@+id/btnAceptarPedido_Confirmado_Dialog"
         style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -42,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
         android:paddingTop="8dp"
-        android:text="Aceptar pedido" />
+        android:text="@string/aceptar_pedido" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 

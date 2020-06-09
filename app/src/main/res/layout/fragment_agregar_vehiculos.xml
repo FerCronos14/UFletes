@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Tipo de caja"
+        android:text="@string/tipo_de_caja"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textViewMarcaTEXT"
         app:layout_constraintTop_toBottomOf="@+id/textViewMarcaTEXT" />
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Tipo"
+        android:text="@string/tipo"
         app:layout_constraintStart_toStartOf="@+id/textViewTipoTEXT"
         app:layout_constraintTop_toBottomOf="@+id/textViewTipoTEXT" />
 
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
-        android:text="Marca"
+        android:text="@string/marca"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageViewVehiculoFletero"
         app:layout_constraintTop_toTopOf="parent" />
@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Marca"
+        android:text="@string/marca"
         app:layout_constraintBottom_toBottomOf="@+id/textViewMarcaTEXT"
         app:layout_constraintStart_toEndOf="@+id/textViewMarcaTEXT"
         app:layout_constraintTop_toTopOf="@+id/textViewMarcaTEXT" />
@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Características"
+        android:text="@string/caracter_sticas"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textViewMarca_V" />
@@ -78,7 +78,7 @@
         android:id="@+id/textViewVol_V"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Volumen"
+        android:text="@string/volumen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewCaracTEXT"
         app:layout_constraintTop_toTopOf="@+id/textViewTipoTEXT" />
@@ -88,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Medida"
+        android:text="@string/medida"
         app:layout_constraintStart_toStartOf="@+id/textViewVol_V"
         app:layout_constraintTop_toBottomOf="@+id/textViewVol_V" />
 
@@ -113,7 +113,7 @@
             android:paddingTop="8dp"
             android:textColor="#FF2222"
             android:gravity="right"
-            android:text="Eliminar"
+            android:text="@string/eliminar"
             />
 
 

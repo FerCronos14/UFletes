@@ -2,31 +2,150 @@
     <string name="app_name">UFletes</string>
     <string name="quieres_ofrecer_tus_servicios_de_fletes_registrate_como_fletero">¿Quieres ofrecer tus servicios de fletes?, ¡Registrate como fletero!</string>
     <string name="registrate">Registrate</string>
-    <string name="estas_buscando_un_flete_que_pueda_mover_tus_muebles_registrate_como_usuario">¿Estas buscando un flete que pueda mover tus muebles?, ¡Registrate como usuario!</string>
     <string name="registro_de_cliente">Registro de cliente</string>
     <string name="apellido_paterno">Apellido paterno</string>
-    <string name="iniciar_sesion">Iniciar Sesion</string>
     <string name="registro">Registro</string>
     <string name="apellido_materno">Apellido materno</string>
-    <string name="telefono">Telefono</string>
+    <string name="telefono">Teléfono</string>
     <string name="nombre_s">Nombre(s)</string>
     <string name="correo_electronio">Correo electrónio</string>
-    <string name="registrar">Registrar</string>
-    <string name="contrase_a">Contraseña</string>
+    <string name="aceptar">Aceptar</string>
     <string name="confirmar_contrase_a">Confirmar contraseña</string>
-    <string name="title_activity_pantalla_busqueda_fletero">pantalla_busquedaFletero</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_pantalla_busqueda_fletero" translatable="false">pantalla_busquedaFletero</string>
+    <string name="title_home" translatable="false">Home</string>
+    <string name="title_dashboard" translatable="false">Dashboard</string>
+    <string name="title_notifications" translatable="false">Notifications</string>
     <string name="title_fleteros">Fleteros</string>
     <string name="title_favs">Favoritos</string>
     <string name="title_inicio">Inicio</string>
-    <string name="title_activity_maps__pedido">Map</string>
+    <string name="title_activity_maps__pedido" translatable="false">Map</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="filter_btn_title">Filtrar</string>
     <string name="hint_searchbox">Busqueda</string>
-    <string name="title_activity_maps__rastreo_fletero">Map</string>
+    <string name="title_activity_maps__rastreo_fletero" translatable="false">Map</string>
     <string name="title_pedido">Pedido</string>
+    <string name="eres_nuevo_usuario">¿Eres nuevo usuario?</string>
+    <string name="correo_electr_nico">Correo electrónico</string>
+    <string name="contrase_a">Contraseña</string>
+
+    <string name="descripci_n">Descripción</string>
+
+    <string name="agregar_a_la_lista">Agregar a la lista</string>
+    <string name="agregar_foto">¿Agregar foto?</string>
+    <string name="articulo_s">Articulo(s)</string>
+    <string name="Llamando">Llamando</string>
+    <string name="pedidos">Pedidos</string>
+    <string name="direcci_n_de_origen">Dirección de origen</string>
+    <string name="agregar_articulos">Agregar artículos</string>
+    <string name="solicitar_flete">Solicitar flete</string>
+    <string name="abrir_mapa">Abrir mapa</string>
+    <string name="direcci_n_de_destino">Dirección de destino</string>
+    <string name="agregar_veh_culo">Agregar vehículo</string>
+    <string name="marca_del_veh_culo">Marca del vehículo</string>
+    <string name="medidas_mts">Medidas (mts³)</string>
+    <string name="capacidad_toneladas">Capacidad (toneladas)</string>
+    <string name="a_adir_veh_culo">Añadir vehículo</string>
+    <string name="registro_de_usuario">Registro de usuario</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="t_rminos_y_condiciones_de_la_aplicaci_n">Términos y condiciones de la aplicación</string>
+    <string name="acepto_t_rminos_y_condiciones">Acepto Términos y Condiciones</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="creditos">Creditos</string>
+    <string name="cerrar">Cerrar</string>
+    <string name="tipo_de_caja">Tipo de caja</string>
+    <string name="tipo">Tipo</string>
+    <string name="marca">Marca</string>
+    <string name="cliente">Cliente</string>
+    <string name="fletero">Fletero</string>
+    <string name="cajacerrada">Caja cerrada</string>
+    <string name="cajaabierta">Caja abierta</string>
+    <string name="cajarendillas">Redilas fijas</string>
+    <string name="cajarefrigerada">Caja refrigerada</string>
+    <string name="otro">Otro</string>
+    <string name="caracter_sticas">Características</string>
+    <string name="volumen">Volumen</string>
+    <string name="medida">Medida</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="aceptar_pedido">Aceptar pedido</string>
+    <string name="uno_de_nuestros_objetivos_es_brindar_una_experiencia_amigable_y_sencilla_a_los_usuarios_que_necesiten_hacer_fletes_puedan_hacerlo_desde_su_celular">Uno de nuestros objetivos es brindar una experiencia amigable y sencilla a los usuarios que necesiten hacer fletes puedan hacerlo desde su celular.</string>
+    <string name="pedir_flete">Pedir flete</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="agregar_datos_del_vehiculo">Agregar datos del vehículo</string>
+    <string name="nuestro_objetivo_es_que_ustedes_los_fleteros_actualicen_su_servicio_con_la_tendencia_de_hacer_todo_con_la_comodidad_que_un_smartphone_ofrece">Nuestro objetivo es que ustedes, los fleteros, actualicen su servicio con la tendencia de hacer todo con la comodidad que un smartphone ofrece.</string>
+    <string name="si_desea_agregar_datos_de_su_vehiculo_solo_presione_el_siguiente_boton">Si desea agregar datos de su vehiculo, solo presione el siguiente boton:</string>
+    <string name="vehiculo_s">Vehiculo(s)</string>
+    <string name="cantidad">Cantidad</string>
+
+    <string name="descripcion">Descripción</string>
+
+    <string name="nombre">Nombre</string>
+    <string name="nombredospuntos">Nombre:</string>
+    <string name="telefonodospuntos">Telefono:</string>
+    <string name="aceptado_por">Aceptado por:</string>
+    <string name="finalizar">Finalizar</string>
+    <string name="llamar">Llamar</string>
+    <string name="mensaje">Mensaje</string>
+    <string name="solicitud_en_tr_nsito">Solicitud en tránsito</string>
+    <string name="title_solicitudes">Solicitudes</string>
+    <string name="seleccioneusuario">Seleccione el tipo de usuario</string>
+    <string name="favrllenarcampor">Favor de llenar los campos</string>
+    <string name="puede_cambiar_su_direccion">Puede cambiar su dirección si deja presionado el puntero.</string>
+    <string name="ubicacion_actual">Ubicación Actual</string>
+    <string name="deje_pulsado_cambio_direccion">Deje pulsado el mapa para seleccionar destino.</string>
+    <string name="destino_dospuntos">"Dirección de destino: "</string>
+    <string name="ubicacion_actualizada">"Su ubicación ha sido actualizada. "</string>
+    <string name="ubicacion_actual_fletero">Ubicación actual del fletero</string>
+    <string name="ubicacion_cliente">Ubicación del cliente</string>
+    <string name="ubicacion_destino">Destino</string>
+    <string name="llenarcampos_articulos">Favor de llenar nombre del artículo</string>
+    <string name="articulo_guardado">Articulo guardado</string>
+    <string name="no_guardo_articulo">No se pudo guardar el artículo</string>
+    <string name="subido_exitosamente">Se subió exitosamente</string>
+    <string name="pausa">Ha sido pausado...</string>
+    <string name="error" translatable="false">Error</string>
+    <string name="subir_imagen">Imagen subida a la base de datos</string>
+    <string name="favor_seleccionar_direcciones">Favor de seleccionar las direcciones abriendo el mapa</string>
+    <string name="favor_seleccionar_origen">Favor de seleccionar la dirección de origen abriendo el mapa</string>
+    <string name="favor_seleccionar_destino">Favor de seleccionar la dirección de destino abriendo el mapa</string>
+    <string name="solicitud_enviada">Solicitud enviada.</string>
+    <string name="no_guardo_solicitud">No se pudo guardar la solicitud</string>
+    <string name="llenarcampos_vehiculos">Favor de llenar nombre del vehículos</string>
+    <string name="favor_seleccionar_caja">Favor de seleccionar el tipo de caja</string>
+    <string name="foto_actualizada">Foto actualizada</string>
+    <string name="foto_error_actualizar">Error al actualizar foto</string>
+    <string name="vehiculo_guardado">Vehículo guardado</string>
+    <string name="error_guardar_vehiculo">No se pudo guardar el vehículo</string>
+    <string name="tomar_foto">Tomar foto</string>
+    <string name="cargar_imagen">Cargar imagen</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="seleccione_opcion">Seleccione una opción</string>
+    <string name="dialog_subiendo_img">Subiendo imagen, espere por favor.</string>
+    <string name="dialog_espere">Espere un momento...</string>
+    <string name="dialog_subiendo_datos">Subiendo datos</string>
+    <string name="dialog_subiendo">Subiendo...</string>
+    <string name="dialog_espere_solicitando">Solicitando flete...</string>
+    <string name="ha_seleccionado">"Ha seleccionado: "</string>
+    <string name="iniciando_sesion">Iniciando sesión</string>
+    <string name="registro_completo">Registro completo</string>
+    <string name="send_email">Correo de verificación enviado, verifique en su correo registrado.</string>
+    <string name="usuario_ya_existe">Usuario ya existe</string>
+    <string name="contraseñas_no_coinciden">Contraseñas no coinciden</string>
+    <string name="contraseña_6">Contraseña menor a 6 caracteres</string>
+    <string name="recientes">Recientes</string>
+    <string name="antiguos">Antiguos</string>
+    <string name="neutral" translatable="false">Neutral</string>
+    <string name="debe_aceptar_terminos">Debe aceptar los Términos y Condiciones para continuar.</string>
+    <string name="email_no_verificado">Correo electrónico no verificado</string>
+    <string name="error_inicio_sesion">No se pudo iniciar sesion, favor de comprobar datos.</string>
+    <string name="favor_seleccionar_usuario">Favor de seleccionar un tipo de usuario</string>
+    <string name="obteniendo_informacion">Obteniendo información</string>
+    <string name="ascendentes">Ascendente</string>
+    <string name="descendentes">Descendente</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="estas_buscando_un_flete_que_pueda_mover_tus_muebles_registrate_como_usuario" translatable="false">Are you looking for a freight that can move your furniture? Register as a user!</string>
+    <string name="detalles">Detalles</string>
+    <string name="lista_fleteros">Fleteros</string>
+
 </resources>

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="Lista de fleteros"
+        android:text="@string/lista_fleteros"
         android:gravity="center"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"

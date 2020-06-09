@@ -69,11 +69,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnInicioSesion:
                 if (!Usuario_login.isEmpty() && !Password_login.isEmpty()) {
                     ObtenerDatosCliente();
-                    ObtenerDatosFletero();
-                    LogearUsuario();
+                    //ObtenerDatosFletero();
+                    //LogearUsuario();
                 }
                 else{
-                    Toast.makeText(MainActivity.this, "Favor de llenar los campos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this,R.string.favrllenarcampor , Toast.LENGTH_SHORT).show();
                 }
                 //Intent intent = new Intent(MainActivity.this, pantalla_busquedaFletero.class);
                 //startActivity(intent);
@@ -152,8 +152,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                             });
                                 }
                             }
-                            //ObtenerDatosFletero();
-                            //LogearUsuario();
+                            ObtenerDatosFletero();
+                            LogearUsuario();
                         }
                     }
                 });
@@ -161,12 +161,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void LogearUsuario()
     {
-        mPDialog.setTitle("Iniciando sesion");
-        mPDialog.setMessage("Espere un momento...");
+
+        mPDialog.setTitle(R.string.iniciando_sesion);
+        mPDialog.setMessage(MainActivity.this.getResources().getString(R.string.dialog_espere));
         mPDialog.setCancelable(false);
         mPDialog.show();
-        //ObtenerDatosFletero();
-        //ObtenerDatosCliente();
+
+
         mAuth.signInWithEmailAndPassword(Usuario_login, Password_login).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -178,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             && !Usuario_login.equals("fletero@gmail.com")
                             && !Usuario_login.equals("fletera@gmail.com"))
                     {
-                        Toast.makeText(MainActivity.this, "Correo electrónico no verificado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, R.string.email_no_verificado, Toast.LENGTH_SHORT).show();
                         mPDialog.dismiss();
                     } else {
                         if (correoUsuario.equals(Usuario_login)) {
@@ -191,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }else {
                     mPDialog.dismiss();
-                    Toast.makeText(MainActivity.this, "No se pudo iniciar sesion, favor de comprobar datos.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.error_inicio_sesion, Toast.LENGTH_SHORT).show();
                 }
 
             }

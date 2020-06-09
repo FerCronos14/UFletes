@@ -1,6 +1,7 @@
 package com.example.ufletes;
 
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,6 +64,7 @@ public class BusquedaListaFleterosFragment extends Fragment {
     private FirestoreRecyclerOptions<Fleteros_Lista> FirestoreRecyclerOptions;
     private Button filterButton;
     private Button mbtnLlamarFletero;
+    private Button mbtnMensajeFletero;
     private EditText searchBox;
     private int expandedPosition = -1;
     private String idDocFletero_bus;
@@ -101,14 +103,18 @@ public class BusquedaListaFleterosFragment extends Fragment {
         LinearLayoutManager mlinearLayoutManager = new LinearLayoutManager(getActivity());
         RVFleteros_Busqueda.setLayoutManager(mlinearLayoutManager);
 
-        final String[] order = getResources().getStringArray(R.array.order);
+        final String[] order = {
+                BusquedaListaFleterosFragment.this.getResources().getString(R.string.ascendentes),
+                BusquedaListaFleterosFragment.this.getResources().getString(R.string.descendentes),
+                BusquedaListaFleterosFragment.this.getResources().getString(R.string.neutral)
+        };
         filterButton = view.findViewById(R.id.filterButtonBusqFletero);
 
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity(), R.style.RoundShapeTheme);
-                materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
+                materialAlertDialogBuilder.setTitle(R.string.seleccione_opcion);
                 materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -183,8 +189,8 @@ public class BusquedaListaFleterosFragment extends Fragment {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPDialog.setTitle("Obteniendo información");
-                        mPDialog.setMessage("Espere un momento...");
+                        mPDialog.setTitle(R.string.obteniendo_informacion);
+                        mPDialog.setMessage(BusquedaListaFleterosFragment.this.getResources().getString(R.string.dialog_espere));
                         mPDialog.setCancelable(false);
                         mPDialog.show();
 
@@ -217,9 +223,23 @@ public class BusquedaListaFleterosFragment extends Fragment {
                         mbtnLlamarFletero.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Toast.makeText(getContext(), "Llamando", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.Llamando, Toast.LENGTH_SHORT).show();
                                 Intent callIntent = new Intent(Intent.ACTION_DIAL,phoneNumber);
                                 startActivity(callIntent);
+                            }
+                        });
+
+                        mbtnMensajeFletero = v.findViewById(R.id.btnMsjFletero);
+                        mbtnMensajeFletero.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent msjIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto" + phoneNumber));
+                                msjIntent.putExtra("sms_body", "Hola");
+                                try {
+                                    startActivity(msjIntent);
+                                } catch (ActivityNotFoundException e){
+
+                                }
                             }
                         });
                     }
@@ -241,29 +261,32 @@ public class BusquedaListaFleterosFragment extends Fragment {
 
     private void changeOrder(String s) {
         Adapter_Fleteros_Busqueda.stopListening();
-        if (s.equals("Ascendente")){
+        if (s.equals(BusquedaListaFleterosFragment.this.getResources().getString(R.string.ascendentes))){
             query = getInstance()
                     .collection("Fletero")
                     .orderBy("nombre", Query.Direction.ASCENDING);
         }
-        else if (s.equals("Descendente")){
+        else if (s.equals(BusquedaListaFleterosFragment.this.getResources().getString(R.string.descendentes))){
             query = getInstance()
                     .collection("Fletero")
                     .orderBy("nombre", Query.Direction.DESCENDING);
         }
 
-        else if(s.equals("Neutral")){
+        else if(s.equals(BusquedaListaFleterosFragment.this.getResources().getString(R.string.neutral))){
             query = getInstance().collection("Fletero").orderBy("correo");
         }
 
-        final String[] order = getResources().getStringArray(R.array.order);
-
+        final String[] order = {
+                BusquedaListaFleterosFragment.this.getResources().getString(R.string.ascendentes),
+                BusquedaListaFleterosFragment.this.getResources().getString(R.string.descendentes),
+                BusquedaListaFleterosFragment.this.getResources().getString(R.string.neutral)
+        };
         filterButton = view.findViewById(R.id.filterButtonBusqFletero);
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity(), R.style.RoundShapeTheme);
-                materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
+                materialAlertDialogBuilder.setTitle(R.string.seleccione_opcion);
                 materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

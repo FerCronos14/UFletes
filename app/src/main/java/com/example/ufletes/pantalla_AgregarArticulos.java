@@ -127,7 +127,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
         switch (opcA) {
             case R.id.btnAgregarArticulo:
                 if (nombreArticulo.isEmpty()) {
-                    Toast.makeText(pantalla_AgregarArticulos.this, "Favor de llenar nombre del articulo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(pantalla_AgregarArticulos.this, R.string.llenarcampos_articulos, Toast.LENGTH_SHORT).show();
                 } else {
                     String cantidad = Integer.toString(cantidadArticulo);
                     Map<String, Object> map = new HashMap<>();
@@ -136,8 +136,8 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
                     map.put("cant_a", cantidad );
                     map.put("pathFoto_a", sPathFoto_Articulo);
 
-                    mPDialog.setTitle("Subiendo...");
-                    mPDialog.setMessage("Registrando datos");
+                    mPDialog.setTitle(R.string.dialog_subiendo_datos);
+                    mPDialog.setMessage(pantalla_AgregarArticulos.this.getResources().getString(R.string.dialog_espere));
                     mPDialog.setCancelable(false);
                     mPDialog.show();
 
@@ -149,7 +149,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
                         public void onSuccess(DocumentReference documentReference) {
                             mPDialog.dismiss();
                             //idDocArticulo = documentReference.getId();
-                            Toast.makeText(pantalla_AgregarArticulos.this, "Articulo guardado" + idDocArticulo, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(pantalla_AgregarArticulos.this, R.string.articulo_guardado + idDocArticulo, Toast.LENGTH_SHORT).show();
                             mtxtNombreArticulo.setText("");
                             mtxtDescripcionArticulo.setText("");
                             mtxtCantidadArticulo.setText("1");
@@ -158,7 +158,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(pantalla_AgregarArticulos.this, "No se pudo guardar el articulo", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(pantalla_AgregarArticulos.this, R.string.no_guardo_articulo, Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -186,20 +186,24 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
     }
 
     private void subirFotoArticulo() {
-        final CharSequence[] opciones = {"Tomar foto", "Cargar imagen", "Cancelar"};
+        final CharSequence[] opciones = {
+                pantalla_AgregarArticulos.this.getResources().getString(R.string.tomar_foto)
+                ,pantalla_AgregarArticulos.this.getResources().getString(R.string.cargar_imagen)
+                ,pantalla_AgregarArticulos.this.getResources().getString(R.string.cancelar)
+        };
         final AlertDialog.Builder alertOpciones = new AlertDialog.Builder((pantalla_AgregarArticulos.this), R.style.CustomAlertDialog);
-        alertOpciones.setTitle("Seleccione una opción");
+        alertOpciones.setTitle(R.string.seleccione_opcion);
         alertOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if (opciones[i].equals("Tomar foto")) {
+                if (opciones[i].equals(pantalla_AgregarArticulos.this.getResources().getString(R.string.tomar_foto))) {
                     tomarFoto_Articulo();
                 } else {
-                    if (opciones[i].equals("Cargar imagen")) {
+                    if (opciones[i].equals(pantalla_AgregarArticulos.this.getResources().getString(R.string.cargar_imagen))) {
 
                         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         intent.setType("image/");
-                        startActivityForResult(intent.createChooser(intent, "Seleccione la aplicación"), 10);
+                        startActivityForResult(intent.createChooser(intent, pantalla_AgregarArticulos.this.getResources().getString(R.string.seleccione_opcion)), 10);
 
                     } else {
                         dialogInterface.dismiss();
@@ -253,8 +257,8 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == GALLERY_INTENT) {
             Uri uriFotoArticulo = data.getData();
-            mPDialog.setTitle("Subiendo imagen, espere por favor.");
-            mPDialog.setMessage("Espere un momento...");
+            mPDialog.setTitle(R.string.dialog_subiendo_img);
+            mPDialog.setMessage(pantalla_AgregarArticulos.this.getResources().getString(R.string.dialog_espere));
             mPDialog.setCancelable(false);
             mPDialog.show();
 
@@ -263,7 +267,7 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(pantalla_AgregarArticulos.this, "Se subio exitosamente", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(pantalla_AgregarArticulos.this, R.string.subido_exitosamente, Toast.LENGTH_SHORT).show();
                         }
                     }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -277,13 +281,13 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
                 @Override
                 public void onPaused(UploadTask.TaskSnapshot taskSnapshot) {
                     System.out.println("Upload is paused");
-                    Toast.makeText(pantalla_AgregarArticulos.this, "Ha sido pausado...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(pantalla_AgregarArticulos.this, R.string.pausa, Toast.LENGTH_SHORT).show();
                     mPDialog.dismiss();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(pantalla_AgregarArticulos.this,"Sorry", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(pantalla_AgregarArticulos.this,R.string.error, Toast.LENGTH_SHORT).show();
                 }
             }).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
@@ -312,8 +316,8 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
 
         } else {
             if (resultCode == RESULT_OK && requestCode == REQUEST_IMAGE_CAPTURE) {
-                mPDialog.setTitle("Subiendo imagen, espere por favor.");
-                mPDialog.setMessage("Espere un momento...");
+                mPDialog.setTitle(R.string.dialog_subiendo_img);
+                mPDialog.setMessage(pantalla_AgregarArticulos.this.getResources().getString(R.string.dialog_espere));
                 mPDialog.setCancelable(false);
                 mPDialog.show();
 
@@ -326,12 +330,12 @@ public class pantalla_AgregarArticulos extends AppCompatActivity implements List
                 filepath.putBytes(b).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(pantalla_AgregarArticulos.this, "Foto súbida", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(pantalla_AgregarArticulos.this, R.string.subir_imagen, Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(pantalla_AgregarArticulos.this,"¡Falló!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(pantalla_AgregarArticulos.this,R.string.error,Toast.LENGTH_LONG).show();
 
 
                     }

@@ -2,17 +2,18 @@
 <resources>
     
     <string-array name="comboTipoUsuario">
-        <item>Seleccione el tipo de usuario</item>
-        <item>Cliente</item>
-        <item>Fletero</item>
+        <item>@string/seleccioneusuario</item>
+        <item>@string/cliente</item>
+        <item>@string/fletero</item>
     </string-array>
 
     <string-array name="SpinnerTipoCaja">
-        <item>Tipo de caja</item>
-        <item>Caja cerrada</item>
-        <item>Caja abierta</item>
-        <item>Redilas fijas</item>
-        <item>Caja refrigerada</item>
-        <item>Otro</item>
+        <item>@string/tipo_de_caja</item>
+        <item>@string/cajacerrada</item>
+        <item>@string/cajaabierta</item>
+        <item>@string/cajarendillas</item>
+        <item>@string/cajarefrigerada</item>
+        <item>@string/otro</item>
     </string-array>
+
 </resources>

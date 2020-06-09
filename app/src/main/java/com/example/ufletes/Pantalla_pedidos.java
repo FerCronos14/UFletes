@@ -63,8 +63,6 @@ public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickL
 
     }
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,13 +114,13 @@ public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickL
 
     private void solicitarFleter() {
         if (txtOrigen.getText().toString().isEmpty() && txtDestino.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Favor de seleccionar las direcciones abriendo el mapa", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.favor_seleccionar_direcciones, Toast.LENGTH_SHORT).show();
         }
         else if (txtOrigen.getText().toString().isEmpty()){
-            Toast.makeText(this, "Favor de seleccionar la direccion de origen abriendo el mapa", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.favor_seleccionar_origen, Toast.LENGTH_SHORT).show();
         }
         else if (txtDestino.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Favor de seleccionar la direccion de destino abriendo el mapa", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.favor_seleccionar_destino, Toast.LENGTH_SHORT).show();
         }
         if (!txtOrigen.getText().toString().isEmpty() && !txtDestino.getText().toString().isEmpty()) {
             Map<String, Object> mapSolicFlete = new HashMap<>();
@@ -140,8 +138,8 @@ public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickL
             mapSolicFlete.put("statusSolicitud_s", "Disponible");
             mapSolicFlete.put("fecha_s", fechaPedido);
 
-            mPDialog.setTitle("Subiendo...");
-            mPDialog.setMessage("Solicitando flete...");
+            mPDialog.setTitle(R.string.dialog_subiendo);
+            mPDialog.setMessage(Pantalla_pedidos.this.getResources().getString(R.string.dialog_espere_solicitando));
             mPDialog.setCancelable(false);
             mPDialog.show();
 
@@ -151,13 +149,13 @@ public class Pantalla_pedidos extends AppCompatActivity implements View.OnClickL
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
                     mPDialog.dismiss();
-                    Toast.makeText(Pantalla_pedidos.this, "Solicitud guardada", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Pantalla_pedidos.this, R.string.solicitud_enviada, Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(Pantalla_pedidos.this, "No se pudo guardar la solicitud", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Pantalla_pedidos.this, R.string.no_guardo_solicitud, Toast.LENGTH_SHORT).show();
                 }
             });
 

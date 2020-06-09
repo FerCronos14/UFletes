@@ -103,14 +103,12 @@ public class ConfirmarPedidoFragment extends Fragment {
     public void onStart() {
         super.onStart();
         Adapter_Articulos.startListening();
-        Toast.makeText(getActivity(), "Start", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Adapter_Articulos.startListening();
-        Toast.makeText(getActivity(), "resume", Toast.LENGTH_SHORT).show();
 
     }
 

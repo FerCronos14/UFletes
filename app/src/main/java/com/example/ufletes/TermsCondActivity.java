@@ -39,14 +39,13 @@ public class TermsCondActivity extends AppCompatActivity implements View.OnClick
                 if (mCBTC.isChecked()) {
                     startActivity(new Intent(TermsCondActivity.this, Registro_User.class));
                 } else {
-                    Toast.makeText(this, "Debe acepter los Términos y Condiciones para continuar.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.debe_aceptar_terminos, Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.btnCreditos:
                 final Dialog dialog_creditos= new Dialog(this, R.style.CustomAlertDialog);
-                //dialog_creditos.getWindow().setBackgroundDrawable(new ColorDrawable(Color.));
                 dialog_creditos.setContentView(R.layout.cuadro_dialogo_creditos);
-                dialog_creditos.setTitle("Creditos");
+                dialog_creditos.setTitle(R.string.creditos);
                 dialog_creditos.setCancelable(true);
                 //dialog_creditos.getWindow().setLayout(600, 400);
                 Button cerrarDialog = dialog_creditos.findViewById(R.id.btnCerrar_Creditos_Dialog);
@@ -56,7 +55,6 @@ public class TermsCondActivity extends AppCompatActivity implements View.OnClick
                         dialog_creditos.dismiss();
                     }
                 });
-                //startActivity(new Intent(MainActivity.this, TermsCondActivity.class));
                 dialog_creditos.show();
                 break;
             default:

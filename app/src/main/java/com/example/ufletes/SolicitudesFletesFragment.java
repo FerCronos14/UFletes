@@ -84,7 +84,11 @@ public class SolicitudesFletesFragment extends Fragment {
         LinearLayoutManager mlinearLayoutManager = new LinearLayoutManager(getActivity());
         RVSOLICITUDES.setLayoutManager(mlinearLayoutManager);
 
-        final String[] order = {"Recientes", "Antiguos", "Neutral"};
+        final String[] order = {
+                SolicitudesFletesFragment.this.getResources().getString(R.string.recientes),
+                SolicitudesFletesFragment.this.getResources().getString(R.string.antiguos),
+                SolicitudesFletesFragment.this.getResources().getString(R.string.neutral)
+        };
 
         filterButton = view.findViewById(R.id.filterButtonSolicitudes);
 
@@ -92,7 +96,7 @@ public class SolicitudesFletesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity(), R.style.RoundShapeTheme);
-                materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
+                materialAlertDialogBuilder.setTitle(R.string.seleccione_opcion);
                 materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -249,41 +253,43 @@ public class SolicitudesFletesFragment extends Fragment {
 
     private void changeOrder(String s) {
         Adapter_Solicitudes.stopListening();
-        if (s.equals("Recientes")){
+        if (s.equals(SolicitudesFletesFragment.this.getResources().getString(R.string.recientes))){
             query = getInstance()
                     .collection("Pedidos")
                     .orderBy("fecha_s", Query.Direction.DESCENDING)
                     .whereEqualTo("statusSolicitud_s", "Disponible");
         }
-        else if (s.equals("Antiguos")){
+        else if (s.equals(SolicitudesFletesFragment.this.getResources().getString(R.string.antiguos))){
             query = getInstance()
                     .collection("Pedidos")
                     .orderBy("fecha_s", Query.Direction.ASCENDING)
                     .whereEqualTo("statusSolicitud_s", "Disponible");
         }
 
-        else if(s.equals("Neutral")){
+        else if(s.equals(SolicitudesFletesFragment.this.getResources().getString(R.string.neutral))){
             query = getInstance().collection("Pedidos")
                     .whereEqualTo("statusSolicitud_s", "Disponible");
         }
 
-        final String[] order = {"Recientes", "Antiguos", "Neutral"};
+        final String[] order = {
+                SolicitudesFletesFragment.this.getResources().getString(R.string.recientes),
+                SolicitudesFletesFragment.this.getResources().getString(R.string.antiguos),
+                SolicitudesFletesFragment.this.getResources().getString(R.string.neutral)
+        };
 
         filterButton = view.findViewById(R.id.filterButtonSolicitudes);
+
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity() , R.style.RoundShapeTheme);
-                materialAlertDialogBuilder.setTitle("Seleccionar filtro.");
+            public void onClick(View view) {
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity(), R.style.RoundShapeTheme);
+                materialAlertDialogBuilder.setTitle(R.string.seleccione_opcion);
                 materialAlertDialogBuilder.setItems(order, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         changeOrder(order[which]);
                     }
                 }).show();
-
-
             }
         });
 

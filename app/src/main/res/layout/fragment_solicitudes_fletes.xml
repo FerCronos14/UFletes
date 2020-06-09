@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Direccion de origen"
+        android:text="@string/direcci_n_de_origen"
         app:layout_constraintEnd_toStartOf="@+id/textViewTEXTODirDestino_Solicitud"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
         android:id="@+id/textViewTEXTODirDestino_Solicitud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Direccion de destino"
+        android:text="@string/direcci_n_de_destino"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textViewTEXTODirOrigen_Solicitud"
@@ -120,7 +120,7 @@
             android:layout_margin="6dp"
             android:paddingTop="8dp"
             android:layout_gravity="right"
-            android:text="Detalles"
+            android:text="@string/detalles"
             />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

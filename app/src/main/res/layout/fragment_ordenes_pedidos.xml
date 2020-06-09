@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:text="Nombre:"
+            android:text="@string/nombredospuntos"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Nombre"
+            android:text="@string/nombre"
             app:layout_constraintStart_toEndOf="@+id/textViewNomTEXT"
             app:layout_constraintTop_toTopOf="@+id/textViewNomTEXT" />
 
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Telefono:"
+            android:text="@string/telefonodospuntos"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewNomTEXT" />
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:text="Direccion de origen"
+            android:text="@string/direcci_n_de_origen"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewTelTEXT" />
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Direccion de destino"
+            android:text="@string/direcci_n_de_destino"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewDirOrigen_Pedido" />
@@ -116,7 +116,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="42dp"
             android:layout_marginEnd="8dp"
-            android:text="Aceptado por:"
+            android:text="@string/aceptado_por"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/tvNomFleteroAceptado"
             app:layout_constraintHorizontal_bias="0.0"
@@ -146,6 +146,28 @@
             app:layout_constraintTop_toBottomOf="@+id/tvNomFleteroAceptadoTEXT">
 
             <Button
+                android:id="@+id/btnMsjCliente_Pedido"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:paddingTop="8dp"
+                android:layout_gravity="right"
+                android:text="@string/mensaje"
+                />
+
+            <Button
+                android:id="@+id/btnLlamarCliente_Pedido"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:paddingTop="8dp"
+                android:layout_gravity="right"
+                android:text="@string/llamar"
+                />
+
+            <Button
                 android:id="@+id/btnFinalizar_Pedido"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
@@ -154,7 +176,7 @@
                 android:paddingTop="8dp"
                 android:textColor="#FF2222"
                 android:layout_gravity="right"
-                android:text="Finalizar"
+                android:text="@string/finalizar"
                 />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -141,9 +141,9 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
         switch (opcA) {
             case R.id.btnAñadirVehiculo:
                 if (marcaVehiculo.isEmpty()) {
-                    Toast.makeText(Registro_AgregarAuto.this, "Favor de llenar nombre del articulo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Registro_AgregarAuto.this, R.string.llenarcampos_vehiculos, Toast.LENGTH_SHORT).show();
                 }else if (tipoVehiculo.isEmpty() ){
-                    Toast.makeText(Registro_AgregarAuto.this, "Favor de seleccionar el tipo de caja", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Registro_AgregarAuto.this, R.string.favor_seleccionar_caja, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     final Map<String, Object> map = new HashMap<>();
@@ -154,8 +154,8 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                     map.put("medida_v", medidasVehiculo + " mts³");
                     map.put("pathFoto_v", sPathFoto_Vehiculo);
 
-                    mPDialog.setTitle("Subiendo...");
-                    mPDialog.setMessage("Registrando datos");
+                    mPDialog.setTitle(R.string.dialog_subiendo_datos);
+                    mPDialog.setMessage(Registro_AgregarAuto.this.getResources().getString(R.string.dialog_espere));
                     mPDialog.setCancelable(false);
                     mPDialog.show();
 
@@ -168,13 +168,13 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(Registro_AgregarAuto.this, "Foto actualizada" , Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Registro_AgregarAuto.this, R.string.foto_actualizada , Toast.LENGTH_SHORT).show();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(Registro_AgregarAuto.this, "Error al actualizar foto" , Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Registro_AgregarAuto.this, R.string.foto_error_actualizar , Toast.LENGTH_SHORT).show();
 
                                 }
                             });;
@@ -188,7 +188,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                         public void onSuccess(DocumentReference documentReference) {
 
                             mPDialog.dismiss();
-                            Toast.makeText(Registro_AgregarAuto.this, "Vehiculo guardado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Registro_AgregarAuto.this, R.string.vehiculo_guardado, Toast.LENGTH_SHORT).show();
                             mtxtMarcaVehiculo.setText("");
                             mtxtMedidasVehiculo.setText("");
                             mtxtVolVehiculo.setText("");
@@ -199,11 +199,11 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(Registro_AgregarAuto.this, "No se pudo guardar el vehiculo", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Registro_AgregarAuto.this, R.string.error_guardar_vehiculo, Toast.LENGTH_SHORT).show();
                         }
                     });
-                    break;
                 }
+                break;
             case R.id.btnAgregarFotoVehiculo:
                 subirFoto();
                 break;
@@ -213,19 +213,23 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
     }
 
     private void subirFoto() {
-        final CharSequence[] opciones = {"Tomar foto", "Cargar imagen", "Cancelar"};
+        final CharSequence[] opciones = {
+                Registro_AgregarAuto.this.getResources().getString(R.string.tomar_foto)
+                ,Registro_AgregarAuto.this.getResources().getString(R.string.cargar_imagen)
+                ,Registro_AgregarAuto.this.getResources().getString(R.string.cancelar)
+        };
         final AlertDialog.Builder alertOpciones = new AlertDialog.Builder((Registro_AgregarAuto.this), R.style.CustomAlertDialog);
-        alertOpciones.setTitle("Seleccione una opción");
+        alertOpciones.setTitle(R.string.seleccione_opcion);
         alertOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if (opciones[i].equals("Tomar foto")) {
+                if (opciones[i].equals(Registro_AgregarAuto.this.getResources().getString(R.string.tomar_foto))) {
                     tomarFotoM2();
                 } else {
-                    if (opciones[i].equals("Cargar imagen")) {
+                    if (opciones[i].equals(Registro_AgregarAuto.this.getResources().getString(R.string.cargar_imagen))) {
                         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         intent.setType("image/*");
-                        startActivityForResult(intent.createChooser(intent, "Seleccione la aplicación"), GALLERY_INTENT );
+                        startActivityForResult(intent.createChooser(intent, Registro_AgregarAuto.this.getResources().getString(R.string.seleccione_opcion)), GALLERY_INTENT );
                     } else {
                         dialogInterface.dismiss();
                     }
@@ -274,8 +278,8 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == GALLERY_INTENT) {
-            mPDialog.setTitle("Subiendo imagen, espere por favor.");
-            mPDialog.setMessage("Espere un momento...");
+            mPDialog.setTitle(R.string.dialog_subiendo_img);
+            mPDialog.setMessage(Registro_AgregarAuto.this.getResources().getString(R.string.dialog_espere));
             mPDialog.setCancelable(false);
             mPDialog.show();
             Uri uriFotoVehiculo = data.getData();
@@ -286,7 +290,7 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                    Toast.makeText(Registro_AgregarAuto.this, "Se subio exitosamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Registro_AgregarAuto.this, R.string.subido_exitosamente, Toast.LENGTH_SHORT).show();
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -300,14 +304,14 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                 @Override
                 public void onPaused(UploadTask.TaskSnapshot taskSnapshot) {
                     System.out.println("Upload is paused");
-                    Toast.makeText(Registro_AgregarAuto.this, "Ha sido pausado...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Registro_AgregarAuto.this, R.string.pausa, Toast.LENGTH_SHORT).show();
                     mPDialog.dismiss();
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(Registro_AgregarAuto.this,"Sorry", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Registro_AgregarAuto.this,R.string.error, Toast.LENGTH_SHORT).show();
                 }
             }).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
@@ -337,8 +341,8 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
         }else {
 
             if (resultCode == RESULT_OK && requestCode == REQUEST_IMAGE_CAPTURE) {
-                mPDialog.setTitle("Subiendo imagen, espere por favor.");
-                mPDialog.setMessage("Espere un momento...");
+                mPDialog.setTitle(R.string.dialog_subiendo_img);
+                mPDialog.setMessage(Registro_AgregarAuto.this.getResources().getString(R.string.dialog_espere));
                 mPDialog.setCancelable(false);
                 mPDialog.show();
 
@@ -352,12 +356,12 @@ public class Registro_AgregarAuto extends AppCompatActivity implements AgregarVe
                 filepath.putBytes(b).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(Registro_AgregarAuto.this, "Foto súbida", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Registro_AgregarAuto.this, R.string.subido_exitosamente, Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Registro_AgregarAuto.this,"¡Falló!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(Registro_AgregarAuto.this,R.string.error,Toast.LENGTH_LONG).show();
 
 
                     }
