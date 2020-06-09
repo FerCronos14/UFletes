@@ -15,12 +15,13 @@ public class Solicitudes_Lista {
     private String statusSolicitud_s;
     private String fecha_s;
     private String idCliente_s;
+    private String idFletero_s;
 
     public Solicitudes_Lista() {
 
     }
 
-    public Solicitudes_Lista(String nombre_s, String apellidop_s, String apellidom_s, String telefono_s, String nombre_f_s, String apellidop_f_s, String apellidom_f_s, String dirOrigen_s, String dirDestino_s, String statusSolicitud_s, String fecha_s, String idCliente_s) {
+    public Solicitudes_Lista(String nombre_s, String apellidop_s, String apellidom_s, String telefono_s, String nombre_f_s, String apellidop_f_s, String apellidom_f_s, String dirOrigen_s, String dirDestino_s, String statusSolicitud_s, String fecha_s, String idCliente_s, String idFletero_s) {
         this.nombre_s = nombre_s;
         this.apellidop_s = apellidop_s;
         this.apellidom_s = apellidom_s;
@@ -33,6 +34,7 @@ public class Solicitudes_Lista {
         this.statusSolicitud_s = statusSolicitud_s;
         this.fecha_s = fecha_s;
         this.idCliente_s = idCliente_s;
+        this.idFletero_s = idFletero_s;
     }
 
     public String getNombre_s() {
@@ -129,5 +131,13 @@ public class Solicitudes_Lista {
 
     public void setIdCliente_s(String idCliente_s) {
         this.idCliente_s = idCliente_s;
+    }
+
+    public String getIdFletero_s() {
+        return idFletero_s;
+    }
+
+    public void setIdFletero_s(String idFletero_s) {
+        this.idFletero_s = idFletero_s;
     }
 }

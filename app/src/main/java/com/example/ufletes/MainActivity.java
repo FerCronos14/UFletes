@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 correoUsuario = document.getData().get("correo").toString();
                                 idDoc_Cliente = document.getId();
+
                                 nombreCliente = document.getData().get("nombre").toString();
                                 apellidoCliente = document.getData().get("apellidop").toString();
                                 apellidomatCliente = document.getData().get("apellidom").toString();

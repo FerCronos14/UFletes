@@ -1,5 +1,8 @@
 package com.example.ufletes;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -46,6 +49,11 @@ public class SoliTransitoFragment extends Fragment {
     private int expandedPosition = -1;
     private FirebaseFirestore mFireStore;
     Button mbtnEliminarSolicitud;
+    Button mbtnLlamarSolicitud;
+    Button mbtnMensajeSolicitud;
+    String telFletero;
+    String idFletero;
+    String telCliente;
 
     public SoliTransitoFragment() { }
 
@@ -60,6 +68,7 @@ public class SoliTransitoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RVPedido = view.findViewById(R.id.PedidosRVAct);
+        mFireStore = FirebaseFirestore.getInstance();
         LinearLayoutManager mlinearLayoutManager = new LinearLayoutManager(getActivity());
         RVPedido.setLayoutManager(mlinearLayoutManager);
         getData();
@@ -72,6 +81,7 @@ public class SoliTransitoFragment extends Fragment {
                     .whereEqualTo("idCliente_s", MainActivity.idDoc_Cliente)
                     .whereEqualTo("statusSolicitud_s", "Ocupado")
             ;
+
         }
         if (!MainActivity.idDoc_Fletero.isEmpty()){
             query = getInstance()
@@ -100,7 +110,8 @@ public class SoliTransitoFragment extends Fragment {
                 holder.mtextViewDirDestinoPedido.setText(model.getDirDestino_s());
                 holder.mtextViewFechaPedido.setText(model.getFecha_s());
 
-                final String idDocCliente = model.getIdCliente_s();
+                telCliente = model.getTelefono_s();
+                idFletero = model.getIdFletero_s();
                 ObservableSnapshotArray<Solicitudes_Lista> observableSnapshotArray = getSnapshots();
                 final DocumentReference documentReference_Solicitudes =
                         observableSnapshotArray.getSnapshot(position).getReference();
@@ -114,13 +125,66 @@ public class SoliTransitoFragment extends Fragment {
                         expandedPosition = isExpanded ? -1:position;
                         TransitionManager.beginDelayedTransition(RVPedido);
                         notifyDataSetChanged();
+
+                        mFireStore.collection("Fletero")
+                                .whereEqualTo("idDocFletero", idFletero)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                telFletero = document.getData().get("telefono").toString();
+                                            }
+                                        }
+                                    }
+                                });
+
                         mbtnEliminarSolicitud = view.findViewById(R.id.btnFinalizar_Pedido);
                         mbtnEliminarSolicitud.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 documentReference_Solicitudes.delete();
+                            }
+                        });
+                        mbtnLlamarSolicitud = view.findViewById(R.id.btnLlamarCliente_Pedido);
+                        mbtnLlamarSolicitud.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (!MainActivity.idDoc_Cliente.isEmpty()) { // Cliente
+                                    Toast.makeText(getContext(), R.string.Llamando, Toast.LENGTH_SHORT).show();
+                                    Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+telFletero));
+                                    startActivity(callIntent);
+                                }
+                                if (!MainActivity.idDoc_Fletero.isEmpty()){ // Fletero
+                                    Toast.makeText(getContext(), R.string.Llamando, Toast.LENGTH_SHORT).show();
+                                    Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+telCliente));
+                                    startActivity(callIntent);
+                                }
+                            }
+                        });
+                        mbtnMensajeSolicitud = view.findViewById(R.id.btnMsjCliente_Pedido);
+                        mbtnMensajeSolicitud.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (!MainActivity.idDoc_Cliente.isEmpty()) { // Cliente
+                                    Intent msjIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + telFletero));
+                                    //msjIntent.putExtra("sms_body", "Hola");
+                                    try {
+                                        startActivity(msjIntent);
+                                    } catch (ActivityNotFoundException e){
 
+                                    }
+                                }
+                                if (!MainActivity.idDoc_Fletero.isEmpty()){ // Fletero
+                                    Intent msjIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + telCliente));
+                                    //msjIntent.putExtra("sms_body", "Hola");
+                                    try {
+                                        startActivity(msjIntent);
+                                    } catch (ActivityNotFoundException e){
 
+                                    }
+                                }
                             }
                         });
                     }

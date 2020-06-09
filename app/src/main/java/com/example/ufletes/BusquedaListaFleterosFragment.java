@@ -98,6 +98,8 @@ public class BusquedaListaFleterosFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mFireStore = FirebaseFirestore.getInstance();
         RVFleteros_Busqueda = view.findViewById(R.id.fleterosRVAct);
         RVFleteros_Busqueda.setHasFixedSize(true);
         LinearLayoutManager mlinearLayoutManager = new LinearLayoutManager(getActivity());
@@ -180,7 +182,7 @@ public class BusquedaListaFleterosFragment extends Fragment {
 
                 holder.nombreBusqFletero.setText(String.format("%s %s", model.getNombre(), model.getApellidop()));
                 holder.numeroBusqFletero.setText(model.getTelefono());
-                final Uri phoneNumber = Uri.parse("tel:"+model.getTelefono());
+                final String phoneNumber = model.getTelefono();
                 final String auxIDFLETERO = model.getIdDocFletero();
 
                 final boolean isExpanded = position==expandedPosition;
@@ -224,7 +226,7 @@ public class BusquedaListaFleterosFragment extends Fragment {
                             @Override
                             public void onClick(View view) {
                                 Toast.makeText(getContext(), R.string.Llamando, Toast.LENGTH_SHORT).show();
-                                Intent callIntent = new Intent(Intent.ACTION_DIAL,phoneNumber);
+                                Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+phoneNumber));
                                 startActivity(callIntent);
                             }
                         });
@@ -233,8 +235,8 @@ public class BusquedaListaFleterosFragment extends Fragment {
                         mbtnMensajeFletero.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent msjIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto" + phoneNumber));
-                                msjIntent.putExtra("sms_body", "Hola");
+                                Intent msjIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + phoneNumber));
+                                //msjIntent.putExtra("sms_body", "Hola");
                                 try {
                                     startActivity(msjIntent);
                                 } catch (ActivityNotFoundException e){
